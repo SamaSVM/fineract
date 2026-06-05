@@ -18,12 +18,13 @@
  */
 package org.apache.fineract.client.feign;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import feign.Response;
 import feign.codec.ErrorDecoder;
 import java.io.IOException;
 import java.io.InputStream;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
 
 public class FineractErrorDecoder implements ErrorDecoder {
 
@@ -52,11 +53,11 @@ public class FineractErrorDecoder implements ErrorDecoder {
                         return new FeignException(response.status(), userMessage != null ? userMessage : enhancedDeveloperMessage,
                                 response.request(), bodyData, enhancedDeveloperMessage, userMessage, userMessageGlobalisationCode);
                     }
-                } catch (IOException e) {
+                } catch (JacksonException e) {
                     return defaultDecoder.decode(methodKey, response);
                 }
             }
-        } catch (IOException e) {
+        } catch (JacksonException | IOException e) {
             return defaultDecoder.decode(methodKey, response);
         }
 
@@ -75,7 +76,7 @@ public class FineractErrorDecoder implements ErrorDecoder {
 
     private String extractField(JsonNode node, String fieldName) {
         JsonNode fieldNode = node.get(fieldName);
-        return fieldNode != null && !fieldNode.isNull() ? fieldNode.asText() : null;
+        return fieldNode != null && !fieldNode.isNull() ? fieldNode.asString() : null;
     }
 
     private String extractValidationErrors(JsonNode rootNode) {

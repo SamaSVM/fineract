@@ -320,9 +320,15 @@ public class SavingsAccountTransactionsApiResource {
     @Path("{savingsId}/transactions/{transactionId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Undo/Reverse/Modify/Release Amount transaction API", operationId = "adjustSavingsAccountTransaction", description = "Undo/Reverse/Modify/Release Amount transaction API\n\n"
-            + "Example Requests:\n" + "\n" + "\n" + "savingsaccounts/{savingsId}/transactions/{transactionId}?command=reverse\n" + "\n"
-            + "Accepted command = undo, reverse, modify, releaseAmount")
+    @Operation(summary = "Undo/Reverse/Modify/Release Amount transaction API", operationId = "adjustSavingsAccountTransaction", description = """
+            Undo/Reverse/Modify/Release Amount transaction API
+
+            Example Requests:
+
+
+            savingsaccounts/{savingsId}/transactions/{transactionId}?command=reverse
+
+            Accepted command = undo, reverse, modify, releaseAmount""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = SavingsAccountTransactionsApiResourceSwagger.PostSavingsAccountBulkReversalTransactionsRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = SavingsAccountTransactionsApiResourceSwagger.PostSavingsAccountBulkReversalTransactionsRequest.class))))
     public String adjustTransaction(@PathParam("savingsId") final Long savingsId, @PathParam("transactionId") final Long transactionId,
@@ -334,10 +340,15 @@ public class SavingsAccountTransactionsApiResource {
     @Path("external-id/{savingsExternalId}/transactions/{transactionId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Undo/Reverse/Modify/Release Amount transaction API", operationId = "adjustSavingsAccountTransactionBySavingsExternalId", description = "Undo/Reverse/Modify/Release Amount transaction API\n\n"
-            + "Example Requests:\n" + "\n" + "\n"
-            + "savingsaccounts/external-id/{savingsExternalId}/transactions/{transactionId}?command=reverse\n" + "\n"
-            + "Accepted command = undo, reverse, modify, releaseAmount")
+    @Operation(summary = "Undo/Reverse/Modify/Release Amount transaction API", operationId = "adjustSavingsAccountTransactionBySavingsExternalId", description = """
+            Undo/Reverse/Modify/Release Amount transaction API
+
+            Example Requests:
+
+
+            savingsaccounts/external-id/{savingsExternalId}/transactions/{transactionId}?command=reverse
+
+            Accepted command = undo, reverse, modify, releaseAmount""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = SavingsAccountTransactionsApiResourceSwagger.PostSavingsAccountBulkReversalTransactionsRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = SavingsAccountTransactionsApiResourceSwagger.PostSavingsAccountBulkReversalTransactionsRequest.class))))
     public String adjustTransaction(@PathParam("savingsExternalId") final String savingsExternalId,
@@ -379,10 +390,15 @@ public class SavingsAccountTransactionsApiResource {
     @Path("{savingsId}/transactions/external-id/{transactionExternalId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Undo/Reverse/Modify/Release Amount transaction API by external ID", operationId = "adjustSavingsAccountTransactionByExternalId", description = "Undo/Reverse/Modify/Release Amount transaction API by external ID\n\n"
-            + "Example Requests:\n" + "\n" + "\n"
-            + "savingsaccounts/{savingsId}/transactions/external-id/{transactionExternalId}?command=reverse\n" + "\n"
-            + "Accepted command = undo, reverse, modify, releaseAmount")
+    @Operation(summary = "Undo/Reverse/Modify/Release Amount transaction API by external ID", operationId = "adjustSavingsAccountTransactionByExternalId", description = """
+            Undo/Reverse/Modify/Release Amount transaction API by external ID
+
+            Example Requests:
+
+
+            savingsaccounts/{savingsId}/transactions/external-id/{transactionExternalId}?command=reverse
+
+            Accepted command = undo, reverse, modify, releaseAmount""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = SavingsAccountTransactionsApiResourceSwagger.PostSavingsAccountBulkReversalTransactionsRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = SavingsAccountTransactionsApiResourceSwagger.PostSavingsAccountBulkReversalTransactionsRequest.class))))
     public String adjustTransaction(@PathParam("savingsId") final Long savingsId,
@@ -395,10 +411,15 @@ public class SavingsAccountTransactionsApiResource {
     @Path("external-id/{savingsExternalId}/transactions/external-id/{transactionExternalId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Undo/Reverse/Modify/Release Amount transaction API by external ID", operationId = "adjustSavingsAccountTransactionBySavingsAndTransactionExternalId", description = "Undo/Reverse/Modify/Release Amount transaction API by external ID\n\n"
-            + "Example Requests:\n" + "\n" + "\n"
-            + "savingsaccounts/external-id/{savingsExternalId}/transactions/external-id/{transactionExternalId}?command=reverse\n" + "\n"
-            + "Accepted command = undo, reverse, modify, releaseAmount")
+    @Operation(summary = "Undo/Reverse/Modify/Release Amount transaction API by external ID", operationId = "adjustSavingsAccountTransactionBySavingsAndTransactionExternalId", description = """
+            Undo/Reverse/Modify/Release Amount transaction API by external ID
+
+            Example Requests:
+
+
+            savingsaccounts/external-id/{savingsExternalId}/transactions/external-id/{transactionExternalId}?command=reverse
+
+            Accepted command = undo, reverse, modify, releaseAmount""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = SavingsAccountTransactionsApiResourceSwagger.PostSavingsAccountBulkReversalTransactionsRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = SavingsAccountTransactionsApiResourceSwagger.PostSavingsAccountBulkReversalTransactionsRequest.class))))
     public String adjustTransaction(@PathParam("savingsExternalId") final String savingsExternalId,

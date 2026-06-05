@@ -98,8 +98,10 @@ public class SurveyApiResource {
     @Path("{surveyName}/{apptableId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create an entry in the survey table", description = "Insert and entry in a survey table (full fill the survey)."
-            + "\n" + "\n" + "Refer Link for sample Body:  [ https://fineract.apache.org/docs/legacy/#survey_create ] ")
+    @Operation(summary = "Create an entry in the survey table", description = """
+            Insert and entry in a survey table (full fill the survey).
+
+            Refer Link for sample Body:  [ https://fineract.apache.org/docs/legacy/#survey_create ] """)
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = SurveyApiResourceSwagger.PostSurveySurveyNameApptableIdRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = SurveyApiResourceSwagger.PostSurveySurveyNameApptableIdResponse.class)))
     public String createDatatableEntry(@PathParam("surveyName") @Parameter(description = "surveyName") final String datatable,

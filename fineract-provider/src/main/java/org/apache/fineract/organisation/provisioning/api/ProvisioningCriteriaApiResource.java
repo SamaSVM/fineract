@@ -99,8 +99,15 @@ public class ProvisioningCriteriaApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create a new Provisioning Criteria", description = "Creates a new Provisioning Criteria\n" + "\n"
-            + "Mandatory Fields: \n" + "criteriaName\n" + "provisioningcriteria\n" + "\n" + "Optional Fields: \n" + "loanProducts")
+    @Operation(summary = "Create a new Provisioning Criteria", description = """
+            Creates a new Provisioning Criteria
+
+            Mandatory Fields:\s
+            criteriaName
+            provisioningcriteria
+
+            Optional Fields:\s
+            loanProducts""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = ProvisioningCriteriaApiResourceSwagger.PostProvisioningCriteriaRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ProvisioningCriteriaApiResourceSwagger.PostProvisioningCriteriaResponse.class)))
     public CommandProcessingResult createProvisioningCriteria(@Parameter(hidden = true) final String apiRequestBodyAsJson) {
@@ -113,8 +120,11 @@ public class ProvisioningCriteriaApiResource {
     @Path("{criteriaId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Updates a new Provisioning Criteria", description = "Updates a new Provisioning Criteria\n" + "\n"
-            + "Optional Fields\n" + "criteriaName, loanProducts, provisioningcriteria")
+    @Operation(summary = "Updates a new Provisioning Criteria", description = """
+            Updates a new Provisioning Criteria
+
+            Optional Fields
+            criteriaName, loanProducts, provisioningcriteria""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = ProvisioningCriteriaApiResourceSwagger.PutProvisioningCriteriaRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ProvisioningCriteriaApiResourceSwagger.PutProvisioningCriteriaResponse.class)))
     public CommandProcessingResult updateProvisioningCriteria(

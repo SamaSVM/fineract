@@ -237,7 +237,7 @@ public class SavingsAccountReadPlatformServiceImpl implements SavingsAccountRead
             params[i] = element;
             i++;
         }
-        return this.jdbcTemplate.query(String.format(sql, inSql), this.savingsAccountTransactionsForBatchMapper, params);
+        return this.jdbcTemplate.query(sql.formatted(inSql), this.savingsAccountTransactionsForBatchMapper, params);
     }
 
     @Override

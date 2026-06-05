@@ -713,7 +713,7 @@ public class LoanOriginationStepDef extends AbstractStepDef {
         GetLoansLoanIdTransactions accrualTransaction = loanDetails.getTransactions().stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Accrual".equals(t.getType().getValue()))
                 .reduce((first, second) -> second)
-                .orElseThrow(() -> new IllegalStateException(String.format("No Accrual transaction found on %s", date)));
+                .orElseThrow(() -> new IllegalStateException("No Accrual transaction found on %s".formatted(date)));
 
         eventAssertion.assertEvent(LoanAccrualTransactionCreatedBusinessEvent.class, accrualTransaction.getId())
                 .extractingData(loanTransactionDataV1 -> {

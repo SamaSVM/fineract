@@ -40,7 +40,7 @@ public class AddPeriodicAccrualEntriesBusinessStep implements LoanCOBBusinessSte
         try {
             loanAccrualsProcessingService.addPeriodicAccruals(DateUtils.getBusinessLocalDate(), loan);
         } catch (MultiException e) {
-            throw new BusinessStepException(String.format("Fail to process period accrual for loan id [%s]", loan.getId()), e);
+            throw new BusinessStepException("Fail to process period accrual for loan id [%s]".formatted(loan.getId()), e);
         }
         log.debug("end processing period accrual business step for loan Id [{}]", loan.getId());
         return loan;

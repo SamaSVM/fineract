@@ -227,8 +227,9 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers/{cashierId}/allocate")
     @Consumes({ MediaType.TEXT_HTML, MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "Allocate Cash To Cashier", operationId = "allocateCashToCashier", description = "Mandatory Fields: \n"
-            + "Date, Amount, Currency, Notes/Comments")
+    @Operation(summary = "Allocate Cash To Cashier", operationId = "allocateCashToCashier", description = """
+            Mandatory Fields:\s
+            Date, Amount, Currency, Notes/Comments""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = TellerApiResourceSwagger.PostTellersTellerIdCashiersCashierIdAllocateRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = TellerApiResourceSwagger.PostTellersTellerIdCashiersCashierIdAllocateResponse.class)))
     public CommandProcessingResult allocateCashToCashier(@PathParam("tellerId") @Parameter(description = "tellerId") final Long tellerId,
@@ -245,8 +246,9 @@ public class TellerApiResource {
     @Path("{tellerId}/cashiers/{cashierId}/settle")
     @Consumes({ MediaType.TEXT_HTML, MediaType.APPLICATION_JSON })
     @Produces(MediaType.APPLICATION_JSON)
-    @Operation(summary = "Settle Cash From Cashier", operationId = "settleCashFromCashier", description = "Mandatory Fields\n"
-            + "Date, Amount, Currency, Notes/Comments")
+    @Operation(summary = "Settle Cash From Cashier", operationId = "settleCashFromCashier", description = """
+            Mandatory Fields
+            Date, Amount, Currency, Notes/Comments""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = TellerApiResourceSwagger.PostTellersTellerIdCashiersCashierIdSettleRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = TellerApiResourceSwagger.PostTellersTellerIdCashiersCashierIdSettleResponse.class)))
     public CommandProcessingResult settleCashFromCashier(@PathParam("tellerId") @Parameter(description = "tellerId") final Long tellerId,

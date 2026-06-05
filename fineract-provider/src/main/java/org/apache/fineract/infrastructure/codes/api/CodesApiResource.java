@@ -56,9 +56,10 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/codes")
 @Component
-@Tag(name = "Codes", description = "Code and code values: Codes represent a specific category of data, their code values are a specific instance of that category.\n"
-        + "\n"
-        + "Codes are mostly system defined which means the code itself comes out of the box and cannot be modified however its code values can be. e.g. 'Customer Identifier', it defaults to a code value of 'Passport' but could be 'Drivers License, National Id' etc")
+@Tag(name = "Codes", description = """
+        Code and code values: Codes represent a specific category of data, their code values are a specific instance of that category.
+
+        Codes are mostly system defined which means the code itself comes out of the box and cannot be modified however its code values can be. e.g. 'Customer Identifier', it defaults to a code value of 'Passport' but could be 'Drivers License, National Id' etc""")
 @RequiredArgsConstructor
 public class CodesApiResource {
 
@@ -106,8 +107,12 @@ public class CodesApiResource {
     @GET
     @Path("{codeId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Code", description = "Returns the details of a Code.\n" + "\n" + "Example Requests:\n" + "\n"
-            + "codes/1")
+    @Operation(summary = "Retrieve a Code", description = """
+            Returns the details of a Code.
+
+            Example Requests:
+
+            codes/1""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CodesApiResourceSwagger.GetCodesResponse.class)))
     public String retrieveCode(@PathParam("codeId") @Parameter(description = "codeId") final Long codeId, @Context final UriInfo uriInfo) {
 
@@ -120,8 +125,12 @@ public class CodesApiResource {
     @GET
     @Path("name/{codeName}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Code", description = "Returns the details of a Code.\n" + "\n" + "Example Requests:\n" + "\n"
-            + "codes/1")
+    @Operation(summary = "Retrieve a Code", description = """
+            Returns the details of a Code.
+
+            Example Requests:
+
+            codes/1""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CodesApiResourceSwagger.GetCodesResponse.class)))
     public String retrieveCodeByName(@PathParam("codeName") @Parameter(description = "codeName") final String codeName,
             @Context final UriInfo uriInfo) {

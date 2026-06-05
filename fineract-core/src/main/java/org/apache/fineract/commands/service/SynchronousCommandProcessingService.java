@@ -20,7 +20,7 @@ package org.apache.fineract.commands.service;
 
 import static org.apache.fineract.commands.domain.CommandProcessingResultType.ERROR;
 import static org.apache.fineract.commands.domain.CommandProcessingResultType.PROCESSED;
-import static org.apache.http.HttpStatus.SC_OK;
+import static org.apache.hc.core5.http.HttpStatus.SC_OK;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -372,9 +372,8 @@ public class SynchronousCommandProcessingService implements CommandProcessingSer
                 reqmap.put("createdByFullName", context.authenticatedUser().getDisplayName());
 
                 reqmap.put("request", myMap);
-                if (result instanceof CommandProcessingResult) {
-                    CommandProcessingResult resultCopy = CommandProcessingResult
-                            .fromCommandProcessingResult((CommandProcessingResult) result);
+                if (result instanceof CommandProcessingResult processingResult) {
+                    CommandProcessingResult resultCopy = CommandProcessingResult.fromCommandProcessingResult(processingResult);
 
                     reqmap.put("officeId", resultCopy.getOfficeId());
                     reqmap.put("clientId", resultCopy.getClientId());

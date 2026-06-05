@@ -27,11 +27,14 @@ import org.apache.fineract.portfolio.group.domain.GroupRepository;
 import org.apache.fineract.portfolio.loanaccount.domain.LoanRepositoryWrapper;
 import org.apache.fineract.portfolio.loanaccount.domain.LoanTransactionRepository;
 import org.apache.fineract.portfolio.note.domain.NoteRepository;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @ComponentScan("com.acme.fineract")
+@Configuration
 class TestOverrideConfiguration {
     // NOTE: unfortunately an abastract base class that contains all these mock functions won't work
 
@@ -41,6 +44,7 @@ class TestOverrideConfiguration {
     }
 
     @Bean
+    @DependsOnDatabaseInitialization
     RoutingDataSource routingDataSource() {
         return mock(RoutingDataSource.class);
     }

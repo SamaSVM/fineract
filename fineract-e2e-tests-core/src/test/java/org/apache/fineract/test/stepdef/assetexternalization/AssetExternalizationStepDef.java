@@ -171,7 +171,7 @@ public class AssetExternalizationStepDef extends AbstractStepDef {
                         response.getResourceExternalId());
             }
         } else {
-            throw new IllegalStateException(String.format("%s is not supported Asset externalization transaction", transferData.get(0)));
+            throw new IllegalStateException("%s is not supported Asset externalization transaction".formatted(transferData.get(0)));
         }
     }
 
@@ -247,7 +247,7 @@ public class AssetExternalizationStepDef extends AbstractStepDef {
                     response.getResourceExternalId());
             testContext().set(TestContextKey.ASSET_EXTERNALIZATION_OWNER_EXTERNAL_ID, ownerExternalId);
         } else {
-            throw new IllegalStateException(String.format("%s is not supported Asset externalization transaction", transferData.get(0)));
+            throw new IllegalStateException("%s is not supported Asset externalization transaction".formatted(transferData.get(0)));
         }
     }
 
@@ -462,9 +462,8 @@ public class AssetExternalizationStepDef extends AbstractStepDef {
 
         PageExternalTransferData transfers = externalAssetOwnersApi().getTransfers(Map.of("loanId", loanId));
         String settlementDateOriginal = FORMATTER.format(transfers.getContent().get(0).getSettlementDate());
-        String errorMessageExpected = String.format(
-                "This loan cannot be bought back, settlement date is earlier than effective transfer settlement date: %s",
-                settlementDateOriginal);
+        String errorMessageExpected = "This loan cannot be bought back, settlement date is earlier than effective transfer settlement date: %s"
+                .formatted(settlementDateOriginal);
 
         ExternalAssetOwnerRequest request = new ExternalAssetOwnerRequest()//
                 .settlementDate(transferData.get(1))//
@@ -511,7 +510,7 @@ public class AssetExternalizationStepDef extends AbstractStepDef {
 
             testContext().set(TestContextKey.ASSET_EXTERNALIZATION_OWNER_EXTERNAL_ID, ownerExternalId);
         } else {
-            throw new IllegalStateException(String.format("%s is not supported Asset externalization transaction", transferData.get(0)));
+            throw new IllegalStateException("%s is not supported Asset externalization transaction".formatted(transferData.get(0)));
         }
 
         AssetExternalizationErrorMessage errorMsgType = AssetExternalizationErrorMessage.valueOf(errorMessageType);
@@ -620,7 +619,7 @@ public class AssetExternalizationStepDef extends AbstractStepDef {
 
         ExternalTransferData result = content.stream().filter(t -> status.equals(t.getStatus().getValue()))
                 .reduce((first, second) -> second)
-                .orElseThrow(() -> new IllegalStateException(String.format("No Journal entry found with status: %s", status)));
+                .orElseThrow(() -> new IllegalStateException("No Journal entry found with status: %s".formatted(status)));
 
         return result.getTransferId();
     }

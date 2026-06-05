@@ -25,12 +25,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.DockerClientFactory;
-import org.testcontainers.containers.MariaDBContainer;
-import org.testcontainers.containers.MySQLContainer;
 import org.testcontainers.containers.Network;
-import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.mariadb.MariaDBContainer;
+import org.testcontainers.mysql.MySQLContainer;
+import org.testcontainers.postgresql.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @Slf4j
@@ -40,16 +40,16 @@ public abstract class CommandBaseTest {
     protected static final Network network = Network.newNetwork();
 
     @Container
-    protected static final PostgreSQLContainer<?> POSTGRES_CONTAINER = new PostgreSQLContainer<>(DockerImageName.parse("postgres:18.3"))
+    protected static final PostgreSQLContainer POSTGRES_CONTAINER = new PostgreSQLContainer(DockerImageName.parse("postgres:18.3"))
             .withNetwork(network).withUsername("root").withPassword("mifos").withDatabaseName("fineract-test");
 
     @Container
-    protected static final MariaDBContainer<?> MARIADB_CONTAINER = new MariaDBContainer<>(DockerImageName.parse("mariadb:12.2"))
+    protected static final MariaDBContainer MARIADB_CONTAINER = new MariaDBContainer(DockerImageName.parse("mariadb:12.2"))
             .withNetwork(network).withUsername("root").withPassword("mifos").withDatabaseName("fineract-test")
             .withCommand("--innodb-snapshot-isolation=OFF").waitingFor(Wait.forListeningPort());
 
     @Container
-    protected static final MySQLContainer<?> MYSQL_CONTAINER = new MySQLContainer<>(DockerImageName.parse("mysql:8")).withNetwork(network)
+    protected static final MySQLContainer MYSQL_CONTAINER = new MySQLContainer(DockerImageName.parse("mysql:8")).withNetwork(network)
             .withUsername("root").withPassword("mifos").withDatabaseName("fineract-test");
 
     @DynamicPropertySource

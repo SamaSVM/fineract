@@ -101,8 +101,11 @@ public class LookupTableApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
-    @Operation(summary = "Create a Lookup Table entry", description = "Add a new entry to a survey.\n" + "\n" + "Mandatory Fields\n"
-            + "key, score, validFrom, validTo")
+    @Operation(summary = "Create a Lookup Table entry", description = """
+            Add a new entry to a survey.
+
+            Mandatory Fields
+            key, score, validFrom, validTo""")
     @ApiResponse(responseCode = "200", description = "OK")
     public void createLookupTable(@PathParam("surveyId") @Parameter(description = "Enter surveyId") final Long surveyId,
             final LookupTableData lookupTableData) {

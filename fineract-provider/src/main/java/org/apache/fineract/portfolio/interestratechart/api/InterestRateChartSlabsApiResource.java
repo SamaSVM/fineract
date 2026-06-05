@@ -70,8 +70,12 @@ public class InterestRateChartSlabsApiResource {
     }
 
     @GET
-    @Operation(summary = "Retrieve all Slabs", operationId = "retrieveAllInterestRateChartSlabs", description = "Retrieve list of slabs associated with a chart\n"
-            + "\n" + "Example Requests:\n" + "\n" + "interestratecharts/1/chartslabs")
+    @Operation(summary = "Retrieve all Slabs", operationId = "retrieveAllInterestRateChartSlabs", description = """
+            Retrieve list of slabs associated with a chart
+
+            Example Requests:
+
+            interestratecharts/1/chartslabs""")
     public List<InterestRateChartSlabData> retrieveAll(@PathParam("chartId") final Long chartId) {
         return interestRateChartSlabsReadService.retrieveAll(chartId);
     }

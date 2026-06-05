@@ -79,7 +79,7 @@ import org.apache.fineract.portfolio.charge.domain.ChargeTimeType;
 import org.apache.fineract.portfolio.loanaccount.domain.transactionprocessor.impl.AdvancedPaymentScheduleTransactionProcessor;
 import org.apache.fineract.portfolio.loanaccount.loanschedule.domain.LoanScheduleProcessingType;
 import org.apache.fineract.portfolio.loanaccount.loanschedule.domain.LoanScheduleType;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -1794,8 +1794,8 @@ public class LoanTransactionInterestPaymentWaiverTest extends BaseLoanIntegratio
             }
 
             if (getResponse.getStatusCode() != 200) {
-                fail(String.format("GET failed. Status: %d, Expected externalId: %s, Actual resourceExternalId: %s, GET Response: %s",
-                        getResponse.getStatusCode(), transactionExternalId, resourceExternalId, getResponse.getBody()));
+                fail("GET failed. Status: %d, Expected externalId: %s, Actual resourceExternalId: %s, GET Response: %s"
+                        .formatted(getResponse.getStatusCode(), transactionExternalId, resourceExternalId, getResponse.getBody()));
             }
 
             assertNotNull(getResponse.getBody());
@@ -1903,8 +1903,8 @@ public class LoanTransactionInterestPaymentWaiverTest extends BaseLoanIntegratio
             }
 
             if (getResponse.getStatusCode() != 200) {
-                fail(String.format("GET failed. Status: %d, Expected externalId: %s, Actual resourceExternalId: %s, GET Response: %s",
-                        getResponse.getStatusCode(), transactionExternalId, resourceExternalId, getResponse.getBody()));
+                fail("GET failed. Status: %d, Expected externalId: %s, Actual resourceExternalId: %s, GET Response: %s"
+                        .formatted(getResponse.getStatusCode(), transactionExternalId, resourceExternalId, getResponse.getBody()));
             }
 
             assertNotNull(getResponse.getBody());
@@ -2006,8 +2006,8 @@ public class LoanTransactionInterestPaymentWaiverTest extends BaseLoanIntegratio
 
             BatchResponse getResponse = responses.get(1);
             if (getResponse.getStatusCode() != 200) {
-                fail(String.format("GET failed. Status: %d, Expected externalId: %s, Actual resourceExternalId: %s, GET Response: %s",
-                        getResponse.getStatusCode(), transactionExternalId, resourceExternalId, getResponse.getBody()));
+                fail("GET failed. Status: %d, Expected externalId: %s, Actual resourceExternalId: %s, GET Response: %s"
+                        .formatted(getResponse.getStatusCode(), transactionExternalId, resourceExternalId, getResponse.getBody()));
             }
 
             assertNotNull(getResponse.getBody());

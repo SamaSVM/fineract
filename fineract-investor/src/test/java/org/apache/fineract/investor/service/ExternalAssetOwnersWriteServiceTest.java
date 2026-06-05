@@ -78,7 +78,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.domain.Specification;
@@ -221,7 +220,7 @@ public class ExternalAssetOwnersWriteServiceTest {
         ExternalAssetOwnerInitiateTransferException exception = assertThrows(ExternalAssetOwnerInitiateTransferException.class,
                 () -> testContext.externalAssetOwnersWriteServiceImpl.intermediarySaleLoanByLoanId(command));
 
-        assertEquals(exception.getMessage(), String.format("Loan status %s is not valid for transfer.", loanStatus.name()));
+        assertEquals(exception.getMessage(), "Loan status %s is not valid for transfer.".formatted(loanStatus.name()));
 
         // then
         verify(testContext.fromApiJsonHelper, times(2)).parse(command.json());
@@ -290,7 +289,7 @@ public class ExternalAssetOwnersWriteServiceTest {
         ExternalAssetOwnerInitiateTransferException exception = assertThrows(ExternalAssetOwnerInitiateTransferException.class,
                 () -> testContext.externalAssetOwnersWriteServiceImpl.saleLoanByLoanId(command));
 
-        assertEquals(exception.getMessage(), String.format("Loan status %s is not valid for transfer.", loanStatus.name()));
+        assertEquals(exception.getMessage(), "Loan status %s is not valid for transfer.".formatted(loanStatus.name()));
 
         // then
         verify(testContext.fromApiJsonHelper, times(2)).parse(command.json());
@@ -387,8 +386,7 @@ public class ExternalAssetOwnersWriteServiceTest {
 
         return Stream.of(
                 Arguments.of("Incorrect State", List.of(activeIntermediate),
-                        String.format("This loan cannot be sold, because it is incorrect state! (transferId = %s)",
-                                activeIntermediate.getId())),
+                        "This loan cannot be sold, because it is incorrect state! (transferId = %s)".formatted(activeIntermediate.getId())),
                 Arguments.of("Already In Progress", List.of(activeIntermediate, active),
                         "This loan cannot be sold, there is already an in progress transfer"),
                 Arguments.of("Already Pending Intermediary", List.of(pendingIntermediate),
@@ -973,7 +971,7 @@ public class ExternalAssetOwnersWriteServiceTest {
         private final String transferExternalId = RandomStringUtils.randomAlphanumeric(10);
         private final String transferExternalGroupId = RandomStringUtils.randomAlphanumeric(10);
         private final LocalDate settlementDate = LocalDate.parse("9999-08-22");
-        private final String jsonCommand = String.format("""
+        private final String jsonCommand = """
                 {
                     "settlementDate": "%s",
                     "ownerExternalId": "%s",
@@ -983,11 +981,11 @@ public class ExternalAssetOwnersWriteServiceTest {
                     "dateFormat": "%s",
                     "locale": "%s"
                 }
-                """, settlementDate, ownerExternalId, transferExternalId, transferExternalGroupId, PURCHASE_RATIO, DATE_FORMAT, LOCALE);
+                """.formatted(settlementDate, ownerExternalId, transferExternalId, transferExternalGroupId, PURCHASE_RATIO, DATE_FORMAT,
+                LOCALE);
 
         @SuppressFBWarnings("CT_CONSTRUCTOR_THROW")
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             final JsonElement jsonCommandElement = fromJsonHelper.parse(jsonCommand);
             externalAssetOwner.setExternalId(new ExternalId(ownerExternalId));
 

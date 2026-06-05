@@ -243,8 +243,8 @@ tasks.named('licenseMain') {
 
 java {
     // keep this at Java 8, not 17; see https://issues.apache.org/jira/browse/FINERACT-1214
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 tasks.withType(JavaCompile).configureEach {

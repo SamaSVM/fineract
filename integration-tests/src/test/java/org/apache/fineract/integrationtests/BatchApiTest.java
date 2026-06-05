@@ -18,7 +18,7 @@
  */
 package org.apache.fineract.integrationtests;
 
-import static org.apache.http.HttpStatus.SC_FORBIDDEN;
+import static org.apache.hc.core5.http.HttpStatus.SC_FORBIDDEN;
 import static org.hamcrest.Matchers.containsString;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -66,7 +66,7 @@ import org.apache.fineract.integrationtests.common.system.CodeHelper;
 import org.apache.fineract.integrationtests.common.system.DatatableHelper;
 import org.apache.fineract.integrationtests.useradministration.users.UserHelper;
 import org.apache.fineract.portfolio.loanaccount.domain.LoanStatus;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -1471,8 +1471,8 @@ public class BatchApiTest extends BaseLoanIntegrationTest {
         Assertions.assertEquals(2, datatableEntries.size());
 
         // Ensure both resourceIds are available in response
-        Assertions.assertTrue(getDatatableEntriesResponse.contains(String.format("\"id\": %d", createDatatableEntryId)));
-        Assertions.assertTrue(getDatatableEntriesResponse.contains(String.format("\"id\": %d", datatableEntryResourceId)));
+        Assertions.assertTrue(getDatatableEntriesResponse.contains("\"id\": %d".formatted(createDatatableEntryId)));
+        Assertions.assertTrue(getDatatableEntriesResponse.contains("\"id\": %d".formatted(datatableEntryResourceId)));
     }
 
     /**
@@ -2231,8 +2231,8 @@ public class BatchApiTest extends BaseLoanIntegrationTest {
         Assertions.assertEquals(2, datatableEntries.size());
 
         // Ensure both resourceIds are available in response
-        Assertions.assertTrue(getDatatableEntriesResponse.contains(String.format("\"id\": %d", createDatatableEntryId)));
-        Assertions.assertTrue(getDatatableEntriesResponse.contains(String.format("\"id\": %d", datatableEntryResourceId)));
+        Assertions.assertTrue(getDatatableEntriesResponse.contains("\"id\": %d".formatted(createDatatableEntryId)));
+        Assertions.assertTrue(getDatatableEntriesResponse.contains("\"id\": %d".formatted(datatableEntryResourceId)));
 
         final BatchRequest queryDatatableEntriesRequest = BatchHelper.queryDatatableEntries(datatableName, columnName1, columnValue1,
                 "id,loan_id");

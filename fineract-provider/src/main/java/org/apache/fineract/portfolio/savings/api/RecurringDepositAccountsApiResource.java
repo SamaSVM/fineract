@@ -104,9 +104,18 @@ public class RecurringDepositAccountsApiResource {
     @GET
     @Path("template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve recurring Deposit Account Template", operationId = "retrieveTemplateRecurringDepositAccount", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for recurring deposit applications. The template data returned consists of any or all of:\n"
-            + "\n" + "Field Defaults\n" + "Allowed Value Lists\n\n" + "Example Requests:\n" + "\n"
-            + "recurringdepositaccounts/template?clientId=1\n" + "\n" + "\n" + "recurringdepositaccounts/template?clientId=1&productId=1")
+    @Operation(summary = "Retrieve recurring Deposit Account Template", operationId = "retrieveTemplateRecurringDepositAccount", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for recurring deposit applications. The template data returned consists of any or all of:
+
+            Field Defaults
+            Allowed Value Lists
+
+            Example Requests:
+
+            recurringdepositaccounts/template?clientId=1
+
+
+            recurringdepositaccounts/template?clientId=1&productId=1""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RecurringDepositAccountsApiResourceSwagger.GetRecurringDepositAccountsTemplateResponse.class))) })
     public String template(@QueryParam("clientId") @Parameter(description = "clientId") final Long clientId,
@@ -127,8 +136,15 @@ public class RecurringDepositAccountsApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Recurring deposit applications/accounts", operationId = "retrieveAllRecurringDepositAccounts", description = "Lists Recurring deposit applications/accounts\n\n"
-            + "Example Requests:\n" + "\n" + "recurringdepositaccounts\n" + "\n" + "\n" + "recurringdepositaccounts?fields=name")
+    @Operation(summary = "List Recurring deposit applications/accounts", operationId = "retrieveAllRecurringDepositAccounts", description = """
+            Lists Recurring deposit applications/accounts
+
+            Example Requests:
+
+            recurringdepositaccounts
+
+
+            recurringdepositaccounts?fields=name""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = RecurringDepositAccountsApiResourceSwagger.GetRecurringDepositAccountsResponse.class)))) })
     public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("paged") @Parameter(description = "paged") final Boolean paged,
@@ -161,10 +177,14 @@ public class RecurringDepositAccountsApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Submit new recurring deposit application", operationId = "submitApplicationRecurringDepositAccount", description = "Submits new recurring deposit application\n\n"
-            + "Mandatory Fields: clientId or groupId, productId, submittedOnDate, depositAmount, depositPeriod, depositPeriodFrequencyId\n\n"
-            + "Optional Fields: accountNo, externalId, fieldOfficerId,linkAccountId(if provided initial deposit amount will be collected from this account),transferInterestToSavings(By enabling this flag all interest postings will be transferred to linked saving account )\n\n"
-            + "Inherited from Product (if not provided): interestCompoundingPeriodType, interestCalculationType, interestCalculationDaysInYearType, lockinPeriodFrequency, lockinPeriodFrequencyType, preClosurePenalApplicable, preClosurePenalInterest, preClosurePenalInterestOnTypeId, charts, withHoldTax")
+    @Operation(summary = "Submit new recurring deposit application", operationId = "submitApplicationRecurringDepositAccount", description = """
+            Submits new recurring deposit application
+
+            Mandatory Fields: clientId or groupId, productId, submittedOnDate, depositAmount, depositPeriod, depositPeriodFrequencyId
+
+            Optional Fields: accountNo, externalId, fieldOfficerId,linkAccountId(if provided initial deposit amount will be collected from this account),transferInterestToSavings(By enabling this flag all interest postings will be transferred to linked saving account )
+
+            Inherited from Product (if not provided): interestCompoundingPeriodType, interestCalculationType, interestCalculationDaysInYearType, lockinPeriodFrequency, lockinPeriodFrequencyType, preClosurePenalApplicable, preClosurePenalInterest, preClosurePenalInterestOnTypeId, charts, withHoldTax""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = RecurringDepositAccountsApiResourceSwagger.PostRecurringDepositAccountsRequest.class)))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RecurringDepositAccountsApiResourceSwagger.PostRecurringDepositAccountsResponse.class))) })
@@ -181,8 +201,15 @@ public class RecurringDepositAccountsApiResource {
     @GET
     @Path("{accountId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a recurring deposit application/account", operationId = "retrieveOneRecurringDepositAccount", description = "Retrieves a recurring deposit application/account\n\n"
-            + "Example Requests :\n" + "\n" + "recurringdepositaccounts/1\n" + "\n" + "\n" + "recurringdepositaccounts/1?associations=all")
+    @Operation(summary = "Retrieve a recurring deposit application/account", operationId = "retrieveOneRecurringDepositAccount", description = """
+            Retrieves a recurring deposit application/account
+
+            Example Requests :
+
+            recurringdepositaccounts/1
+
+
+            recurringdepositaccounts/1?associations=all""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RecurringDepositAccountsApiResourceSwagger.GetRecurringDepositAccountsAccountIdResponse.class))) })
     public String retrieveOne(@PathParam("accountId") @Parameter(description = "accountId") final Long accountId,
@@ -277,30 +304,55 @@ public class RecurringDepositAccountsApiResource {
     @Path("{accountId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Approve recurring deposit application | Undo approval recurring deposit application | Reject recurring deposit application | Withdraw recurring deposit application | Activate a recurring deposit account | Update the recommended deposit amount for a recurring deposit account | Close a recurring deposit account | Premature Close a recurring deposit account | Calculate Premature amount on Recurring deposit account | Calculate Interest on recurring Deposit Account | Post Interest on recurring Deposit Account", description = "Approve recurring deposit application:\n\n"
-            + "Approves recurring deposit application so long as its in 'Submitted and pending approval' state.\n\n"
-            + "Undo approval recurring deposit application:\n\n"
-            + "Will move 'approved' recurring deposit application back to 'Submitted and pending approval' state.\n\n"
-            + "Reject recurring deposit application\n\n"
-            + "Rejects recurring deposit application so long as its in 'Submitted and pending approval' state.\n\n"
-            + "Withdraw recurring deposit application:\n\n"
-            + "Used when an applicant withdraws from the recurring deposit application. It must be in 'Submitted and pending approval' state.\n\n"
-            + "Activate a recurring deposit account:\n\n"
-            + "Results in an approved recurring deposit application being converted into an 'active' recurring deposit account.\n\n"
-            + "Update the recommended deposit amount for a recurring deposit account:\n\n"
-            + "Updates the recommended deposit amount for a RD account as on the effective date.\n\n"
-            + "Close a recurring deposit account\n\n"
-            + "Results in a Matured recurring deposit account being converted into a 'closed' recurring deposit account.\n" + "\n"
-            + "On account close allowed actions are." + "Premature Close a recurring deposit account:\n\n"
-            + "Results in an Active recurring deposit account being converted into a 'Premature Closed' recurring deposit account with options to withdraw prematured amount. (premature amount is calculated using interest rate chart applicable along with penal interest if any.)\n"
-            + "\n" + "On account premature closure allowed actions are.\n\n"
-            + "Calculate Premature amount on Recurring deposit account:\n\n"
-            + "Calculate premature amount on recurring deposit till premature close date. Premature amount is calculated based on interest chart and penal interest applicable if any.\n\n"
-            + "Calculate Interest on recurring Deposit Account:\n\n"
-            + "Calculates interest earned on a recurring deposit account based on todays date. It does not attempt to post or credit the interest on the account. That is responsibility of the Post Interest API that will likely be called by overnight process.\n\n"
-            + "Post Interest on recurring Deposit Account:\n\n"
-            + "Calculates and Posts interest earned on a recurring deposit account based on todays date and whether an interest posting or crediting event is due.\n\n"
-            + "Showing request/response for 'Post Interest on recurring Deposit Account'", operationId = "handleCommandsRecurringDepositAccount")
+    @Operation(summary = "Approve recurring deposit application | Undo approval recurring deposit application | Reject recurring deposit application | Withdraw recurring deposit application | Activate a recurring deposit account | Update the recommended deposit amount for a recurring deposit account | Close a recurring deposit account | Premature Close a recurring deposit account | Calculate Premature amount on Recurring deposit account | Calculate Interest on recurring Deposit Account | Post Interest on recurring Deposit Account", description = """
+            Approve recurring deposit application:
+
+            Approves recurring deposit application so long as its in 'Submitted and pending approval' state.
+
+            Undo approval recurring deposit application:
+
+            Will move 'approved' recurring deposit application back to 'Submitted and pending approval' state.
+
+            Reject recurring deposit application
+
+            Rejects recurring deposit application so long as its in 'Submitted and pending approval' state.
+
+            Withdraw recurring deposit application:
+
+            Used when an applicant withdraws from the recurring deposit application. It must be in 'Submitted and pending approval' state.
+
+            Activate a recurring deposit account:
+
+            Results in an approved recurring deposit application being converted into an 'active' recurring deposit account.
+
+            Update the recommended deposit amount for a recurring deposit account:
+
+            Updates the recommended deposit amount for a RD account as on the effective date.
+
+            Close a recurring deposit account
+
+            Results in a Matured recurring deposit account being converted into a 'closed' recurring deposit account.
+
+            On account close allowed actions are.\
+            Premature Close a recurring deposit account:
+
+            Results in an Active recurring deposit account being converted into a 'Premature Closed' recurring deposit account with options to withdraw prematured amount. (premature amount is calculated using interest rate chart applicable along with penal interest if any.)
+
+            On account premature closure allowed actions are.
+
+            Calculate Premature amount on Recurring deposit account:
+
+            Calculate premature amount on recurring deposit till premature close date. Premature amount is calculated based on interest chart and penal interest applicable if any.
+
+            Calculate Interest on recurring Deposit Account:
+
+            Calculates interest earned on a recurring deposit account based on todays date. It does not attempt to post or credit the interest on the account. That is responsibility of the Post Interest API that will likely be called by overnight process.
+
+            Post Interest on recurring Deposit Account:
+
+            Calculates and Posts interest earned on a recurring deposit account based on todays date and whether an interest posting or crediting event is due.
+
+            Showing request/response for 'Post Interest on recurring Deposit Account'""", operationId = "handleCommandsRecurringDepositAccount")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = RecurringDepositAccountsApiResourceSwagger.PostRecurringDepositAccountsAccountIdRequest.class)))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RecurringDepositAccountsApiResourceSwagger.PostRecurringDepositAccountsAccountIdResponse.class))) })

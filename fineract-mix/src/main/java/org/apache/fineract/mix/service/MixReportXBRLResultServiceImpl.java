@@ -35,7 +35,6 @@ import org.apache.fineract.mix.data.MixReportXBRLData;
 import org.apache.fineract.mix.data.MixTaxonomyData;
 import org.apache.fineract.mix.data.MixTaxonomyMappingData;
 import org.apache.fineract.mix.exception.MixReportXBRLMappingInvalidException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
@@ -50,7 +49,6 @@ public class MixReportXBRLResultServiceImpl implements MixReportXBRLResultServic
     private final MixTaxonomyReadService readTaxonomyService;
     private final JdbcTemplate jdbcTemplate;
 
-    @Autowired
     public MixReportXBRLResultServiceImpl(final JdbcTemplate jdbcTemplate, final MixTaxonomyMappingReadService readTaxonomyMappingService,
             final MixTaxonomyReadService readTaxonomyService) {
         this.readTaxonomyMappingService = readTaxonomyMappingService;

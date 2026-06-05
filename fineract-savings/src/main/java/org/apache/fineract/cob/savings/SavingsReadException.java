@@ -23,7 +23,7 @@ public class SavingsReadException extends Exception {
     private final Long id;
 
     public SavingsReadException(Long id, Throwable t) {
-        super(String.format("Savings account is in already locked state! savingsId: %d", id), t);
+        super("Savings account is in already locked state! savingsId: %d".formatted(id), t);
         this.id = id;
     }
 

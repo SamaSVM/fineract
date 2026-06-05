@@ -86,10 +86,16 @@ public class RecurringDepositAccountTransactionsApiResource {
     @GET
     @Path("template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Recurring Deposit Account Transaction Template", operationId = "retrieveTemplateRecurringDepositAccountTransaction", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n"
-            + "\n" + "Field Defaults\n" + "Allowed Value Lists\n" + "Example Requests:\n" + "\n"
-            + "recurringdepositaccounts/1/transactions/template?command=deposit\n" + "\n"
-            + "recurringdepositaccounts/1/transactions/template?command=withdrawal")
+    @Operation(summary = "Retrieve Recurring Deposit Account Transaction Template", operationId = "retrieveTemplateRecurringDepositAccountTransaction", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+
+            Field Defaults
+            Allowed Value Lists
+            Example Requests:
+
+            recurringdepositaccounts/1/transactions/template?command=deposit
+
+            recurringdepositaccounts/1/transactions/template?command=withdrawal""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RecurringDepositAccountTransactionsApiResourceSwagger.GetRecurringDepositAccountsRecurringDepositAccountIdTransactionsTemplateResponse.class))) })
     public String retrieveTemplate(
@@ -129,8 +135,12 @@ public class RecurringDepositAccountTransactionsApiResource {
     @GET
     @Path("{transactionId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Recurring Deposit Account Transaction", operationId = "retrieveOneRecurringDepositAccountTransaction", description = "Retrieves Recurring Deposit Account Transaction\n\n"
-            + "Example Requests:\n" + "\n" + "recurringdepositaccounts/1/transactions/1")
+    @Operation(summary = "Retrieve Recurring Deposit Account Transaction", operationId = "retrieveOneRecurringDepositAccountTransaction", description = """
+            Retrieves Recurring Deposit Account Transaction
+
+            Example Requests:
+
+            recurringdepositaccounts/1/transactions/1""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RecurringDepositAccountTransactionsApiResourceSwagger.GetRecurringDepositAccountsRecurringDepositAccountIdTransactionsTransactionIdResponse.class))) })
     public String retrieveOne(
@@ -153,9 +163,16 @@ public class RecurringDepositAccountTransactionsApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Deposit Transaction | Withdrawal Transaction", operationId = "transactionRecurringDepositAccountTransaction", description = "Deposit Transaction:\n\n"
-            + "Used for a deposit transaction\n\n" + "Withdrawal Transaction:\n\n" + "Used for a Withdrawal Transaction\n\n"
-            + "Showing request/response for Deposit Transaction")
+    @Operation(summary = "Deposit Transaction | Withdrawal Transaction", operationId = "transactionRecurringDepositAccountTransaction", description = """
+            Deposit Transaction:
+
+            Used for a deposit transaction
+
+            Withdrawal Transaction:
+
+            Used for a Withdrawal Transaction
+
+            Showing request/response for Deposit Transaction""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = RecurringDepositAccountTransactionsApiResourceSwagger.PostRecurringDepositAccountsRecurringDepositAccountIdTransactionsRequest.class)))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RecurringDepositAccountTransactionsApiResourceSwagger.PostRecurringDepositAccountsRecurringDepositAccountIdTransactionsResponse.class))) })
@@ -188,9 +205,16 @@ public class RecurringDepositAccountTransactionsApiResource {
     @Path("{transactionId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Adjust Transaction | Undo transaction", description = "Adjust Transaction:\n\n"
-            + "This command modifies the given transaction.\n\n" + "Undo transaction:\n\n"
-            + "This command reverses the given transaction.\n\n" + "Showing request/response for 'Adjust Transaction'")
+    @Operation(summary = "Adjust Transaction | Undo transaction", description = """
+            Adjust Transaction:
+
+            This command modifies the given transaction.
+
+            Undo transaction:
+
+            This command reverses the given transaction.
+
+            Showing request/response for 'Adjust Transaction'""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = RecurringDepositAccountTransactionsApiResourceSwagger.PostRecurringDepositAccountsRecurringDepositAccountIdTransactionsRequest.class)))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RecurringDepositAccountTransactionsApiResourceSwagger.PostRecurringDepositAccountsRecurringDepositAccountIdTransactionsTransactionIdResponse.class))) })

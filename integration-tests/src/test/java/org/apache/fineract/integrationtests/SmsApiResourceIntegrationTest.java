@@ -82,9 +82,8 @@ public class SmsApiResourceIntegrationTest {
 
         Integer clientId = ClientHelper.createClientAsPerson(requestSpec, responseSpec);
 
-        String smsJson = String.format(
-                "{\"groupId\":null,\"clientId\":%d,\"staffId\":null,\"message\":\"Integration test message\",\"campaignId\":%d}", clientId,
-                campaignId);
+        String smsJson = "{\"groupId\":null,\"clientId\":%d,\"staffId\":null,\"message\":\"Integration test message\",\"campaignId\":%d}"
+                .formatted(clientId, campaignId);
         io.restassured.RestAssured.given().spec(requestSpec).body(smsJson).when().post("/fineract-provider/api/v1/sms").then()
                 .statusCode(200).body("resourceId", notNullValue());
 

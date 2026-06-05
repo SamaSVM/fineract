@@ -98,14 +98,30 @@ public class JournalEntriesApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Journal Entries", operationId = "retrieveAllJournalEntries", tags = {
-            "Journal Entries" }, description = "The list capability of journal entries can support pagination and sorting.\n\n"
-                    + "Example Requests:\n" + "\n" + "journalentries\n" + "\n" + "journalentries?transactionId=PB37X8Y21EQUY4S\n" + "\n"
-                    + "journalentries?officeId=1&manualEntriesOnly=true&fromDate=1 July 2013&toDate=15 July 2013&dateFormat=dd MMMM yyyy&locale=en\n"
-                    + "\n" + "journalentries?fields=officeName,glAccountName,transactionDate\n" + "\n"
-                    + "journalentries?offset=10&limit=50\n" + "\n" + "journalentries?orderBy=transactionId&sortOrder=DESC\n" + "\n"
-                    + "journalentries?runningBalance=true\n" + "\n" + "journalentries?transactionDetails=true\n" + "\n"
-                    + "journalentries?loanId=12\n" + "\n" + "journalentries?savingsId=24")
+    @Operation(summary = "List Journal Entries", operationId = "retrieveAllJournalEntries", tags = { "Journal Entries" }, description = """
+            The list capability of journal entries can support pagination and sorting.
+
+            Example Requests:
+
+            journalentries
+
+            journalentries?transactionId=PB37X8Y21EQUY4S
+
+            journalentries?officeId=1&manualEntriesOnly=true&fromDate=1 July 2013&toDate=15 July 2013&dateFormat=dd MMMM yyyy&locale=en
+
+            journalentries?fields=officeName,glAccountName,transactionDate
+
+            journalentries?offset=10&limit=50
+
+            journalentries?orderBy=transactionId&sortOrder=DESC
+
+            journalentries?runningBalance=true
+
+            journalentries?transactionDetails=true
+
+            journalentries?loanId=12
+
+            journalentries?savingsId=24""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = JournalEntriesApiResourceSwagger.GetJournalEntriesTransactionIdResponse.class)))
     public String retrieveAll(@Context final UriInfo uriInfo,
             @QueryParam("officeId") @Parameter(description = "officeId") final Long officeId,
@@ -167,9 +183,18 @@ public class JournalEntriesApiResource {
     @GET
     @Path("{journalEntryId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a single Entry", tags = { "Journal Entries" }, description = "Example Requests:\n" + "\n"
-            + "journalentries/1\n" + "\n" + "\n" + "\n" + "journalentries/1?fields=officeName,glAccountId,entryType,amount\n" + "\n"
-            + "journalentries/1?runningBalance=true\n" + "\n" + "journalentries/1?transactionDetails=true")
+    @Operation(summary = "Retrieve a single Entry", tags = { "Journal Entries" }, description = """
+            Example Requests:
+
+            journalentries/1
+
+
+
+            journalentries/1?fields=officeName,glAccountId,entryType,amount
+
+            journalentries/1?runningBalance=true
+
+            journalentries/1?transactionDetails=true""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = JournalEntriesApiResourceSwagger.JournalEntryTransactionItem.class)))
     public String retrieveJournalEntryById(
             @PathParam("journalEntryId") @Parameter(description = "journalEntryId") final Long journalEntryId,
@@ -191,11 +216,23 @@ public class JournalEntriesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @Operation(summary = "Create \"Balanced\" Journal Entries", tags = {
-            "Journal Entries" }, description = "Note: A Balanced (simple) Journal entry would have atleast one \"Debit\" and one \"Credit\" entry whose amounts are equal \n"
-                    + "Compound Journal entries may have \"n\" debits and \"m\" credits where both \"m\" and \"n\" are greater than 0 and the net sum or all debits and credits are equal \n\n"
-                    + "\n" + "Mandatory Fields\n" + "officeId, transactionDate\n\n" + "\ncredits- glAccountId, amount, comments\n\n "
-                    + "\ndebits-  glAccountId, amount, comments\n\n " + "\n" + "Optional Fields\n"
-                    + "paymentTypeId, accountNumber, checkNumber, routingCode, receiptNumber, bankNumber")
+            "Journal Entries" }, description = """
+                    Note: A Balanced (simple) Journal entry would have atleast one "Debit" and one "Credit" entry whose amounts are equal\s
+                    Compound Journal entries may have "n" debits and "m" credits where both "m" and "n" are greater than 0 and the net sum or all debits and credits are equal\s
+
+
+                    Mandatory Fields
+                    officeId, transactionDate
+
+
+                    credits- glAccountId, amount, comments
+
+                    \s
+                    debits-  glAccountId, amount, comments
+
+                    \s
+                    Optional Fields
+                    paymentTypeId, accountNumber, checkNumber, routingCode, receiptNumber, bankNumber""")
     @RequestBody(content = @Content(schema = @Schema(implementation = JournalEntryCommand.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = JournalEntriesApiResourceSwagger.PostJournalEntriesResponse.class)))
     public String createGLJournalEntry(@Parameter(hidden = true) final String jsonRequestBody,
@@ -222,8 +259,10 @@ public class JournalEntriesApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @Operation(summary = "Update Running balances for Journal Entries", tags = {
-            "Journal Entries" }, description = "This API calculates the running balances for office. If office ID not provided this API calculates running balances for all offices. \n"
-                    + "Mandatory Fields\n" + "officeId")
+            "Journal Entries" }, description = """
+                    This API calculates the running balances for office. If office ID not provided this API calculates running balances for all offices.\s
+                    Mandatory Fields
+                    officeId""")
     @RequestBody(content = @Content(schema = @Schema(implementation = JournalEntriesApiResourceSwagger.PostJournalEntriesTransactionIdRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = JournalEntriesApiResourceSwagger.PostJournalEntriesTransactionIdResponse.class)))
     public String createReversalJournalEntry(@Parameter(hidden = true) final String jsonRequestBody,

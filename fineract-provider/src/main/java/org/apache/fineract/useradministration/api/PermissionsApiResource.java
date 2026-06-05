@@ -54,9 +54,12 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/permissions")
 @Component
-@Tag(name = "Permissions", description = "An API capability to support management of application permissions for user administration.\n"
-        + "\n" + "There is no Apache Fineract functionality for creating or deleting permissions. Permissions come pre-installed.\n" + "\n"
-        + "Permissions are not updated, except in the case of enabling or disabling non-read transactions for Maker Checker functionality")
+@Tag(name = "Permissions", description = """
+        An API capability to support management of application permissions for user administration.
+
+        There is no Apache Fineract functionality for creating or deleting permissions. Permissions come pre-installed.
+
+        Permissions are not updated, except in the case of enabling or disabling non-read transactions for Maker Checker functionality""")
 @RequiredArgsConstructor
 public class PermissionsApiResource {
 
@@ -72,13 +75,25 @@ public class PermissionsApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Application Permissions", tags = { "Permissions" }, description = "ARGUMENTS\n"
-            + "makerCheckerableoptional, Values are true, false. Default is false.\n"
-            + "If makerCheckerable=false or not supplied then a list of application permissions is returned. The \"selected\" attribute is always true in this case.\n"
-            + "\n"
-            + "If makerCheckerable=true then the \"selected\" attribute shows whether the permission is enabled for Maker Check functionality.\n"
-            + "\n" + "Note: Each Apache Fineract transaction is associated with a permission.\n" + "\n" + "Example Requests:\n" + "\n"
-            + "permissions\n" + "\n" + "\n" + "permissions?makerCheckerable=true\n" + "\n" + "\n" + "permissions?fields=grouping,code")
+    @Operation(summary = "List Application Permissions", tags = {
+            "Permissions" }, description = """
+                    ARGUMENTS
+                    makerCheckerableoptional, Values are true, false. Default is false.
+                    If makerCheckerable=false or not supplied then a list of application permissions is returned. The "selected" attribute is always true in this case.
+
+                    If makerCheckerable=true then the "selected" attribute shows whether the permission is enabled for Maker Check functionality.
+
+                    Note: Each Apache Fineract transaction is associated with a permission.
+
+                    Example Requests:
+
+                    permissions
+
+
+                    permissions?makerCheckerable=true
+
+
+                    permissions?fields=grouping,code""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = PermissionsApiResourceSwagger.GetPermissionsResponse.class)))) })
     public String retrieveAllPermissions(@Context final UriInfo uriInfo) {

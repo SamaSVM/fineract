@@ -35,9 +35,11 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/fieldconfiguration/{entity}")
 @Component
-@Tag(name = "Entity Field Configuration", description = "Entity Field configuration API is a generic and extensible \n"
-        + "wherein various entities and subentities can be related.\n" + "Also it gives the user an ability to enable/disable fields,\n"
-        + "add regular expression for validation")
+@Tag(name = "Entity Field Configuration", description = """
+        Entity Field configuration API is a generic and extensible\s
+        wherein various entities and subentities can be related.
+        Also it gives the user an ability to enable/disable fields,
+        add regular expression for validation""")
 @RequiredArgsConstructor
 public class EntityFieldConfigurationApiResource {
 

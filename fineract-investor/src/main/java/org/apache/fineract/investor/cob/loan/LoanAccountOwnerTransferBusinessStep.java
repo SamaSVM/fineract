@@ -44,9 +44,9 @@ import org.apache.fineract.investor.service.ExternalAssetOwnerTransferOutstandin
 import org.apache.fineract.investor.service.LoanTransferabilityService;
 import org.apache.fineract.portfolio.loanaccount.domain.Loan;
 import org.apache.fineract.portfolio.loanaccount.service.LoanJournalEntryPoster;
+import org.jspecify.annotations.Nullable;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.data.domain.Sort;
-import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -87,13 +87,13 @@ public class LoanAccountOwnerTransferBusinessStep implements LoanCOBBusinessStep
             ExternalTransferStatus secondTransferStatus = transferDataList.get(1).getStatus();
 
             if (delayedSettlementAttributeService.isEnabled(loan.getLoanProduct().getId())) {
-                throw new IllegalStateException(String.format("Delayed Settlement enabled, but found 2 transfers of statuses: %s and %s",
-                        firstTransferStatus, secondTransferStatus));
+                throw new IllegalStateException("Delayed Settlement enabled, but found 2 transfers of statuses: %s and %s"
+                        .formatted(firstTransferStatus, secondTransferStatus));
             }
 
             if (!ExternalTransferStatus.PENDING.equals(firstTransferStatus)
                     || !ExternalTransferStatus.BUYBACK.equals(secondTransferStatus)) {
-                throw new IllegalStateException(String.format("Illegal transfer found. Expected %s and %s, found: %s and %s",
+                throw new IllegalStateException("Illegal transfer found. Expected %s and %s, found: %s and %s".formatted(
                         ExternalTransferStatus.PENDING, ExternalTransferStatus.BUYBACK, firstTransferStatus, secondTransferStatus));
             }
             handleSameDaySaleAndBuyback(settlementDate, transferDataList, loan);
@@ -129,7 +129,7 @@ public class LoanAccountOwnerTransferBusinessStep implements LoanCOBBusinessStep
                         criteriaBuilder.equal(root.get("status"), expectedActiveStatus),
                         criteriaBuilder.equal(root.get("effectiveDateTo"), FUTURE_DATE_9999_12_31)));
         ExternalAssetOwnerTransfer newExternalAssetOwnerTransfer;
-        if (!optActiveExternalAssetOwnerTransfer.isPresent()) {
+        if (optActiveExternalAssetOwnerTransfer.isEmpty()) {
             newExternalAssetOwnerTransfer = createNewEntryAndExpireOldEntry(settlementDate, buybackExternalAssetOwnerTransfer,
                     ExternalTransferStatus.CANCELLED, ExternalTransferSubStatus.UNSOLD, settlementDate, settlementDate);
         } else {

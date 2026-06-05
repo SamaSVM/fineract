@@ -23,11 +23,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.ObjectMapper;
 
 class ObjectMapperFactoryTest {
 
@@ -45,7 +45,7 @@ class ObjectMapperFactoryTest {
     }
 
     @Test
-    void testJava8DateTimeSerialization() throws JsonProcessingException {
+    void testJava8DateTimeSerialization() throws JacksonException {
         ObjectMapper mapper = ObjectMapperFactory.getShared();
         LocalDate date = LocalDate.of(2024, 1, 15);
 
@@ -65,7 +65,7 @@ class ObjectMapperFactoryTest {
     }
 
     @Test
-    void testNullHandling() throws JsonProcessingException {
+    void testNullHandling() throws JacksonException {
         ObjectMapper mapper = ObjectMapperFactory.getShared();
         TestObject obj = new TestObject(null);
 

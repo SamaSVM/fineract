@@ -19,11 +19,11 @@
 package org.springframework.batch.core.scope.context;
 
 import org.apache.fineract.infrastructure.jobs.TenantAwareEqualsHashCodeAdvice;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.JobInstance;
-import org.springframework.batch.core.JobParameters;
+import org.jspecify.annotations.Nullable;
+import org.springframework.batch.core.job.JobExecution;
+import org.springframework.batch.core.job.JobInstance;
+import org.springframework.batch.core.job.parameters.JobParameters;
 import org.springframework.cglib.proxy.Enhancer;
-import org.springframework.lang.Nullable;
 
 // Temporary solution until spring-batch fixes the concurrency issue
 // https://github.com/spring-projects/spring-batch/issues/4774

@@ -52,7 +52,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
@@ -370,15 +369,14 @@ public class ExternalAssetOwnerLoanProductAttributesWriteServiceImplTest {
         @Setter
         private String attributeValue = "DELAYED_SETTLEMENT";
 
-        private String jsonCommandString = String.format("""
+        private String jsonCommandString = """
                 {
                     "attributeKey": "%s",
                     "attributeValue": "%s"
                 }
-                """, attributeKey, attributeValue);
+                """.formatted(attributeKey, attributeValue);
 
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             stubFromApiJsonHelper();
         }
 

@@ -31,14 +31,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.fineract.batch.domain.BatchRequest;
 import org.apache.fineract.batch.domain.BatchResponse;
 import org.apache.fineract.portfolio.loanaccount.api.LoanChargesApiResource;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Test class for {@link AdjustChargeCommandStrategy}.
  */
+@ExtendWith(MockitoExtension.class)
 public class AdjustChargeCommandStrategyTest {
 
     /**
@@ -107,12 +109,12 @@ public class AdjustChargeCommandStrategyTest {
     private BatchRequest getBatchRequest(final Long loanId, final Long transactionId, final String chargeCommand) {
 
         final BatchRequest br = new BatchRequest();
-        String relativeUrl = String.format("loans/%s/charges/%s", loanId, transactionId);
+        String relativeUrl = "loans/%s/charges/%s".formatted(loanId, transactionId);
 
         br.setRequestId(Long.valueOf(RandomStringUtils.randomNumeric(5)));
         br.setRelativeUrl(relativeUrl);
         if (StringUtils.isNotBlank(chargeCommand)) {
-            br.setRelativeUrl(br.getRelativeUrl() + String.format("?command=%s", chargeCommand));
+            br.setRelativeUrl(br.getRelativeUrl() + "?command=%s".formatted(chargeCommand));
         }
         br.setMethod(HttpMethod.POST);
         br.setReference(Long.valueOf(RandomStringUtils.randomNumeric(5)));
@@ -147,7 +149,6 @@ public class AdjustChargeCommandStrategyTest {
          * Constructor.
          */
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             subjectToTest = new AdjustChargeCommandStrategy(loanChargesApiResource);
         }
     }

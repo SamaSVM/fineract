@@ -219,7 +219,7 @@ public class LoanRescheduleStepDef extends AbstractStepDef {
                 case "Reason" ->
                     actualValues.add(r.getRescheduleReasonCodeValue() == null ? null : r.getRescheduleReasonCodeValue().getName());
                 case "Status" -> actualValues.add(r.getStatusEnum() == null ? null : r.getStatusEnum().getValue());
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;

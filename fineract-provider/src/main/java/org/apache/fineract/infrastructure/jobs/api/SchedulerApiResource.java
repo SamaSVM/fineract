@@ -43,7 +43,6 @@ import org.apache.fineract.infrastructure.jobs.data.SchedulerDetailData;
 import org.apache.fineract.infrastructure.jobs.service.JobRegisterService;
 import org.apache.fineract.infrastructure.security.exception.NoAuthorizationException;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Path("/v1/scheduler")
@@ -56,7 +55,6 @@ public class SchedulerApiResource {
     private final ToApiJsonSerializer<SchedulerDetailData> toApiJsonSerializer;
     private final ApiRequestParameterHelper apiRequestParameterHelper;
 
-    @Autowired
     public SchedulerApiResource(final PlatformSecurityContext context, final JobRegisterService jobRegisterService,
             final ToApiJsonSerializer<SchedulerDetailData> toApiJsonSerializer, final ApiRequestParameterHelper apiRequestParameterHelper) {
         this.context = context;
@@ -67,8 +65,12 @@ public class SchedulerApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Scheduler Status", description = "Returns the scheduler status.\n" + "\n" + "Example Requests:\n" + "\n"
-            + "scheduler")
+    @Operation(summary = "Retrieve Scheduler Status", description = """
+            Returns the scheduler status.
+
+            Example Requests:
+
+            scheduler""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = SchedulerApiResourceSwagger.GetSchedulerResponse.class)))
     public String retrieveStatus(@Context final UriInfo uriInfo) {
         this.context.authenticatedUser().validateHasReadPermission(SchedulerJobApiConstants.SCHEDULER_RESOURCE_NAME);

@@ -42,7 +42,7 @@ When you want to generate a new encrypted password, you can use the `org.apache.
 ----
 java -cp fineract-provider.jar \
   -Dloader.main=org.apache.fineract.infrastructure.core.service.database.DatabasePasswordEncryptor \
-  org.springframework.boot.loader.PropertiesLauncher \
+  org.springframework.boot.loader.launch.PropertiesLauncher \
   <masterPassword> \
   <plainPassword>
 ----
@@ -53,7 +53,7 @@ For example:
 ----
 java -cp fineract-provider-0.0.0-48f7e315.jar \
   -Dloader.main=org.apache.fineract.infrastructure.core.service.database.DatabasePasswordEncryptor \
-  org.springframework.boot.loader.PropertiesLauncher \
+  org.springframework.boot.loader.launch.PropertiesLauncher \
   fineract-master-password \
   fineract-tenant-password
 The encrypted password: VLwGl7vOP/q275ZTku+PNGWnGwW4mzzNHSNaO9Pr67WT5/NZMpBr9tGYYiYsqwL1eRew2jl7O3/N1EFbLlXhSA==

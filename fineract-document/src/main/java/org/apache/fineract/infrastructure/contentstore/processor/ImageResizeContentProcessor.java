@@ -57,7 +57,7 @@ public class ImageResizeContentProcessor implements ContentProcessor {
         requireNonNull(maxHeight, "Missing max height parameter");
 
         if (!VALID_IMAGE_FORMATS.matcher(format).matches()) {
-            throw new ContentProcessorException(String.format("Wrong image format parameter: %s", format));
+            throw new ContentProcessorException("Wrong image format parameter: %s".formatted(format));
         }
 
         final var pipedInputStream = pipe.pipe(ctx.getInputStream(), (in, out) -> {

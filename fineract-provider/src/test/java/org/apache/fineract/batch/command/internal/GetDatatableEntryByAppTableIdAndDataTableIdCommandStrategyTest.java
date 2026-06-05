@@ -33,19 +33,21 @@ import org.apache.fineract.batch.domain.BatchRequest;
 import org.apache.fineract.batch.domain.BatchResponse;
 import org.apache.fineract.infrastructure.core.api.MutableUriInfo;
 import org.apache.fineract.infrastructure.dataqueries.api.DatatablesApiResource;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Tests {GetDatatableEntryByAppTableIdAndDataTableIdCommandStrategy}.
  */
+@ExtendWith(MockitoExtension.class)
 public class GetDatatableEntryByAppTableIdAndDataTableIdCommandStrategyTest {
 
     /**
@@ -112,7 +114,7 @@ public class GetDatatableEntryByAppTableIdAndDataTableIdCommandStrategyTest {
     private BatchRequest getBatchRequest(final Long loanId, final Long datatableId, final String queryParameter,
             final String datatableName) {
         final BatchRequest br = new BatchRequest();
-        String relativeUrl = String.format("datatables/%s/%s/%s", datatableName, loanId, datatableId);
+        String relativeUrl = "datatables/%s/%s/%s".formatted(datatableName, loanId, datatableId);
         if (queryParameter != null) {
             relativeUrl = relativeUrl + "?" + queryParameter;
         }
@@ -158,7 +160,6 @@ public class GetDatatableEntryByAppTableIdAndDataTableIdCommandStrategyTest {
          * Constructor.
          */
         private TestContext() {
-            MockitoAnnotations.openMocks(this);
             subjectToTest = new GetDatatableEntryByAppTableIdAndDataTableIdCommandStrategy(dataTableApiResource);
         }
     }

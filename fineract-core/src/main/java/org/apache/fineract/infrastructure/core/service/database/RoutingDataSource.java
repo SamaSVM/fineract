@@ -27,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenant;
 import org.apache.fineract.infrastructure.core.service.ThreadLocalContextUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.datasource.AbstractDataSource;
@@ -43,6 +44,7 @@ import org.springframework.transaction.support.TransactionSynchronizationManager
  * The {@link RoutingDataSourceService} is responsible for returning the appropriate {@link DataSource} for the tenant
  * of this request.
  */
+@DependsOnDatabaseInitialization
 @Service(value = "dataSource")
 @Primary
 @Slf4j

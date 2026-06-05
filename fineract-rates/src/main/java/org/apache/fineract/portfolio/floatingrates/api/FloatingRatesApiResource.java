@@ -62,8 +62,10 @@ public class FloatingRatesApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create a new Floating Rate", operationId = "createFloatingRate", description = "Creates a new Floating Rate\n"
-            + "Mandatory Fields: name\n" + "Optional Fields: isBaseLendingRate, isActive, ratePeriods")
+    @Operation(summary = "Create a new Floating Rate", operationId = "createFloatingRate", description = """
+            Creates a new Floating Rate
+            Mandatory Fields: name
+            Optional Fields: isBaseLendingRate, isActive, ratePeriods""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = FloatingRateRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = FloatingRatesApiResourceSwagger.PostFloatingRatesResponse.class)))
     public CommandProcessingResult createFloatingRate(@Parameter(hidden = true) final FloatingRateRequest floatingRateRequest) {

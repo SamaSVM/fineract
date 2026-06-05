@@ -79,8 +79,11 @@ public class ScorecardApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
-    @Operation(summary = "Create a Scorecard entry", description = "Add a new entry to a survey.\n" + "\n" + "Mandatory Fields\n"
-            + "clientId, createdOn, questionId, responseId, staffId")
+    @Operation(summary = "Create a Scorecard entry", description = """
+            Add a new entry to a survey.
+
+            Mandatory Fields
+            clientId, createdOn, questionId, responseId, staffId""")
     @ApiResponses({ @ApiResponse(responseCode = "200", description = "OK") })
     public void createScorecard(@PathParam("surveyId") @Parameter(description = "Enter surveyId") final Long surveyId,
             @Parameter(description = "scorecardData") final ScorecardData scorecardData) {

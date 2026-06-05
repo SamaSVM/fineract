@@ -731,7 +731,7 @@ public class LoanDelinquencyStepDef extends AbstractStepDef {
                 case "pausePeriodStart" ->
                     actualValues.add(t.getPausePeriodStart() == null ? null : FORMATTER.format(t.getPausePeriodStart()));
                 case "pausePeriodEnd" -> actualValues.add(t.getPausePeriodEnd() == null ? null : FORMATTER.format(t.getPausePeriodEnd()));
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;

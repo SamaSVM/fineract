@@ -34,18 +34,20 @@ import org.apache.fineract.batch.domain.BatchRequest;
 import org.apache.fineract.batch.domain.BatchResponse;
 import org.apache.fineract.infrastructure.core.api.MutableUriInfo;
 import org.apache.fineract.portfolio.loanaccount.api.LoansApiResource;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Test class for {@link GetLoanByIdCommandStrategy}.
  */
+@ExtendWith(MockitoExtension.class)
 public class GetLoanByIdCommandStrategyTest {
 
     private static Stream<Arguments> provideQueryParameters() {
@@ -140,7 +142,6 @@ public class GetLoanByIdCommandStrategyTest {
         private final GetLoanByIdCommandStrategy underTest;
 
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             underTest = new GetLoanByIdCommandStrategy(loansApiResource);
         }
     }

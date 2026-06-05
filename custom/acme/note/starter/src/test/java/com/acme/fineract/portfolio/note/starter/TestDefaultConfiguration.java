@@ -30,12 +30,15 @@ import org.apache.fineract.portfolio.loanaccount.domain.LoanTransactionRepositor
 import org.apache.fineract.portfolio.note.domain.NoteRepository;
 import org.apache.fineract.portfolio.savings.domain.SavingsAccountRepository;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @EnableConfigurationProperties({ FineractProperties.class })
 @ComponentScan("org.apache.fineract.portfolio.note.service")
+@Configuration
 class TestDefaultConfiguration {
     // NOTE: unfortunately an abastract base class that contains all these mock functions won't work
 
@@ -45,6 +48,7 @@ class TestDefaultConfiguration {
     }
 
     @Bean
+    @DependsOnDatabaseInitialization
     RoutingDataSource routingDataSource() {
         return mock(RoutingDataSource.class);
     }

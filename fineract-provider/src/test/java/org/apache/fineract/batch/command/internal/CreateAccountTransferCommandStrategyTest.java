@@ -32,15 +32,17 @@ import org.apache.fineract.commands.domain.CommandWrapper;
 import org.apache.fineract.commands.service.PortfolioCommandSourceWritePlatformService;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.infrastructure.core.serialization.DefaultToApiJsonSerializer;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Test class for {@link CreateAccountTransferCommandStrategy}.
  */
+@ExtendWith(MockitoExtension.class)
 public class CreateAccountTransferCommandStrategyTest {
 
     /**
@@ -104,7 +106,6 @@ public class CreateAccountTransferCommandStrategyTest {
         private final CreateAccountTransferCommandStrategy subjectToTest;
 
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             subjectToTest = new CreateAccountTransferCommandStrategy(commandsSourceWritePlatformService, toApiJsonSerializer);
         }
     }

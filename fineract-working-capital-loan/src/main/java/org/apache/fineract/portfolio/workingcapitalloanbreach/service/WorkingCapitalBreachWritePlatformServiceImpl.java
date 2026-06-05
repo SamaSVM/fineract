@@ -83,7 +83,7 @@ public class WorkingCapitalBreachWritePlatformServiceImpl implements WorkingCapi
                 .orElseThrow(() -> new WorkingCapitalBreachNotFoundException(breachId));
         if (workingCapitalLoanProductRepository.existsByBreach(breach)) {
             throw new PlatformDataIntegrityException("error.msg.data.integrity.issue.entity.linked",
-                    String.format("Data integrity issue with resource: %d", breachId));
+                    "Data integrity issue with resource: %d".formatted(breachId));
         }
         workingCapitalBreachRepository.delete(breach);
         return new CommandProcessingResultBuilder().withCommandId(command.commandId()).withEntityId(breachId).build();

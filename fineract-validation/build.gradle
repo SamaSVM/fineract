@@ -38,3 +38,6 @@ if (!(project.hasProperty('env') && project.getProperty('env') == 'dev')) {
         }
     }
 }
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}

@@ -98,8 +98,12 @@ public class SpmApiResource {
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
     @Transactional
-    @Operation(summary = "Create a Survey", description = "Adds a new survey to collect client related data.\n" + "\n"
-            + "Mandatory Fields\n" + "\n" + "countryCode, key, name, questions, responses, sequenceNo, text, description")
+    @Operation(summary = "Create a Survey", description = """
+            Adds a new survey to collect client related data.
+
+            Mandatory Fields
+
+            countryCode, key, name, questions, responses, sequenceNo, text, description""")
     @ApiResponses({ @ApiResponse(responseCode = "200", description = "OK") })
     public String createSurvey(@Parameter(description = "Create survey") final SurveyData surveyData) {
         this.securityContext.authenticatedUser();

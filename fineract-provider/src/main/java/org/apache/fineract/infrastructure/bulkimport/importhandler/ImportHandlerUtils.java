@@ -288,8 +288,7 @@ public final class ImportHandlerUtils {
         } else if (re instanceof AbstractPlatformException) {
             AbstractPlatformException abstractPlatformException = (AbstractPlatformException) re;
             return abstractPlatformException.getDefaultUserMessage();
-        } else if (re instanceof UnsupportedParameterException) {
-            UnsupportedParameterException unsupportedParameterException = (UnsupportedParameterException) re;
+        } else if (re instanceof UnsupportedParameterException unsupportedParameterException) {
             return getErrorList(unsupportedParameterException.getUnsupportedParameters());
         } else {
             if (re.getMessage() != null) {

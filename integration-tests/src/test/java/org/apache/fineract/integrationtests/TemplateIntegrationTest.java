@@ -67,7 +67,7 @@ public class TemplateIntegrationTest {
         final Integer id = Utils.performServerPost(this.requestSpec, this.responseSpec, GET_TEMPLATES_URL, new Gson().toJson(map),
                 "resourceId");
 
-        final String templateUrlForId = String.format("/fineract-provider/api/v1/templates/%s?tenantIdentifier=default", id);
+        final String templateUrlForId = "/fineract-provider/api/v1/templates/%s?tenantIdentifier=default".formatted(id);
 
         final String getrequest2 = Utils.performServerGet(this.requestSpec, this.responseSpec, templateUrlForId, RESPONSE_ATTRIBUTE_NAME);
 

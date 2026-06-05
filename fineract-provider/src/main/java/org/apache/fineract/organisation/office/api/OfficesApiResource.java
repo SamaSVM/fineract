@@ -96,8 +96,13 @@ public class OfficesApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Offices", description = "Example Requests:\n" + "\n" + "offices\n" + "\n" + "\n"
-            + "offices?fields=id,name,openingDate")
+    @Operation(summary = "List Offices", description = """
+            Example Requests:
+
+            offices
+
+
+            offices?fields=id,name,openingDate""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = OfficesApiResourceSwagger.GetOfficesResponse.class))))
     public String retrieveOffices(@Context final UriInfo uriInfo,
             @DefaultValue("false") @QueryParam("includeAllOffices") @Parameter(description = "includeAllOffices") final boolean onlyManualEntries,
@@ -116,8 +121,14 @@ public class OfficesApiResource {
     @GET
     @Path("template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Office Details Template", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n"
-            + "\n" + "Field Defaults\n" + "Allowed description Lists\n" + "Example Request:\n" + "\n" + "offices/template")
+    @Operation(summary = "Retrieve Office Details Template", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+
+            Field Defaults
+            Allowed description Lists
+            Example Request:
+
+            offices/template""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = OfficesApiResourceSwagger.GetOfficesTemplateResponse.class)))
     public String retrieveOfficeTemplate(@Context final UriInfo uriInfo) {
         context.authenticatedUser().validateHasReadPermission(RESOURCE_NAME_FOR_PERMISSIONS);
@@ -146,8 +157,16 @@ public class OfficesApiResource {
     @GET
     @Path("{officeId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve an Office", description = "Example Requests:\n" + "\n" + "offices/1\n" + "\n" + "\n"
-            + "offices/1?template=true\n" + "\n" + "\n" + "offices/1?fields=id,name,parentName")
+    @Operation(summary = "Retrieve an Office", description = """
+            Example Requests:
+
+            offices/1
+
+
+            offices/1?template=true
+
+
+            offices/1?fields=id,name,parentName""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = OfficesApiResourceSwagger.GetOfficesResponse.class)))
     public String retrieveOffice(@PathParam("officeId") @Parameter(description = "officeId") final Long officeId,
             @Context final UriInfo uriInfo) {
@@ -164,9 +183,16 @@ public class OfficesApiResource {
     @GET
     @Path("/external-id/{externalId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve an Office using external id", description = "Example Requests:\n" + "\n" + "offices/external-id/asd123\n"
-            + "\n" + "\n" + "offices/external-id/asd123?template=true\n" + "\n" + "\n"
-            + "offices/external-id/asd123?fields=id,name,parentName")
+    @Operation(summary = "Retrieve an Office using external id", description = """
+            Example Requests:
+
+            offices/external-id/asd123
+
+
+            offices/external-id/asd123?template=true
+
+
+            offices/external-id/asd123?fields=id,name,parentName""")
     public OfficesApiResourceSwagger.GetOfficesResponse retrieveOfficeByExternalId(
             @PathParam("externalId") @Parameter(description = "externalId") final String externalId, @Context final UriInfo uriInfo) {
         context.authenticatedUser().validateHasReadPermission(RESOURCE_NAME_FOR_PERMISSIONS);

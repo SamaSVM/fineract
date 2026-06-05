@@ -30,7 +30,7 @@ dependencies {
             )
 
     implementation(
-            'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.boot:spring-boot-starter-webmvc',
             'org.springframework.boot:spring-boot-starter-validation',
             'org.springframework.boot:spring-boot-starter-security',
             'org.springframework.boot:spring-boot-starter-data-jdbc',
@@ -66,5 +66,5 @@ dependencies {
         exclude group: 'javax.activation'
         exclude group: 'org.skyscreamer'
     }
-    testImplementation ('org.mockito:mockito-inline')
+    testImplementation ('org.mockito:mockito-core')
 }

@@ -187,3 +187,6 @@ tasks.named('srcDistTar') {
 // Disable zip distributions as they're not needed
 binaryDistZip.enabled false
 srcDistZip.enabled false
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}

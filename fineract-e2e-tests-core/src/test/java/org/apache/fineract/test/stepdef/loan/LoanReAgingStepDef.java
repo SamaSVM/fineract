@@ -297,7 +297,7 @@ public class LoanReAgingStepDef extends AbstractStepDef {
                         : new Utils.DoubleFormatter(repaymentPeriod.getTotalWaivedForPeriod().doubleValue()).format());
                 case "Outstanding" -> actualValues.add(repaymentPeriod.getTotalOutstandingForPeriod() == null ? null
                         : new Utils.DoubleFormatter(repaymentPeriod.getTotalOutstandingForPeriod().doubleValue()).format());
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;

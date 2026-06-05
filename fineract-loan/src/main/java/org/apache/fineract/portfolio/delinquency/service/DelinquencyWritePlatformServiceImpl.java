@@ -178,7 +178,7 @@ public class DelinquencyWritePlatformServiceImpl implements DelinquencyWritePlat
             for (final DelinquencyBucketUsageChecker checker : delinquencyBucketUsageCheckers) {
                 if (checker.hasUsages(delinquencyBucket)) {
                     throw new PlatformDataIntegrityException("error.msg.data.integrity.issue.entity.linked",
-                            String.format("Data integrity issue with resource: %d", delinquencyBucket.getId()));
+                            "Data integrity issue with resource: %d".formatted(delinquencyBucket.getId()));
                 }
             }
 

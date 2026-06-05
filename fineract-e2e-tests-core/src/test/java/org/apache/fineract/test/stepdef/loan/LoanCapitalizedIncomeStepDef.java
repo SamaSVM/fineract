@@ -63,8 +63,8 @@ public class LoanCapitalizedIncomeStepDef extends AbstractStepDef {
         List<GetLoansLoanIdTransactions> transactions = loanDetailsResponse.getTransactions();
         GetLoansLoanIdTransactions capitalizedIncomeAmortizationTransaction = transactions.stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Capitalized Income Amortization".equals(t.getType().getValue()))
-                .reduce((first, second) -> second).orElseThrow(
-                        () -> new IllegalStateException(String.format("No Capitalized Income Amortization transaction found on %s", date)));
+                .reduce((first, second) -> second)
+                .orElseThrow(() -> new IllegalStateException("No Capitalized Income Amortization transaction found on %s".formatted(date)));
         Long capitalizedIncomeAmortizationTransactionId = capitalizedIncomeAmortizationTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanCapitalizedIncomeAmortizationTransactionCreatedEvent.class,

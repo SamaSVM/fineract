@@ -23,7 +23,6 @@ import org.apache.fineract.commands.handler.NewCommandSourceHandler;
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.portfolio.group.service.GroupingTypesWritePlatformService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +32,6 @@ public class DeleteGroupCommandHandler implements NewCommandSourceHandler {
 
     private final GroupingTypesWritePlatformService groupWritePlatformService;
 
-    @Autowired
     public DeleteGroupCommandHandler(final GroupingTypesWritePlatformService groupWritePlatformService) {
         this.groupWritePlatformService = groupWritePlatformService;
     }

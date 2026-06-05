@@ -77,9 +77,18 @@ public class AccountsApiResource {
     @GET
     @Path("template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Share Account Template", operationId = "retrieveTemplateShareAccount", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n"
-            + "\n" + "Field Defaults\n" + "Allowed Value Lists\n\n" + "Example Requests:\n" + "\n" + "accounts/share/template?clientId=1\n"
-            + "\n" + "\n" + "accounts/share/template?clientId=1&productId=1")
+    @Operation(summary = "Retrieve Share Account Template", operationId = "retrieveTemplateShareAccount", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+
+            Field Defaults
+            Allowed Value Lists
+
+            Example Requests:
+
+            accounts/share/template?clientId=1
+
+
+            accounts/share/template?clientId=1&productId=1""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AccountsApiResourceSwagger.GetAccountsTypeTemplateResponse.class)))
     public ShareAccountData template(@PathParam("type") @Parameter(description = "type") final String accountType,
             @QueryParam("clientId") @Parameter(description = "clientId") final Long clientId,
@@ -91,8 +100,12 @@ public class AccountsApiResource {
     @GET
     @Path("{accountId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a share application/account", operationId = "retrieveOneShareAccount", description = "Retrieves a share application/account\n\n"
-            + "Example Requests :\n" + "\n" + "shareaccount/1")
+    @Operation(summary = "Retrieve a share application/account", operationId = "retrieveOneShareAccount", description = """
+            Retrieves a share application/account
+
+            Example Requests :
+
+            shareaccount/1""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AccountsApiResourceSwagger.GetAccountsTypeAccountIdResponse.class)))
     public ShareAccountData retrieveAccount(@PathParam("accountId") @Parameter(description = "accountId") final Long accountId,
             @PathParam("type") @Parameter(description = "type") final String accountType, @Context final UriInfo uriInfo) {
@@ -102,8 +115,12 @@ public class AccountsApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List share applications/accounts", operationId = "retrieveAllShareAccounts", description = "Lists share applications/accounts\n\n"
-            + "Example Requests:\n" + "\n" + "shareaccount")
+    @Operation(summary = "List share applications/accounts", operationId = "retrieveAllShareAccounts", description = """
+            Lists share applications/accounts
+
+            Example Requests:
+
+            shareaccount""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AccountsApiResourceSwagger.GetAccountsTypeResponse.class)))
     public Page<AccountData> retrieveAllAccounts(@PathParam("type") @Parameter(description = "type") final String accountType,
             @QueryParam("offset") @Parameter(description = "offset") final Integer offset,
@@ -114,10 +131,14 @@ public class AccountsApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Submit new share application", operationId = "createShareAccount", description = "Submits new share application\n\n"
-            + "Mandatory Fields: clientId, productId, submittedDate, savingsAccountId, requestedShares, applicationDate\n\n"
-            + "Optional Fields: accountNo, externalId\n\n"
-            + "Inherited from Product (if not provided): minimumActivePeriod, minimumActivePeriodFrequencyType, lockinPeriodFrequency, lockinPeriodFrequencyType")
+    @Operation(summary = "Submit new share application", operationId = "createShareAccount", description = """
+            Submits new share application
+
+            Mandatory Fields: clientId, productId, submittedDate, savingsAccountId, requestedShares, applicationDate
+
+            Optional Fields: accountNo, externalId
+
+            Inherited from Product (if not provided): minimumActivePeriod, minimumActivePeriodFrequencyType, lockinPeriodFrequency, lockinPeriodFrequencyType""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = AccountRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AccountsApiResourceSwagger.PostAccountsTypeResponse.class)))
     public CommandProcessingResult createAccount(@PathParam("type") @Parameter(description = "type") final String accountType,
@@ -132,25 +153,64 @@ public class AccountsApiResource {
     @Path("{accountId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Approve share application | Undo approval share application | Reject share application | Activate a share account | Close a share account | Apply additional shares on a share account | Approve additional shares request on a share account | Reject additional shares request on a share account | Redeem shares on a share account", operationId = "handleCommandsShareAccount", description = "Approve share application:\n\n"
-            + "Approves share application so long as its in 'Submitted and pending approval' state.\n\n"
-            + "Undo approval share application:\n\n"
-            + "Will move 'approved' share application back to 'Submitted and pending approval' state.\n\n" + "Reject share application:\n\n"
-            + "Rejects share application so long as its in 'Submitted and pending approval' state.\n\n" + "Activate a share account:\n\n"
-            + "Results in an approved share application being converted into an 'active' share account.\n\n" + "Close a share account:\n\n"
-            + "Results in an Activated share application being converted into an 'closed' share account.\n" + "\n"
-            + "closedDate is closure date of share account\n\n" + "Mandatory Fields: dateFormat,locale,closedDate\n\n"
-            + "Apply additional shares on a share account:\n\n" + "requestedDate is requsted date of share purchase\n" + "\n"
-            + "requestedShares is number of shares to be purchase\n\n"
-            + "Mandatory Fields: dateFormat,locale,requestedDate, requestedShares\n\n"
-            + "Approve additional shares request on a share account\n\n" + "requestedShares is Share purchase transaction ids\n\n"
-            + "Mandatory Fields: requestedShares\n\n" + "Reject additional shares request on a share account:\n\n"
-            + "requestedShares is Share purchase transaction ids\n\n" + "Mandatory Fields: requestedShares\n\n"
-            + "Redeem shares on a share account:\n\n" + "Results redeem some/all shares from share account.\n" + "\n"
-            + "requestedDate is requsted date of shares redeem\n" + "\n" + "requestedShares is number of shares to be redeemed\n\n"
-            + "Mandatory Fields: dateFormat,locale,requestedDate,requestedShares\n\n"
-            + "Showing request/response for 'Reject additional shares request on a share account'\n\n"
-            + "For more info visit this link - https://fineract.apache.org/docs/legacy/#shareaccounts")
+    @Operation(summary = "Approve share application | Undo approval share application | Reject share application | Activate a share account | Close a share account | Apply additional shares on a share account | Approve additional shares request on a share account | Reject additional shares request on a share account | Redeem shares on a share account", operationId = "handleCommandsShareAccount", description = """
+            Approve share application:
+
+            Approves share application so long as its in 'Submitted and pending approval' state.
+
+            Undo approval share application:
+
+            Will move 'approved' share application back to 'Submitted and pending approval' state.
+
+            Reject share application:
+
+            Rejects share application so long as its in 'Submitted and pending approval' state.
+
+            Activate a share account:
+
+            Results in an approved share application being converted into an 'active' share account.
+
+            Close a share account:
+
+            Results in an Activated share application being converted into an 'closed' share account.
+
+            closedDate is closure date of share account
+
+            Mandatory Fields: dateFormat,locale,closedDate
+
+            Apply additional shares on a share account:
+
+            requestedDate is requsted date of share purchase
+
+            requestedShares is number of shares to be purchase
+
+            Mandatory Fields: dateFormat,locale,requestedDate, requestedShares
+
+            Approve additional shares request on a share account
+
+            requestedShares is Share purchase transaction ids
+
+            Mandatory Fields: requestedShares
+
+            Reject additional shares request on a share account:
+
+            requestedShares is Share purchase transaction ids
+
+            Mandatory Fields: requestedShares
+
+            Redeem shares on a share account:
+
+            Results redeem some/all shares from share account.
+
+            requestedDate is requsted date of shares redeem
+
+            requestedShares is number of shares to be redeemed
+
+            Mandatory Fields: dateFormat,locale,requestedDate,requestedShares
+
+            Showing request/response for 'Reject additional shares request on a share account'
+
+            For more info visit this link - https://fineract.apache.org/docs/legacy/#shareaccounts""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = AccountsApiResourceSwagger.PostAccountsTypeAccountIdRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AccountsApiResourceSwagger.PostAccountsTypeAccountIdResponse.class)))
     public CommandProcessingResult handleCommands(@PathParam("type") @Parameter(description = "type") final String accountType,

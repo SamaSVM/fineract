@@ -20,7 +20,6 @@ package org.apache.fineract.portfolio.loanaccount.service;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -45,7 +44,6 @@ import org.apache.fineract.portfolio.charge.domain.Charge;
 import org.apache.fineract.portfolio.charge.domain.ChargeCalculationType;
 import org.apache.fineract.portfolio.charge.domain.ChargePaymentMode;
 import org.apache.fineract.portfolio.charge.domain.ChargeRepositoryWrapper;
-import org.apache.fineract.portfolio.loanaccount.data.AccountingBridgeDataDTO;
 import org.apache.fineract.portfolio.loanaccount.domain.Loan;
 import org.apache.fineract.portfolio.loanaccount.domain.LoanAccountDomainService;
 import org.apache.fineract.portfolio.loanaccount.domain.LoanAccountService;
@@ -202,9 +200,6 @@ class LoanChargeWritePlatformServiceImplTest {
         when(loan.isPeriodicAccrualAccountingEnabledOnLoanProduct()).thenReturn(false);
         when(loan.isCashBasedAccountingEnabledOnLoanProduct()).thenReturn(false);
         when(loan.isUpfrontAccrualAccountingEnabledOnLoanProduct()).thenReturn(false);
-
-        doNothing().when(journalEntryWritePlatformService).createJournalEntriesForLoan(any(AccountingBridgeDataDTO.class));
-        doNothing().when(loanChargeService).addLoanCharge(any(Loan.class), any(LoanCharge.class));
     }
 
     @ParameterizedTest

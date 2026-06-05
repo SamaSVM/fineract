@@ -23,7 +23,6 @@ import org.apache.fineract.commands.handler.NewCommandSourceHandler;
 import org.apache.fineract.infrastructure.campaigns.email.service.EmailCampaignWritePlatformService;
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,7 +31,6 @@ public class CloseEmailCampaignCommandHandler implements NewCommandSourceHandler
 
     private final EmailCampaignWritePlatformService emailCampaignWritePlatformService;
 
-    @Autowired
     public CloseEmailCampaignCommandHandler(final EmailCampaignWritePlatformService emailCampaignWritePlatformService) {
         this.emailCampaignWritePlatformService = emailCampaignWritePlatformService;
     }

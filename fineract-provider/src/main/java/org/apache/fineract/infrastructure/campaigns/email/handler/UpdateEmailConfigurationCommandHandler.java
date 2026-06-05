@@ -23,7 +23,6 @@ import org.apache.fineract.commands.handler.NewCommandSourceHandler;
 import org.apache.fineract.infrastructure.campaigns.email.service.EmailConfigurationWritePlatformService;
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +32,6 @@ public class UpdateEmailConfigurationCommandHandler implements NewCommandSourceH
 
     private final EmailConfigurationWritePlatformService writePlatformService;
 
-    @Autowired
     public UpdateEmailConfigurationCommandHandler(final EmailConfigurationWritePlatformService writePlatformService) {
         this.writePlatformService = writePlatformService;
     }

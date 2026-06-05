@@ -63,11 +63,28 @@ public class AccountTransfersApiResource {
     @GET
     @Path("template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Account Transfer Template", operationId = "retrieveTemplateAccountTransfer", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n\n"
-            + "\n\n" + "Field Defaults\n\n" + "Allowed Value Lists\n\n" + "Example Requests:\n\n" + "\n\n"
-            + "accounttransfers/template?fromAccountType=2&fromOfficeId=1\n\n" + "\n\n"
-            + "accounttransfers/template?fromAccountType=2&fromOfficeId=1&fromClientId=1\n\n" + "\n\n"
-            + "accounttransfers/template?fromClientId=1&fromAccountType=2&fromAccountId=1")
+    @Operation(summary = "Retrieve Account Transfer Template", operationId = "retrieveTemplateAccountTransfer", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+
+
+
+            Field Defaults
+
+            Allowed Value Lists
+
+            Example Requests:
+
+
+
+            accounttransfers/template?fromAccountType=2&fromOfficeId=1
+
+
+
+            accounttransfers/template?fromAccountType=2&fromOfficeId=1&fromClientId=1
+
+
+
+            accounttransfers/template?fromClientId=1&fromAccountType=2&fromAccountId=1""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AccountTransfersApiResourceSwagger.GetAccountTransfersTemplateResponse.class)))
     public AccountTransferData template(@BeanParam AccountTransSearchParam accountTransSearchParam) {
 
@@ -95,8 +112,14 @@ public class AccountTransfersApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List account transfers", operationId = "retrieveAllAccountTransfers", description = "Lists account's transfers\n\n"
-            + "Example Requests:\n\n" + "\n\n" + "accounttransfers")
+    @Operation(summary = "List account transfers", operationId = "retrieveAllAccountTransfers", description = """
+            Lists account's transfers
+
+            Example Requests:
+
+
+
+            accounttransfers""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AccountTransfersApiResourceSwagger.GetAccountTransfersResponse.class)))
     public Page<AccountTransferData> retrieveAll(@QueryParam("externalId") @Parameter(description = "externalId") final String externalId,
             @QueryParam("offset") @Parameter(description = "offset") final Integer offset,
@@ -116,8 +139,14 @@ public class AccountTransfersApiResource {
     @GET
     @Path("{transferId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve account transfer", operationId = "retrieveOneAccountTransfer", description = "Retrieves account transfer\n\n"
-            + "Example Requests :\n\n" + "\n\n" + "accounttransfers/1")
+    @Operation(summary = "Retrieve account transfer", operationId = "retrieveOneAccountTransfer", description = """
+            Retrieves account transfer
+
+            Example Requests :
+
+
+
+            accounttransfers/1""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AccountTransfersApiResourceSwagger.GetAccountTransfersResponse.GetAccountTransfersPageItems.class)))
     public AccountTransferData retrieveOne(@PathParam("transferId") @Parameter(description = "transferId") final Long transferId) {
         context.authenticatedUser().validateHasReadPermission(AccountTransfersApiConstants.ACCOUNT_TRANSFER_RESOURCE_NAME);
@@ -127,9 +156,13 @@ public class AccountTransfersApiResource {
     @GET
     @Path("templateRefundByTransfer")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Refund of an Active Loan by Transfer Template", operationId = "retrieveTemplateRefundByTransfer", description = "Retrieves Refund of an Active Loan by Transfer Template"
-            + "Example Requests :\n\n" + "\n\n"
-            + "accounttransfers/templateRefundByTransfer?fromAccountId=2&fromAccountType=1& toAccountId=1&toAccountType=2&toClientId=1&toOfficeId=1")
+    @Operation(summary = "Retrieve Refund of an Active Loan by Transfer Template", operationId = "retrieveTemplateRefundByTransfer", description = """
+            Retrieves Refund of an Active Loan by Transfer Template\
+            Example Requests :
+
+
+
+            accounttransfers/templateRefundByTransfer?fromAccountId=2&fromAccountType=1& toAccountId=1&toAccountType=2&toClientId=1&toOfficeId=1""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AccountTransfersApiResourceSwagger.GetAccountTransfersTemplateRefundByTransferResponse.class)))
     public AccountTransferData templateRefundByTransfer(@BeanParam AccountTransSearchParam accountTransSearchParam) {
         context.authenticatedUser().validateHasReadPermission(AccountTransfersApiConstants.ACCOUNT_TRANSFER_RESOURCE_NAME);

@@ -23,7 +23,6 @@ import org.apache.fineract.commands.handler.NewCommandSourceHandler;
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.portfolio.savings.service.SavingsApplicationProcessWritePlatformService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +32,6 @@ public class SavingsAccountApplicationApprovalUndoCommandHandler implements NewC
 
     private final SavingsApplicationProcessWritePlatformService writePlatformService;
 
-    @Autowired
     public SavingsAccountApplicationApprovalUndoCommandHandler(final SavingsApplicationProcessWritePlatformService writePlatformService) {
         this.writePlatformService = writePlatformService;
     }

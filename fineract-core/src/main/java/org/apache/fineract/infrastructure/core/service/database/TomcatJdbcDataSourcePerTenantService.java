@@ -35,6 +35,7 @@ import org.apache.fineract.infrastructure.core.service.ThreadLocalContextUtil;
 import org.apache.fineract.infrastructure.core.service.tenant.TenantDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,7 @@ import org.springframework.stereotype.Service;
  *
  * {@link ThreadLocalContextUtil} is used to retrieve the {@link FineractPlatformTenant} for the request.
  */
+@DependsOnDatabaseInitialization
 @Slf4j
 @Service
 @RequiredArgsConstructor

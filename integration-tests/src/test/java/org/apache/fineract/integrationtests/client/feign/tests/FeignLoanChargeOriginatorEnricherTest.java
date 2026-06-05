@@ -181,8 +181,8 @@ public class FeignLoanChargeOriginatorEnricherTest extends FeignIntegrationTest 
 
     private Long extractLoanId(ExternalEventResponse event) {
         final Object loanId = event.getPayLoad().get("loanId");
-        if (loanId instanceof Number) {
-            return ((Number) loanId).longValue();
+        if (loanId instanceof Number number) {
+            return number.longValue();
         }
         return null;
     }

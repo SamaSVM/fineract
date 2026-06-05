@@ -58,7 +58,7 @@ dependencies {
             project(path: ':fineract-avro-schemas')
             )
     implementation(
-            'org.springframework.boot:spring-boot-starter-web',
+            'org.springframework.boot:spring-boot-starter-webmvc',
             'org.springframework.boot:spring-boot-starter-validation',
             'org.springframework.boot:spring-boot-starter-security',
             'org.springframework.boot:spring-boot-starter-oauth2-authorization-server',
@@ -129,7 +129,7 @@ dependencies {
 
     implementation 'io.swagger.core.v3:swagger-jaxrs2-jakarta'
 
-    implementation ('org.apache.commons:commons-email') {
+    implementation ('org.apache.commons:commons-email2-jakarta') {
         exclude group: 'com.sun.mail', module: 'javax.mail'
         exclude group: 'javax.activation', module: 'activation'
     }
@@ -226,7 +226,7 @@ dependencies {
         exclude group: 'javax.activation'
         exclude group: 'org.skyscreamer'
     }
-    testImplementation ('org.mockito:mockito-inline')
+    testImplementation ('org.mockito:mockito-core')
 
     testRuntimeOnly(
             'org.mariadb.jdbc:mariadb-java-client',

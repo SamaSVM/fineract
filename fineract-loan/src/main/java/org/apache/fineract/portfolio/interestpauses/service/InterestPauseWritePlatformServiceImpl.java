@@ -187,20 +187,20 @@ public class InterestPauseWritePlatformServiceImpl implements InterestPauseWrite
 
         if (startDate.isBefore(loan.getSubmittedOnDate())) {
             throw new GeneralPlatformDomainRuleException("interest.pause.start.date.before.loan.start.date",
-                    String.format("Interest pause start date (%s) cannot be earlier than loan start date (%s).", startDate,
+                    "Interest pause start date (%s) cannot be earlier than loan start date (%s).".formatted(startDate,
                             loan.getSubmittedOnDate()),
                     startDate, loan.getSubmittedOnDate());
         }
 
         if (endDate.isAfter(loan.getMaturityDate())) {
-            throw new GeneralPlatformDomainRuleException("interest.pause.end.date.after.loan.maturity.date", String
-                    .format("Interest pause end date (%s) cannot be later than loan maturity date (%s).", endDate, loan.getMaturityDate()),
+            throw new GeneralPlatformDomainRuleException("interest.pause.end.date.after.loan.maturity.date",
+                    "Interest pause end date (%s) cannot be later than loan maturity date (%s).".formatted(endDate, loan.getMaturityDate()),
                     endDate, loan.getMaturityDate());
         }
 
         if (endDate.isBefore(startDate)) {
-            throw new GeneralPlatformDomainRuleException("interest.pause.end.date.before.start.date", String
-                    .format("Interest pause end date (%s) must not be before the interest pause start date (%s).", endDate, startDate),
+            throw new GeneralPlatformDomainRuleException("interest.pause.end.date.before.start.date",
+                    "Interest pause end date (%s) must not be before the interest pause start date (%s).".formatted(endDate, startDate),
                     endDate, startDate);
         }
 
@@ -246,7 +246,7 @@ public class InterestPauseWritePlatformServiceImpl implements InterestPauseWrite
             return LocalDate.parse(date, formatter);
         } catch (DateTimeParseException e) {
             throw new PlatformApiDataValidationException("validation.msg.invalid.date.format",
-                    String.format("Invalid date format. Provided: %s, Expected format: %s, Locale: %s", date, dateFormat, locale),
+                    "Invalid date format. Provided: %s, Expected format: %s, Locale: %s".formatted(date, dateFormat, locale),
                     e.getMessage(), e);
         }
     }

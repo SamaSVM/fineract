@@ -18,8 +18,6 @@
  */
 package org.apache.fineract.infrastructure.campaigns.email.service;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.mustachejava.DefaultMustacheFactory;
 import com.github.mustachejava.Mustache;
 import com.github.mustachejava.MustacheFactory;
@@ -76,6 +74,9 @@ import org.springframework.dao.NonTransientDataAccessException;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.type.TypeReference;
+import tools.jackson.databind.json.JsonMapper;
 
 @Service
 @Slf4j
@@ -222,10 +223,10 @@ public class EmailCampaignWritePlatformCommandHandlerImpl implements EmailCampai
     private void insertDirectCampaignIntoEmailOutboundTable(final String emailParams, final String emailSubject,
             final String messageTemplate, final String campaignName, final Long campaignId) {
         try {
-            HashMap<String, String> campaignParams = new ObjectMapper().readValue(emailParams,
+            HashMap<String, String> campaignParams = new JsonMapper().readValue(emailParams,
                     new TypeReference<HashMap<String, String>>() {});
 
-            HashMap<String, String> queryParamForRunReport = new ObjectMapper().readValue(emailParams,
+            HashMap<String, String> queryParamForRunReport = new JsonMapper().readValue(emailParams,
                     new TypeReference<HashMap<String, String>>() {});
 
             List<HashMap<String, Object>> runReportObject = this.getRunReportByServiceImpl(campaignParams.get("reportName"),
@@ -246,7 +247,7 @@ public class EmailCampaignWritePlatformCommandHandlerImpl implements EmailCampai
                     }
                 }
             }
-        } catch (final IOException e) {
+        } catch (final JacksonException | IOException e) {
             // TODO throw something here
         }
 
@@ -361,7 +362,7 @@ public class EmailCampaignWritePlatformCommandHandlerImpl implements EmailCampai
         final GenericResultsetData results = this.readReportingService.retrieveGenericResultSetForSmsEmailCampaign(reportName, reportType,
                 queryParams);
         final String response = this.genericDataService.generateJsonFromGenericResultsetData(results);
-        resultList = new ObjectMapper().readValue(response, new TypeReference<>() {});
+        resultList = new JsonMapper().readValue(response, new TypeReference<>() {});
         // loop changes array date to string date
         for (Iterator<HashMap<String, Object>> it = resultList.iterator(); it.hasNext();) {
             HashMap<String, Object> entry = it.next();
@@ -369,9 +370,9 @@ public class EmailCampaignWritePlatformCommandHandlerImpl implements EmailCampai
                 Map.Entry<String, Object> map = iter.next();
                 String key = map.getKey();
                 Object ob = map.getValue();
-                if (ob instanceof ArrayList && ((ArrayList) ob).size() == 3) {
-                    String changeArrayDateToStringDate = ((ArrayList) ob).get(2).toString() + "-" + ((ArrayList) ob).get(1).toString() + "-"
-                            + ((ArrayList) ob).get(0).toString();
+                if (ob instanceof ArrayList list && list.size() == 3) {
+                    String changeArrayDateToStringDate = list.get(2).toString() + "-" + list.get(1).toString() + "-"
+                            + list.get(0).toString();
                     entry.put(key, changeArrayDateToStringDate);
                 }
             }
@@ -388,10 +389,10 @@ public class EmailCampaignWritePlatformCommandHandlerImpl implements EmailCampai
         final String textMessageTemplate = this.fromJsonHelper.extractStringNamed("emailMessage", query.parsedJson());
 
         try {
-            HashMap<String, String> campaignParams = new ObjectMapper().readValue(emailParams,
+            HashMap<String, String> campaignParams = new JsonMapper().readValue(emailParams,
                     new TypeReference<HashMap<String, String>>() {});
 
-            HashMap<String, String> queryParamForRunReport = new ObjectMapper().readValue(emailParams,
+            HashMap<String, String> queryParamForRunReport = new JsonMapper().readValue(emailParams,
                     new TypeReference<HashMap<String, String>>() {});
 
             List<HashMap<String, Object>> runReportObject = this.getRunReportByServiceImpl(campaignParams.get("reportName"),
@@ -409,7 +410,7 @@ public class EmailCampaignWritePlatformCommandHandlerImpl implements EmailCampai
                     }
                 }
             }
-        } catch (final IOException e) {
+        } catch (final JacksonException | IOException e) {
             // TODO throw something here
         }
 

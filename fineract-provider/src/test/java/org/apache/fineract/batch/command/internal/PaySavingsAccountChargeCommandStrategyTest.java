@@ -30,14 +30,16 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.fineract.batch.domain.BatchRequest;
 import org.apache.fineract.batch.domain.BatchResponse;
 import org.apache.fineract.portfolio.savings.api.SavingsAccountChargesApiResource;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Test class for {@link PaySavingsAccountChargeCommandStrategy}.
  */
+@ExtendWith(MockitoExtension.class)
 public class PaySavingsAccountChargeCommandStrategyTest {
 
     /**
@@ -109,7 +111,7 @@ public class PaySavingsAccountChargeCommandStrategyTest {
         // URL without ?command=... — should return 501
         final BatchRequest request = new BatchRequest();
         request.setRequestId(Long.valueOf(RandomStringUtils.randomNumeric(5)));
-        request.setRelativeUrl(String.format("savingsaccounts/%s/charges/%s", savingsAccountId, savingsAccountChargeId));
+        request.setRelativeUrl("savingsaccounts/%s/charges/%s".formatted(savingsAccountId, savingsAccountChargeId));
         request.setMethod(HttpMethod.POST);
         request.setBody("{\"transactionDate\":\"2026-03-16\",\"amount\":100}");
 
@@ -128,7 +130,7 @@ public class PaySavingsAccountChargeCommandStrategyTest {
     private BatchRequest getBatchRequest(final Long savingsAccountId, final Long savingsAccountChargeId, final String command) {
         final BatchRequest br = new BatchRequest();
         br.setRequestId(Long.valueOf(RandomStringUtils.randomNumeric(5)));
-        br.setRelativeUrl(String.format("savingsaccounts/%s/charges/%s?command=%s", savingsAccountId, savingsAccountChargeId, command));
+        br.setRelativeUrl("savingsaccounts/%s/charges/%s?command=%s".formatted(savingsAccountId, savingsAccountChargeId, command));
         br.setMethod(HttpMethod.POST);
         br.setReference(Long.valueOf(RandomStringUtils.randomNumeric(5)));
         br.setBody("{\"transactionDate\":\"2026-03-16\",\"amount\":100,\"locale\":\"en\",\"dateFormat\":\"yyyy-MM-dd\"}");
@@ -149,7 +151,6 @@ public class PaySavingsAccountChargeCommandStrategyTest {
         private final PaySavingsAccountChargeCommandStrategy subjectToTest;
 
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             subjectToTest = new PaySavingsAccountChargeCommandStrategy(savingsAccountChargesApiResource);
         }
     }

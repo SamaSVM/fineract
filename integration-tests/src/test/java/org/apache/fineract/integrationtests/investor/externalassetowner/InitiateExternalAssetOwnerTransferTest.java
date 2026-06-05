@@ -106,11 +106,11 @@ import org.apache.fineract.integrationtests.common.loans.LoanTransactionHelper;
 import org.apache.fineract.integrationtests.common.report.ReportHelper;
 import org.apache.fineract.portfolio.loanaccount.domain.LoanStatus;
 import org.hamcrest.Matchers;
+import org.jspecify.annotations.NonNull;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.springframework.lang.NonNull;
 import retrofit2.Response;
 
 @SuppressWarnings("rawtypes")
@@ -654,7 +654,7 @@ public class InitiateExternalAssetOwnerTransferTest extends BaseLoanIntegrationT
 
             CallFailedRuntimeException exception = assertThrows(CallFailedRuntimeException.class,
                     () -> createSaleTransfer(loanID, "2020-03-02"));
-            assertTrue(exception.getMessage().contains(String.format("Loan status %s is not valid for transfer.", loanStatus)));
+            assertTrue(exception.getMessage().contains("Loan status %s is not valid for transfer.".formatted(loanStatus)));
         } finally {
             cleanUpAndRestoreBusinessDate();
         }
@@ -898,7 +898,7 @@ public class InitiateExternalAssetOwnerTransferTest extends BaseLoanIntegrationT
                 createBuybackTransfer(loanID, "2020-03-02", externalId);
             });
             assertTrue(exception6.getMessage()
-                    .contains(String.format("Already existing an asset transfer with the provided transfer external id: %s", externalId)));
+                    .contains("Already existing an asset transfer with the provided transfer external id: %s".formatted(externalId)));
         } finally {
             cleanUpAndRestoreBusinessDate();
         }
@@ -948,7 +948,7 @@ public class InitiateExternalAssetOwnerTransferTest extends BaseLoanIntegrationT
                 createSaleTransfer(loanID2, "2020-03-05", externalId, transferExternalGroupId, "1", "1.0");
             });
             assertTrue(exception7.getMessage()
-                    .contains(String.format("Already existing an asset transfer with the provided transfer external id: %s", externalId)));
+                    .contains("Already existing an asset transfer with the provided transfer external id: %s".formatted(externalId)));
         } finally {
             cleanUpAndRestoreBusinessDate();
         }

@@ -97,8 +97,13 @@ public class RolesApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Roles", tags = { "Roles" }, description = "Example Requests:\n" + "\n" + "roles\n" + "\n" + "\n"
-            + "roles?fields=name")
+    @Operation(summary = "List Roles", tags = { "Roles" }, description = """
+            Example Requests:
+
+            roles
+
+
+            roles?fields=name""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = RolesApiResourceSwagger.GetRolesResponse.class)))) })
     public String retrieveAllRoles(@Context final UriInfo uriInfo) {
@@ -133,8 +138,13 @@ public class RolesApiResource {
     @GET
     @Path("{roleId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Role", tags = { "Roles" }, description = "Example Requests:\n" + "\n" + "roles/1\n" + "\n" + "\n"
-            + "roles/1?fields=name")
+    @Operation(summary = "Retrieve a Role", tags = { "Roles" }, description = """
+            Example Requests:
+
+            roles/1
+
+
+            roles/1?fields=name""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RolesApiResourceSwagger.GetRolesRoleIdResponse.class))) })
     public String retrieveRole(@PathParam("roleId") @Parameter(description = "roleId") final Long roleId, @Context final UriInfo uriInfo) {
@@ -160,10 +170,20 @@ public class RolesApiResource {
     @Path("{roleId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Enable Role | Disable Role", tags = {
-            "Roles" }, description = "Description : Enable role in case role is disabled. | Disable the role in case role is not associated with any users.\n\n\n\n"
-                    + "\n\n" + "Example Request:   https://DomainName/api/v1/roles/{roleId}?command=enable" + "\n\n\n\n" + "\n\n"
-                    + "https://DomainName/api/v1/roles/{roleId}?command=disable")
+    @Operation(summary = "Enable Role | Disable Role", tags = { "Roles" }, description = """
+            Description : Enable role in case role is disabled. | Disable the role in case role is not associated with any users.
+
+
+
+
+
+            Example Request:   https://DomainName/api/v1/roles/{roleId}?command=enable
+
+
+
+
+
+            https://DomainName/api/v1/roles/{roleId}?command=disable""")
     @Parameters({ @Parameter(description = "No Request Body", name = "No Request Body") })
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RolesApiResourceSwagger.PostRolesRoleIdResponse.class))) })
@@ -209,8 +229,10 @@ public class RolesApiResource {
     @GET
     @Path("{roleId}/permissions")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Role's Permissions", tags = { "Roles" }, description = "Example Requests:\n" + "\n"
-            + "roles/1/permissions")
+    @Operation(summary = "Retrieve a Role's Permissions", tags = { "Roles" }, description = """
+            Example Requests:
+
+            roles/1/permissions""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RolesApiResourceSwagger.GetRolesRoleIdPermissionsResponse.class))) })
     public String retrieveRolePermissions(@PathParam("roleId") @Parameter(description = "roleId") final Long roleId,

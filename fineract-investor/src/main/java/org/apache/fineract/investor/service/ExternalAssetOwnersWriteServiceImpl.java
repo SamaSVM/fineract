@@ -101,9 +101,8 @@ public class ExternalAssetOwnersWriteServiceImpl implements ExternalAssetOwnersW
         Long loanId = command.getLoanId();
         LoanDataForExternalTransfer loanDataForExternalTransfer = fetchAndValidateLoanDataForExternalTransfer(loanId);
         if (!delayedSettlementAttributeService.isEnabled(loanDataForExternalTransfer.getLoanProductId())) {
-            throw new ExternalAssetOwnerInitiateTransferException(
-                    String.format("Delayed Settlement Configuration is not enabled for the loan product: %s",
-                            loanDataForExternalTransfer.getLoanProductShortName()));
+            throw new ExternalAssetOwnerInitiateTransferException("Delayed Settlement Configuration is not enabled for the loan product: %s"
+                    .formatted(loanDataForExternalTransfer.getLoanProductShortName()));
         }
         ExternalId externalId = getTransferExternalIdFromJson(json);
         validateExternalId(externalId);
@@ -156,7 +155,7 @@ public class ExternalAssetOwnersWriteServiceImpl implements ExternalAssetOwnersW
                 .exists((root, query, criteriaBuilder) -> criteriaBuilder.equal(root.get("externalId"), externalId));
         if (alreadyExists) {
             throw new ExternalAssetOwnerInitiateTransferException(
-                    String.format("Already existing an asset transfer with the provided transfer external id: %s", externalId.getValue()));
+                    "Already existing an asset transfer with the provided transfer external id: %s".formatted(externalId.getValue()));
         }
     }
 
@@ -186,7 +185,7 @@ public class ExternalAssetOwnersWriteServiceImpl implements ExternalAssetOwnersW
             }
             if (!ExternalTransferStatus.ACTIVE.equals(transferStatus)) {
                 throw new ExternalAssetOwnerInitiateTransferException(
-                        String.format("This loan cannot be sold, because it is incorrect state! (transferId = %s)", transfer.getId()));
+                        "This loan cannot be sold, because it is incorrect state! (transferId = %s)".formatted(transfer.getId()));
             }
         }
     }
@@ -219,7 +218,7 @@ public class ExternalAssetOwnersWriteServiceImpl implements ExternalAssetOwnersW
             }
             if (!ExternalTransferStatus.ACTIVE.equals(transferStatus)) {
                 throw new ExternalAssetOwnerInitiateTransferException(
-                        String.format("This loan cannot be sold, because it is incorrect state! (transferId = %s)", transfer.getId()));
+                        "This loan cannot be sold, because it is incorrect state! (transferId = %s)".formatted(transfer.getId()));
             }
             // Owner-to-owner transfer with delayed settlement: allow intermediarySale when loan is currently
             // owned. The actual ownership switch happens atomically in the COB step.
@@ -243,12 +242,12 @@ public class ExternalAssetOwnersWriteServiceImpl implements ExternalAssetOwnersW
                     "This loan cannot be bought back, external asset owner buyback transfer is already in progress");
         } else if (!BUYBACK_READY_STATUSES.contains(effectiveTransfers.getFirst().getStatus())) {
             throw new ExternalAssetOwnerInitiateTransferException(
-                    String.format("This loan cannot be bought back, effective transfer is not in right state: %s",
-                            effectiveTransfers.getFirst().getStatus()));
+                    "This loan cannot be bought back, effective transfer is not in right state: %s"
+                            .formatted(effectiveTransfers.getFirst().getStatus()));
         } else if (DateUtils.isBefore(settlementDate, effectiveTransfers.getFirst().getSettlementDate())) {
             throw new ExternalAssetOwnerInitiateTransferException(
-                    String.format("This loan cannot be bought back, settlement date is earlier than effective transfer settlement date: %s",
-                            effectiveTransfers.getFirst().getSettlementDate()));
+                    "This loan cannot be bought back, settlement date is earlier than effective transfer settlement date: %s"
+                            .formatted(effectiveTransfers.getFirst().getSettlementDate()));
         }
 
         return effectiveTransfers.getFirst();
@@ -276,12 +275,12 @@ public class ExternalAssetOwnersWriteServiceImpl implements ExternalAssetOwnersW
                     "This loan cannot be bought back, external asset owner buyback transfer is already in progress");
         } else if (!BUYBACK_READY_STATUSES_FOR_DELAY_SETTLEMENT.contains(effectiveTransfers.getFirst().getStatus())) {
             throw new ExternalAssetOwnerInitiateTransferException(
-                    String.format("This loan cannot be bought back, effective transfer is not in right state: %s",
-                            effectiveTransfers.getFirst().getStatus()));
+                    "This loan cannot be bought back, effective transfer is not in right state: %s"
+                            .formatted(effectiveTransfers.getFirst().getStatus()));
         } else if (DateUtils.isBefore(settlementDate, effectiveTransfers.getFirst().getSettlementDate())) {
             throw new ExternalAssetOwnerInitiateTransferException(
-                    String.format("This loan cannot be bought back, settlement date is earlier than effective transfer settlement date: %s",
-                            effectiveTransfers.getFirst().getSettlementDate()));
+                    "This loan cannot be bought back, settlement date is earlier than effective transfer settlement date: %s"
+                            .formatted(effectiveTransfers.getFirst().getSettlementDate()));
         }
 
         return effectiveTransfers.getFirst();
@@ -290,7 +289,7 @@ public class ExternalAssetOwnersWriteServiceImpl implements ExternalAssetOwnersW
     private ExternalAssetOwnerTransfer fetchAndValidateEffectiveTransferForCancel(final Long transferId) {
         ExternalAssetOwnerTransfer selectedTransfer = externalAssetOwnerTransferRepository.findById(transferId)
                 .orElseThrow(() -> new ExternalAssetOwnerInitiateTransferException(
-                        String.format("This loan cannot be cancelled, transfer with id %s does not exist", transferId)));
+                        "This loan cannot be cancelled, transfer with id %s does not exist".formatted(transferId)));
 
         List<ExternalAssetOwnerTransfer> effective = externalAssetOwnerTransferRepository
                 .findEffectiveTransfersOrderByIdDesc(selectedTransfer.getLoanId(), DateUtils.getBusinessLocalDate());
@@ -328,8 +327,9 @@ public class ExternalAssetOwnersWriteServiceImpl implements ExternalAssetOwnersW
         return switch (effectiveTransfer.getStatus()) {
             case PENDING, ACTIVE -> ExternalTransferStatus.BUYBACK;
             case ACTIVE_INTERMEDIATE -> ExternalTransferStatus.BUYBACK_INTERMEDIATE;
-            default -> throw new ExternalAssetOwnerInitiateTransferException(String.format(
-                    "This loan cannot be bought back, effective transfer is not in right state: %s", effectiveTransfer.getStatus()));
+            default -> throw new ExternalAssetOwnerInitiateTransferException(
+                    "This loan cannot be bought back, effective transfer is not in right state: %s"
+                            .formatted(effectiveTransfer.getStatus()));
         };
     }
 
@@ -390,14 +390,14 @@ public class ExternalAssetOwnersWriteServiceImpl implements ExternalAssetOwnersW
     private void validateLoanStatus(LoanDataForExternalTransfer loanDataForExternalTransfer, boolean isDelayedSettlementEnabled) {
         LoanStatus loanStatus = loanDataForExternalTransfer.getLoanStatus();
         if (!getValidLoanStatusList(isDelayedSettlementEnabled).contains(loanStatus)) {
-            throw new ExternalAssetOwnerInitiateTransferException(String.format("Loan status %s is not valid for transfer.", loanStatus));
+            throw new ExternalAssetOwnerInitiateTransferException("Loan status %s is not valid for transfer.".formatted(loanStatus));
         }
     }
 
     private void validateLoanStatusIntermediarySale(LoanDataForExternalTransfer loanDataForExternalTransfer) {
         LoanStatus loanStatus = loanDataForExternalTransfer.getLoanStatus();
         if (!getAllowedLoanStatuses().contains(loanStatus)) {
-            throw new ExternalAssetOwnerInitiateTransferException(String.format("Loan status %s is not valid for transfer.", loanStatus));
+            throw new ExternalAssetOwnerInitiateTransferException("Loan status %s is not valid for transfer.".formatted(loanStatus));
         }
     }
 

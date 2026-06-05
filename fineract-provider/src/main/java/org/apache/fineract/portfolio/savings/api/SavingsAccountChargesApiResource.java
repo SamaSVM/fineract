@@ -65,9 +65,10 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/savingsaccounts/{savingsAccountId}/charges")
 @Component
-@Tag(name = "Savings Charges", description = "Its typical for MFIs to add maintenance and operating charges. They can be either Fees or Penalties.\n"
-        + "\n"
-        + "Savings Charges are instances of Charges and represent either fees and penalties for savings products. Refer Charges for documentation of the various properties of a charge, Only additional properties ( specific to the context of a Charge being associated with a Savings account) are described here")
+@Tag(name = "Savings Charges", description = """
+        Its typical for MFIs to add maintenance and operating charges. They can be either Fees or Penalties.
+
+        Savings Charges are instances of Charges and represent either fees and penalties for savings products. Refer Charges for documentation of the various properties of a charge, Only additional properties ( specific to the context of a Charge being associated with a Savings account) are described here""")
 @RequiredArgsConstructor
 public class SavingsAccountChargesApiResource {
 
@@ -84,10 +85,20 @@ public class SavingsAccountChargesApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Savings Charges", description = "Lists Savings Charges\n\n" + "Example Requests:\n" + "\n"
-            + "savingsaccounts/1/charges\n" + "\n" + "savingsaccounts/1/charges?chargeStatus=all\n" + "\n"
-            + "savingsaccounts/1/charges?chargeStatus=inactive\n" + "\n" + "savingsaccounts/1/charges?chargeStatus=active\n" + "\n"
-            + "savingsaccounts/1/charges?fields=name,amountOrPercentage")
+    @Operation(summary = "List Savings Charges", description = """
+            Lists Savings Charges
+
+            Example Requests:
+
+            savingsaccounts/1/charges
+
+            savingsaccounts/1/charges?chargeStatus=all
+
+            savingsaccounts/1/charges?chargeStatus=inactive
+
+            savingsaccounts/1/charges?chargeStatus=active
+
+            savingsaccounts/1/charges?fields=name,amountOrPercentage""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = SavingsAccountChargesApiResourceSwagger.GetSavingsAccountsSavingsAccountIdChargesResponse.class)))) })
     public String retrieveAllSavingsAccountCharges(
@@ -112,9 +123,14 @@ public class SavingsAccountChargesApiResource {
     @GET
     @Path("template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Savings Charges Template", operationId = "retrieveTemplateSavingsAccountCharge", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n"
-            + "\n" + "Field Defaults\n" + "Allowed description Lists\n" + "Example Request:\n" + "\n"
-            + "savingsaccounts/1/charges/template")
+    @Operation(summary = "Retrieve Savings Charges Template", operationId = "retrieveTemplateSavingsAccountCharge", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+
+            Field Defaults
+            Allowed description Lists
+            Example Request:
+
+            savingsaccounts/1/charges/template""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = SavingsAccountChargesApiResourceSwagger.GetSavingsAccountsSavingsAccountIdChargesTemplateResponse.class))) })
     public String retrieveTemplate(@PathParam("savingsAccountId") @Parameter(description = "savingsAccountId") final Long savingsAccountId,
@@ -134,8 +150,15 @@ public class SavingsAccountChargesApiResource {
     @GET
     @Path("{savingsAccountChargeId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Savings account Charge", description = "Retrieves a Savings account Charge\n\n" + "Example Requests:\n"
-            + "\n" + "/savingsaccounts/1/charges/5\n" + "\n" + "\n" + "/savingsaccounts/1/charges/5?fields=name,amountOrPercentage")
+    @Operation(summary = "Retrieve a Savings account Charge", description = """
+            Retrieves a Savings account Charge
+
+            Example Requests:
+
+            /savingsaccounts/1/charges/5
+
+
+            /savingsaccounts/1/charges/5?fields=name,amountOrPercentage""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = SavingsAccountChargesApiResourceSwagger.GetSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdResponse.class))) })
     public String retrieveSavingsAccountCharge(
@@ -156,9 +179,14 @@ public class SavingsAccountChargesApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create a Savings account Charge", description = "Creates a Savings account Charge\n\n"
-            + "Mandatory Fields for Savings account Charges: chargeId, amount\n\n" + "chargeId, amount, dueDate, dateFormat, locale\n\n"
-            + "chargeId, amount, feeOnMonthDay, monthDayFormat, locale")
+    @Operation(summary = "Create a Savings account Charge", description = """
+            Creates a Savings account Charge
+
+            Mandatory Fields for Savings account Charges: chargeId, amount
+
+            chargeId, amount, dueDate, dateFormat, locale
+
+            chargeId, amount, feeOnMonthDay, monthDayFormat, locale""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = SavingsAccountChargesApiResourceSwagger.PostSavingsAccountsSavingsAccountIdChargesRequest.class)))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = SavingsAccountChargesApiResourceSwagger.PostSavingsAccountsSavingsAccountIdChargesResponse.class))) })
@@ -199,12 +227,20 @@ public class SavingsAccountChargesApiResource {
     @Path("{savingsAccountChargeId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Pay a Savings account Charge | Waive off a Savings account Charge | Inactivate a Savings account Charge", description = "Pay a Savings account Charge:\n\n"
-            + "An active charge will be paid when savings account is active and having sufficient balance.\n\n"
-            + "Waive off a Savings account Charge:\n\n" + "Outstanding charge amount will be waived off.\n\n"
-            + "Inactivate a Savings account Charge:\n\n"
-            + "A charge will be allowed to inactivate when savings account is active and not having any dues as of today. If charge is overpaid, corresponding charge payment transactions will be reversed.\n\n"
-            + "Showing request/response for 'Pay a Savings account Charge'")
+    @Operation(summary = "Pay a Savings account Charge | Waive off a Savings account Charge | Inactivate a Savings account Charge", description = """
+            Pay a Savings account Charge:
+
+            An active charge will be paid when savings account is active and having sufficient balance.
+
+            Waive off a Savings account Charge:
+
+            Outstanding charge amount will be waived off.
+
+            Inactivate a Savings account Charge:
+
+            A charge will be allowed to inactivate when savings account is active and not having any dues as of today. If charge is overpaid, corresponding charge payment transactions will be reversed.
+
+            Showing request/response for 'Pay a Savings account Charge'""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = SavingsAccountChargesApiResourceSwagger.PostSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest.class)))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = SavingsAccountChargesApiResourceSwagger.PostSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdResponse.class))) })

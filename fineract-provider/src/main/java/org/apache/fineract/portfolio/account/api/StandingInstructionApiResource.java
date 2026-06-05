@@ -67,8 +67,10 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/standinginstructions")
 @Component
-@Tag(name = "Standing Instructions", description = "Standing instructions (or standing orders) refer to instructions a bank account holder (\"the payer\") gives to his or her bank to pay a set amount at regular intervals to another's (\"the payee's\") account.\n"
-        + "\n" + "Note: At present only savings account to savings account and savings account to Loan account transfers are permitted.")
+@Tag(name = "Standing Instructions", description = """
+        Standing instructions (or standing orders) refer to instructions a bank account holder ("the payer") gives to his or her bank to pay a set amount at regular intervals to another's ("the payee's") account.
+
+        Note: At present only savings account to savings account and savings account to Loan account transfers are permitted.""")
 @RequiredArgsConstructor
 public class StandingInstructionApiResource {
 
@@ -88,12 +90,20 @@ public class StandingInstructionApiResource {
     @GET
     @Path("template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Standing Instruction Template", operationId = "retrieveTemplateStandingInstruction", description = "This is a convenience resource. "
-            + "It can be useful when building maintenance user interface screens for client applications. "
-            + "The template data returned consists of any or all of:\n" + "\n" + "Field Defaults\n" + "Allowed Value Lists\n"
-            + "Example Requests:\n" + "\n" + "standinginstructions/template?fromAccountType=2&fromOfficeId=1\n" + "\n"
-            + "standinginstructions/template?fromAccountType=2&fromOfficeId=1&fromClientId=1&transferType=1\n" + "\n"
-            + "standinginstructions/template?fromClientId=1&fromAccountType=2&fromAccountId=1&transferType=1")
+    @Operation(summary = "Retrieve Standing Instruction Template", operationId = "retrieveTemplateStandingInstruction", description = """
+            This is a convenience resource. \
+            It can be useful when building maintenance user interface screens for client applications. \
+            The template data returned consists of any or all of:
+
+            Field Defaults
+            Allowed Value Lists
+            Example Requests:
+
+            standinginstructions/template?fromAccountType=2&fromOfficeId=1
+
+            standinginstructions/template?fromAccountType=2&fromOfficeId=1&fromClientId=1&transferType=1
+
+            standinginstructions/template?fromClientId=1&fromAccountType=2&fromAccountId=1&transferType=1""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = StandingInstructionApiResourceSwagger.GetStandingInstructionsTemplateResponse.class)))
     public StandingInstructionData template(@BeanParam StandingInstructionSearchParam instructionParam) {
         context.authenticatedUser().validateHasReadPermission(StandingInstructionApiConstants.STANDING_INSTRUCTION_RESOURCE_NAME);
@@ -121,10 +131,15 @@ public class StandingInstructionApiResource {
     @Path("{standingInstructionId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Update Standing Instruction | Delete Standing Instruction", operationId = "updateStandingInstruction", description = "Ability to modify existing instruction for transfer of monetary funds from one account to another.\n"
-            + "\n" + "PUT https://DomainName/api/v1/standinginstructions/1?command=update\n" + "\n\n"
-            + "Ability to modify existing instruction for transfer of monetary funds from one account to another.\n" + "\n"
-            + "PUT https://DomainName/api/v1/standinginstructions/1?command=delete")
+    @Operation(summary = "Update Standing Instruction | Delete Standing Instruction", operationId = "updateStandingInstruction", description = """
+            Ability to modify existing instruction for transfer of monetary funds from one account to another.
+
+            PUT https://DomainName/api/v1/standinginstructions/1?command=update
+
+
+            Ability to modify existing instruction for transfer of monetary funds from one account to another.
+
+            PUT https://DomainName/api/v1/standinginstructions/1?command=delete""")
     @RequestBody(content = @Content(schema = @Schema(implementation = StandingInstructionUpdatesRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = StandingInstructionApiResourceSwagger.PutStandingInstructionsStandingInstructionIdResponse.class)))
     public CommandProcessingResult update(
@@ -141,8 +156,10 @@ public class StandingInstructionApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Standing Instructions", operationId = "retrieveAllStandingInstructions", description = "Example Requests:\n"
-            + "\n" + "standinginstructions")
+    @Operation(summary = "List Standing Instructions", operationId = "retrieveAllStandingInstructions", description = """
+            Example Requests:
+
+            standinginstructions""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = StandingInstructionApiResourceSwagger.GetStandingInstructionsResponse.class)))
     public Page<StandingInstructionData> retrieveAll(
             @QueryParam("externalId") @Parameter(description = "externalId") final String externalId,
@@ -175,8 +192,10 @@ public class StandingInstructionApiResource {
     @GET
     @Path("{standingInstructionId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Standing Instruction", operationId = "retrieveOneStandingInstruction", description = "Example Requests :\n"
-            + "\n" + "standinginstructions/1")
+    @Operation(summary = "Retrieve Standing Instruction", operationId = "retrieveOneStandingInstruction", description = """
+            Example Requests :
+
+            standinginstructions/1""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = StandingInstructionApiResourceSwagger.GetStandingInstructionsStandingInstructionIdResponse.class)))
     public StandingInstructionData retrieveOne(
             @PathParam("standingInstructionId") @Parameter(description = "standingInstructionId") final Long standingInstructionId,

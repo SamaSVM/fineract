@@ -24,7 +24,6 @@ import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.portfolio.client.api.ClientApiConstants;
 import org.apache.fineract.portfolio.client.service.ClientTransactionWritePlatformService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +33,6 @@ public class UndoClientTransactionCommandHandler implements NewCommandSourceHand
 
     private final ClientTransactionWritePlatformService writePlatformService;
 
-    @Autowired
     public UndoClientTransactionCommandHandler(final ClientTransactionWritePlatformService writePlatformService) {
         this.writePlatformService = writePlatformService;
     }

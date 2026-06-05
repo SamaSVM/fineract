@@ -659,8 +659,7 @@ public class LoanStepDef extends AbstractStepDef {
         long loanId = loanResponse.getLoanId();
 
         int errorCodeExpected = 403;
-        String errorMessageExpected = String.format("Loan: %s, Credit Balance Refund transaction cannot be created for the future.",
-                loanId);
+        String errorMessageExpected = "Loan: %s, Credit Balance Refund transaction cannot be created for the future.".formatted(loanId);
 
         PostLoansLoanIdTransactionsRequest paymentTransactionRequest = loanRequestFactory.defaultPaymentTransactionRequest()
                 .transactionDate(transactionDate).transactionAmount(transactionAmount);
@@ -1970,8 +1969,8 @@ public class LoanStepDef extends AbstractStepDef {
                 () -> fineractClient.loanTransactions().executeLoanTransaction(loanId, chargeOffRequest, Map.of("command", "charge-off")));
 
         Integer httpStatusCodeExpected = 403;
-        String developerMessageExpected = String.format(
-                "Loan: %s charge-off cannot be executed. Loan has monetary activity after the charge-off transaction date!", loanId);
+        String developerMessageExpected = "Loan: %s charge-off cannot be executed. Loan has monetary activity after the charge-off transaction date!"
+                .formatted(loanId);
 
         assertThat(exception.getStatus())
                 .as(ErrorMessageHelper.wrongErrorCodeInFailedChargeAdjustment(exception.getStatus(), httpStatusCodeExpected))
@@ -2024,7 +2023,7 @@ public class LoanStepDef extends AbstractStepDef {
         CallFailedRuntimeException exception = fail(
                 () -> fineractClient.loanTransactions().executeLoanTransaction(loanId, chargeOffRequest, Map.of("command", "charge-off")));
         assertThat(exception.getDeveloperMessage())
-                .isEqualTo(String.format("Loan: %s Charge-off is not allowed. Loan Account is interest bearing", loanId));
+                .isEqualTo("Loan: %s Charge-off is not allowed. Loan Account is interest bearing".formatted(loanId));
     }
 
     @Then("Second Charge-off is not possible on {string}")
@@ -3013,7 +3012,7 @@ public class LoanStepDef extends AbstractStepDef {
         GetLoansLoanIdTransactions accrualTransaction = transactions.stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Accrual".equals(t.getType().getValue()))
                 .reduce((first, second) -> second)
-                .orElseThrow(() -> new IllegalStateException(String.format("No Accrual transaction found on %s", date)));
+                .orElseThrow(() -> new IllegalStateException("No Accrual transaction found on %s".formatted(date)));
         Long accrualTransactionId = accrualTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanAccrualTransactionCreatedBusinessEvent.class, accrualTransactionId);
@@ -3029,7 +3028,7 @@ public class LoanStepDef extends AbstractStepDef {
         List<GetLoansLoanIdTransactions> transactions = loanDetailsResponse.getTransactions();
         GetLoansLoanIdTransactions accrualAdjustmentTransaction = transactions.stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Accrual Adjustment".equals(t.getType().getValue())).findFirst()
-                .orElseThrow(() -> new IllegalStateException(String.format("No Accrual Adjustment transaction found on %s", date)));
+                .orElseThrow(() -> new IllegalStateException("No Accrual Adjustment transaction found on %s".formatted(date)));
         Long accrualAdjustmentTransactionId = accrualAdjustmentTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanAccrualAdjustmentTransactionBusinessEvent.class, accrualAdjustmentTransactionId);
@@ -3046,7 +3045,7 @@ public class LoanStepDef extends AbstractStepDef {
 
         GetLoansLoanIdTransactions loanTransaction = transactions.stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Charge Adjustment".equals(t.getType().getValue())).findFirst()
-                .orElseThrow(() -> new IllegalStateException(String.format("No Charge Adjustment transaction found on %s", date)));
+                .orElseThrow(() -> new IllegalStateException("No Charge Adjustment transaction found on %s".formatted(date)));
 
         eventAssertion.assertEventRaised(LoanChargeAdjustmentPostBusinessEvent.class, loanTransaction.getId());
     }
@@ -3082,8 +3081,8 @@ public class LoanStepDef extends AbstractStepDef {
 
         GetLoansLoanIdTransactions loanTransaction = transactions.stream()
                 .filter(t -> transactionDate.equals(FORMATTER.format(t.getDate())) && transactionType.equals(t.getType().getValue()))
-                .findFirst().orElseThrow(
-                        () -> new IllegalStateException(String.format("No %s transaction found on %s", transactionType, transactionDate)));
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No %s transaction found on %s".formatted(transactionType, transactionDate)));
         return loanTransaction;
     }
 
@@ -3189,8 +3188,7 @@ public class LoanStepDef extends AbstractStepDef {
 
         GetLoansLoanIdTransactionsTransactionIdResponse originalTransaction = ok(
                 () -> fineractClient.loanTransactions().retrieveTransaction(loanId, originalTransactionId, Map.of()));
-        assertNull(originalTransaction.getExternalId(),
-                String.format("Original transaction external id is not null %n%s", originalTransaction));
+        assertNull(originalTransaction.getExternalId(), "Original transaction external id is not null %n%s".formatted(originalTransaction));
     }
 
     @Then("LoanTransactionAccrualActivityPostBusinessEvent is raised on {string}")
@@ -3203,7 +3201,7 @@ public class LoanStepDef extends AbstractStepDef {
         List<GetLoansLoanIdTransactions> transactions = loanDetailsResponse.getTransactions();
         GetLoansLoanIdTransactions accrualTransaction = transactions.stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Accrual Activity".equals(t.getType().getValue())).findFirst()
-                .orElseThrow(() -> new IllegalStateException(String.format("No Accrual activity transaction found on %s", date)));
+                .orElseThrow(() -> new IllegalStateException("No Accrual activity transaction found on %s".formatted(date)));
         Long accrualTransactionId = accrualTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanTransactionAccrualActivityPostEvent.class, accrualTransactionId);
@@ -3301,7 +3299,7 @@ public class LoanStepDef extends AbstractStepDef {
                 Map.of("staffInSelectedOfficeOnly", "false", "associations", "transactions")));
         List<GetLoansLoanIdTransactions> transactions = loanDetailsResponse.getTransactions();
         GetLoansLoanIdTransactions chargeOffTransaction = transactions.stream().filter(t -> "Charge-off".equals(t.getType().getValue()))
-                .findFirst().orElseThrow(() -> new IllegalStateException(String.format("No transaction found")));
+                .findFirst().orElseThrow(() -> new IllegalStateException("No transaction found".formatted()));
         Long chargeOffTransactionId = chargeOffTransaction.getId();
 
         eventAssertion.assertEvent(LoanChargeOffUndoEvent.class, chargeOffTransactionId).extractingData(loanTransactionDataV1 -> {
@@ -3390,8 +3388,8 @@ public class LoanStepDef extends AbstractStepDef {
         Map<String, Integer> repaymentStartDateTypeMap = Map.of("DISBURSEMENT_DATE", 1, "SUBMITTED_ON_DATE", 2);
 
         if (!repaymentStartDateTypeMap.containsKey(repaymentStartDateType)) {
-            throw new IllegalArgumentException(String
-                    .format("Invalid repaymentStartDateType: %s. Must be DISBURSEMENT_DATE or SUBMITTED_ON_DATE.", repaymentStartDateType));
+            throw new IllegalArgumentException("Invalid repaymentStartDateType: %s. Must be DISBURSEMENT_DATE or SUBMITTED_ON_DATE."
+                    .formatted(repaymentStartDateType));
         }
 
         int repaymentStartDateTypeValue = repaymentStartDateTypeMap.get(repaymentStartDateType);
@@ -4472,7 +4470,7 @@ public class LoanStepDef extends AbstractStepDef {
                     boolean hasReplayed = t.getTransactionRelations().stream().anyMatch(e -> "REPLAYED".equals(e.getRelationType()));
                     actualValues.add(hasReplayed ? "true" : "false");
                 }
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;
@@ -4498,7 +4496,7 @@ public class LoanStepDef extends AbstractStepDef {
                 case "Charged Off Amount" -> actualValues
                         .add(t.getChargedOffAmount() == null ? new Utils.DoubleFormatter(new BigDecimal("0.0").doubleValue()).format()
                                 : new Utils.DoubleFormatter(t.getChargedOffAmount().doubleValue()).format());
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;
@@ -4523,7 +4521,7 @@ public class LoanStepDef extends AbstractStepDef {
                 case "Charged Off Amount" -> actualValues
                         .add(t.getChargedOffAmount() == null ? new Utils.DoubleFormatter(new BigDecimal("0.0").doubleValue()).format()
                                 : new Utils.DoubleFormatter(t.getChargedOffAmount().doubleValue()).format());
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;
@@ -4541,7 +4539,7 @@ public class LoanStepDef extends AbstractStepDef {
                     actualValues.add(t.getPrincipal() == null ? null : new Utils.DoubleFormatter(t.getPrincipal().doubleValue()).format());
                 case "Net Disbursal Amount" -> actualValues.add(t.getNetDisbursalAmount() == null ? null
                         : new Utils.DoubleFormatter(t.getNetDisbursalAmount().doubleValue()).format());
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;
@@ -4580,7 +4578,7 @@ public class LoanStepDef extends AbstractStepDef {
                         : new Utils.DoubleFormatter(repaymentPeriod.getTotalWaivedForPeriod().doubleValue()).format());
                 case "Outstanding" -> actualValues.add(repaymentPeriod.getTotalOutstandingForPeriod() == null ? null
                         : new Utils.DoubleFormatter(repaymentPeriod.getTotalOutstandingForPeriod().doubleValue()).format());
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;
@@ -4715,7 +4713,7 @@ public class LoanStepDef extends AbstractStepDef {
         for (GetLoansLoanIdTransactionsTransactionIdResponse transaction : transactions) {
             String transactionType = transaction.getType().getCode();
             assertThat(excludedTypesList.contains(transactionType))
-                    .as(String.format("Transaction type '%s' should be excluded but was found in the filtered results", transactionType))
+                    .as("Transaction type '%s' should be excluded but was found in the filtered results".formatted(transactionType))
                     .isFalse();
         }
     }
@@ -4736,7 +4734,7 @@ public class LoanStepDef extends AbstractStepDef {
         for (GetLoansLoanIdTransactionsTransactionIdResponse transaction : transactions) {
             String transactionType = transaction.getType().getCode();
             assertThat(excludedTypesList.contains(transactionType))
-                    .as(String.format("Transaction type '%s' should be excluded but was found in the filtered results", transactionType))
+                    .as("Transaction type '%s' should be excluded but was found in the filtered results".formatted(transactionType))
                     .isFalse();
         }
     }
@@ -4838,7 +4836,7 @@ public class LoanStepDef extends AbstractStepDef {
                     actualValues.add(t.getOutstandingLoanBalance() == null ? null : String.valueOf(t.getOutstandingLoanBalance()));
                 case "Overpayment" ->
                     actualValues.add(t.getOverpaymentPortion() == null ? null : String.valueOf(t.getOverpaymentPortion()));
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;
@@ -5165,8 +5163,8 @@ public class LoanStepDef extends AbstractStepDef {
         List<GetLoansLoanIdTransactions> transactions = loanDetailsResponse.getTransactions();
         GetLoansLoanIdTransactions finalAmortizationTransaction = transactions.stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Capitalized Income Amortization".equals(t.getType().getValue()))
-                .findFirst().orElseThrow(
-                        () -> new IllegalStateException(String.format("No Capitalized Income Amortization transaction found on %s", date)));
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No Capitalized Income Amortization transaction found on %s".formatted(date)));
         Long finalAmortizationTransactionId = finalAmortizationTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanCapitalizedIncomeAmortizationTransactionCreatedBusinessEvent.class,
@@ -5185,7 +5183,7 @@ public class LoanStepDef extends AbstractStepDef {
                 .filter(t -> date.equals(FORMATTER.format(t.getDate()))
                         && "Capitalized Income Amortization Adjustment".equals(t.getType().getValue()))
                 .findFirst().orElseThrow(() -> new IllegalStateException(
-                        String.format("No Capitalized Income Amortization Adjustment transaction found on %s", date)));
+                        "No Capitalized Income Amortization Adjustment transaction found on %s".formatted(date)));
         Long finalAmortizationTransactionId = finalAmortizationTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanCapitalizedIncomeAmortizationAdjustmentTransactionCreatedBusinessEvent.class,
@@ -5202,7 +5200,7 @@ public class LoanStepDef extends AbstractStepDef {
         List<GetLoansLoanIdTransactions> transactions = loanDetailsResponse.getTransactions();
         GetLoansLoanIdTransactions finalAmortizationTransaction = transactions.stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Capitalized Income".equals(t.getType().getValue())).findFirst()
-                .orElseThrow(() -> new IllegalStateException(String.format("No Capitalized Income transaction found on %s", date)));
+                .orElseThrow(() -> new IllegalStateException("No Capitalized Income transaction found on %s".formatted(date)));
         Long finalAmortizationTransactionId = finalAmortizationTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanCapitalizedIncomeTransactionCreatedBusinessEvent.class, finalAmortizationTransactionId);
@@ -5218,8 +5216,8 @@ public class LoanStepDef extends AbstractStepDef {
         List<GetLoansLoanIdTransactions> transactions = loanDetailsResponse.getTransactions();
         GetLoansLoanIdTransactions finalAmortizationTransaction = transactions.stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Capitalized Income Adjustment".equals(t.getType().getValue()))
-                .findFirst().orElseThrow(
-                        () -> new IllegalStateException(String.format("No Capitalized Income Adjustment transaction found on %s", date)));
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No Capitalized Income Adjustment transaction found on %s".formatted(date)));
         Long finalAmortizationTransactionId = finalAmortizationTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanCapitalizedIncomeAdjustmentTransactionCreatedBusinessEvent.class,
@@ -5467,7 +5465,7 @@ public class LoanStepDef extends AbstractStepDef {
         final GetLoansLoanIdTransactions loanContractTerminationTransaction = transactions.stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Contract Termination".equals(t.getType().getValue()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException(String.format("No Contract Termination transaction found on %s", date)));
+                .orElseThrow(() -> new IllegalStateException("No Contract Termination transaction found on %s".formatted(date)));
         final Long loanContractTerminationTransactionId = loanContractTerminationTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanTransactionContractTerminationPostBusinessEvent.class, loanContractTerminationTransactionId);
@@ -5839,7 +5837,7 @@ public class LoanStepDef extends AbstractStepDef {
         List<GetLoansLoanIdTransactions> transactions = loanDetailsResponse.getTransactions();
         GetLoansLoanIdTransactions buyDownFeeTransaction = transactions.stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Buy Down Fee".equals(t.getType().getValue())).findFirst()
-                .orElseThrow(() -> new IllegalStateException(String.format("No Buy Down Fee transaction found on %s", date)));
+                .orElseThrow(() -> new IllegalStateException("No Buy Down Fee transaction found on %s".formatted(date)));
         Long buyDownFeeTransactionId = buyDownFeeTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanBuyDownFeeTransactionCreatedBusinessEvent.class, buyDownFeeTransactionId);
@@ -5856,7 +5854,7 @@ public class LoanStepDef extends AbstractStepDef {
         GetLoansLoanIdTransactions buyDownFeeAmortizationTransaction = transactions.stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Buy Down Fee Amortization".equals(t.getType().getValue()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException(String.format("No Buy Down Fee Amortization transaction found on %s", date)));
+                .orElseThrow(() -> new IllegalStateException("No Buy Down Fee Amortization transaction found on %s".formatted(date)));
         Long buyDownFeeAmortizationTransactionId = buyDownFeeAmortizationTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanBuyDownFeeAmortizationTransactionCreatedBusinessEvent.class,
@@ -5874,7 +5872,7 @@ public class LoanStepDef extends AbstractStepDef {
         GetLoansLoanIdTransactions buyDownFeeAdjustmentTransaction = transactions.stream()
                 .filter(t -> date.equals(FORMATTER.format(t.getDate())) && "Buy Down Fee Adjustment".equals(t.getType().getValue()))
                 .findFirst()
-                .orElseThrow(() -> new IllegalStateException(String.format("No Buy Down Fee Adjustment transaction found on %s", date)));
+                .orElseThrow(() -> new IllegalStateException("No Buy Down Fee Adjustment transaction found on %s".formatted(date)));
         Long buyDownFeeAdjustmentTransactionId = buyDownFeeAdjustmentTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanBuyDownFeeAdjustmentTransactionCreatedBusinessEvent.class, buyDownFeeAdjustmentTransactionId);
@@ -5890,8 +5888,8 @@ public class LoanStepDef extends AbstractStepDef {
         List<GetLoansLoanIdTransactions> transactions = loanDetailsResponse.getTransactions();
         GetLoansLoanIdTransactions buyDownFeeAmortizationAdjustmentTransaction = transactions.stream().filter(
                 t -> date.equals(FORMATTER.format(t.getDate())) && "Buy Down Fee Amortization Adjustment".equals(t.getType().getValue()))
-                .findFirst().orElseThrow(() -> new IllegalStateException(
-                        String.format("No Buy Down Fee Amortization Adjustment transaction found on %s", date)));
+                .findFirst().orElseThrow(
+                        () -> new IllegalStateException("No Buy Down Fee Amortization Adjustment transaction found on %s".formatted(date)));
         Long buyDownFeeAmortizationAdjustmentTransactionId = buyDownFeeAmortizationAdjustmentTransaction.getId();
 
         eventAssertion.assertEventRaised(LoanBuyDownFeeAmortizationAdjustmentTransactionCreatedBusinessEvent.class,
@@ -5908,14 +5906,14 @@ public class LoanStepDef extends AbstractStepDef {
         List<GetLoansLoanIdTransactions> transactions = loanDetailsResponse.getTransactions();
         GetLoansLoanIdTransactions transaction = transactions.stream()
                 .filter(t -> transactionType.equals(t.getType().getValue()) && expectedDate.equals(FORMATTER.format(t.getDate())))
-                .findFirst().orElseThrow(
-                        () -> new IllegalStateException(String.format("No %s transaction found on %s", transactionType, expectedDate)));
+                .findFirst()
+                .orElseThrow(() -> new IllegalStateException("No %s transaction found on %s".formatted(transactionType, expectedDate)));
 
         // Get detailed transaction information including classification
         GetLoansLoanIdTransactionsTransactionIdResponse transactionDetailsResponse = ok(
                 () -> fineractClient.loanTransactions().retrieveTransaction(loanId, transaction.getId(), (String) null));
         GetLoansLoanIdTransactionsTransactionIdResponse transactionDetails = transactionDetailsResponse;
-        assertThat(transactionDetails.getClassification()).as(String.format("%s transaction should have classification", transactionType))
+        assertThat(transactionDetails.getClassification()).as("%s transaction should have classification".formatted(transactionType))
                 .isNotNull();
         assertThat(transactionDetails.getClassification().getName()).as("Classification name should match expected value")
                 .isEqualTo(expectedClassification);
@@ -5932,7 +5930,7 @@ public class LoanStepDef extends AbstractStepDef {
             }
         }
 
-        throw new IllegalStateException(String.format("Code [%s] with code value [%s] cannot be found", codeName, codeValueName));
+        throw new IllegalStateException("Code [%s] with code value [%s] cannot be found".formatted(codeName, codeValueName));
     }
 
     @And("Loan Amortization Allocation Mapping for {string} transaction created on {string} contains the following data:")
@@ -6052,7 +6050,7 @@ public class LoanStepDef extends AbstractStepDef {
                 case "Amount" ->
                     actualValues.add(t.getAmount() == null ? new Utils.DoubleFormatter(new BigDecimal("0.0").doubleValue()).format()
                             : new Utils.DoubleFormatter(t.getAmount().doubleValue()).format());
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;

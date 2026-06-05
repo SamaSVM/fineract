@@ -47,20 +47,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.batch.core.configuration.JobRegistry;
-import org.springframework.batch.core.explore.JobExplorer;
-import org.springframework.batch.core.launch.JobLauncher;
 import org.springframework.batch.core.launch.JobOperator;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.batch.BatchAutoConfiguration;
-import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
-import org.springframework.boot.autoconfigure.liquibase.LiquibaseAutoConfiguration;
-import org.springframework.boot.autoconfigure.liquibase.LiquibaseProperties;
-import org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration;
+import org.springframework.boot.batch.autoconfigure.BatchAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.boot.hibernate.autoconfigure.HibernateJpaAutoConfiguration;
+import org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration;
+import org.springframework.boot.jdbc.autoconfigure.DataSourceTransactionManagerAutoConfiguration;
+import org.springframework.boot.jdbc.autoconfigure.JdbcTemplateAutoConfiguration;
+import org.springframework.boot.liquibase.autoconfigure.LiquibaseAutoConfiguration;
+import org.springframework.boot.liquibase.autoconfigure.LiquibaseProperties;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -79,8 +77,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @Configuration
 @EnableAutoConfiguration(exclude = { DataSourceAutoConfiguration.class, HibernateJpaAutoConfiguration.class,
-        DataSourceTransactionManagerAutoConfiguration.class, GsonAutoConfiguration.class, JdbcTemplateAutoConfiguration.class,
-        LiquibaseAutoConfiguration.class, BatchAutoConfiguration.class })
+        DataSourceTransactionManagerAutoConfiguration.class, JdbcTemplateAutoConfiguration.class, LiquibaseAutoConfiguration.class,
+        BatchAutoConfiguration.class })
 @EnableTransactionManagement
 @EnableWebSecurity
 @EnableConfigurationProperties({ FineractProperties.class, LiquibaseProperties.class })
@@ -91,6 +89,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class TestConfiguration {
 
     @Bean
+    @DependsOnDatabaseInitialization
     public TenantDataSourceFactory tenantDataSourceFactory(HikariConfig hikariConfig, DatabasePasswordEncryptor databasePasswordEncryptor) {
         return new TenantDataSourceFactory(hikariConfig, null, databasePasswordEncryptor) {
 
@@ -117,6 +116,7 @@ public class TestConfiguration {
      * DataSource with Mockito RETURNS_MOCKS black magic.
      */
     @Bean
+    @DependsOnDatabaseInitialization
     public RoutingDataSource hikariTenantDataSource() {
         RoutingDataSource mockDataSource = mock(RoutingDataSource.class, RETURNS_MOCKS);
         return mockDataSource;
@@ -138,16 +138,19 @@ public class TestConfiguration {
     }
 
     @Bean
+    @DependsOnDatabaseInitialization
     public ExtendedSpringLiquibaseFactory liquibaseFactory() {
         return mock(ExtendedSpringLiquibaseFactory.class, RETURNS_MOCKS);
     }
 
     @Bean
+    @DependsOnDatabaseInitialization
     public DatabaseIndependentQueryService databaseIndependentQueryService() {
         return mock(DatabaseIndependentQueryService.class, RETURNS_MOCKS);
     }
 
     @Bean
+    @DependsOnDatabaseInitialization
     public TenantDatabaseStateVerifier tenantDatabaseStateVerifier(DatabaseIndependentQueryService databaseIndependentQueryService,
             LiquibaseProperties liquibaseProperties, DatabaseTypeResolver databaseTypeResolver) {
         return new TenantDatabaseStateVerifier(liquibaseProperties, databaseIndependentQueryService, databaseTypeResolver);
@@ -158,6 +161,7 @@ public class TestConfiguration {
      * which accesses the database on start-up.
      */
     @Bean
+    @DependsOnDatabaseInitialization
     public TenantDatabaseUpgradeService tenantDatabaseUpgradeService(TenantDetailsService tenantDetailsService,
             HikariDataSource tenantDataSource, TenantDatabaseStateVerifier tenantDatabaseStateVerifier,
             ExtendedSpringLiquibaseFactory liquibaseFactory, TenantDataSourceFactory tenantDataSourceFactory,
@@ -184,14 +188,14 @@ public class TestConfiguration {
 
     @Primary
     @Bean
-    public JobExplorer jobExplorer() {
-        return mock(JobExplorer.class, RETURNS_MOCKS);
+    public JobRepository jobExplorer() {
+        return mock(JobRepository.class, RETURNS_MOCKS);
     }
 
     @Primary
     @Bean
-    public JobLauncher jobLauncher() {
-        return mock(JobLauncher.class, RETURNS_MOCKS);
+    public JobOperator jobLauncher() {
+        return mock(JobOperator.class, RETURNS_MOCKS);
     }
 
     @Primary

@@ -336,7 +336,7 @@ public class ReportingStepDef extends AbstractStepDef {
     private String formatRows(final List<List<String>> rows) {
         final StringBuilder sb = new StringBuilder();
         for (int i = 0; i < rows.size(); i++) {
-            sb.append(String.format("  [%d] %s%n", i + 1, String.join(" | ", rows.get(i))));
+            sb.append("  [%d] %s%n".formatted(i + 1, String.join(" | ", rows.get(i))));
         }
         return sb.toString();
     }

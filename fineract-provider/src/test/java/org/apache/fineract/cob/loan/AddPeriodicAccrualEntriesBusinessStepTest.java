@@ -96,7 +96,7 @@ public class AddPeriodicAccrualEntriesBusinessStepTest {
                 () -> underTest.execute(loanForProcessing));
         // then
         verify(loanAccrualsProcessingService, times(1)).addPeriodicAccruals(any(LocalDate.class), eq(loanForProcessing));
-        assertEquals(String.format("Fail to process period accrual for loan id [%s]", loanId), businessStepException.getMessage());
+        assertEquals("Fail to process period accrual for loan id [%s]".formatted(loanId), businessStepException.getMessage());
     }
 
     @Test

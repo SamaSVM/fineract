@@ -1382,7 +1382,7 @@ public class ShareAccountIntegrationTests {
         }
 
         Assertions.assertTrue(transactionFound,
-                String.format("Transaction with type %s for %s should exist", transactionTypeCode, expectedDate));
+                "Transaction with type %s for %s should exist".formatted(transactionTypeCode, expectedDate));
     }
 
     private void verifyTransactionWithShares(List<Map<String, Object>> transactions, String transactionTypeCode, String expectedDate,
@@ -1405,7 +1405,7 @@ public class ShareAccountIntegrationTests {
             }
         }
 
-        Assertions.assertTrue(transactionFound, String.format("Transaction for %s should be successfully created", expectedDate));
+        Assertions.assertTrue(transactionFound, "Transaction for %s should be successfully created".formatted(expectedDate));
     }
 
     private Integer setupAndActivateShareAccount(Integer clientId, Integer productId, Integer savingsAccountId, String initialDate) {

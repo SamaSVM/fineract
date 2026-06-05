@@ -21,7 +21,6 @@ package org.apache.fineract.portfolio.loanaccount.service;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mockStatic;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -186,10 +185,6 @@ public class LoanDownPaymentHandlerServiceImplTest {
         dateUtilsMock.when(DateUtils::getBusinessLocalDate).thenReturn(LocalDate.of(2024, 11, 19));
 
         when(scheduleGeneratorDTO.getHolidayDetailDTO()).thenReturn(holidayDetailDTO);
-
-        doNothing().when(businessEventNotifierService).notifyPreBusinessEvent(any(LoanTransactionDownPaymentPreBusinessEvent.class));
-        doNothing().when(businessEventNotifierService).notifyPostBusinessEvent(any(LoanTransactionDownPaymentPostBusinessEvent.class));
-        doNothing().when(businessEventNotifierService).notifyPostBusinessEvent(any(LoanBalanceChangedBusinessEvent.class));
         when(loanTransactionRepository.saveAndFlush(any(LoanTransaction.class))).thenReturn(loanTransaction);
 
         // when
@@ -240,8 +235,6 @@ public class LoanDownPaymentHandlerServiceImplTest {
         dateUtilsMock.when(DateUtils::getBusinessLocalDate).thenReturn(LocalDate.of(2024, 11, 19));
 
         when(scheduleGeneratorDTO.getHolidayDetailDTO()).thenReturn(holidayDetailDTO);
-
-        doNothing().when(businessEventNotifierService).notifyPreBusinessEvent(any(LoanTransactionDownPaymentPreBusinessEvent.class));
 
         // when
         LoanTransaction actual = underTest.handleDownPayment(scheduleGeneratorDTO, command, disbursement, loanForProcessing);

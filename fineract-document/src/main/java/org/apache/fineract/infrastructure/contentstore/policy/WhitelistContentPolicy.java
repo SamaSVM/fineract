@@ -52,7 +52,7 @@ public class WhitelistContentPolicy implements ContentPolicy {
             boolean matches = regexWhitelist.stream().anyMatch(p -> p.matcher(fileName).matches());
 
             if (!matches) {
-                throw new ContentPolicyException(String.format("File name not allowed: %s", fileName));
+                throw new ContentPolicyException("File name not allowed: %s".formatted(fileName));
             }
         }
 
@@ -60,12 +60,12 @@ public class WhitelistContentPolicy implements ContentPolicy {
             final var fileName = FilenameUtils.getName(ctx.getPath());
 
             if (StringUtils.isEmpty(ctx.getMimeType())) {
-                throw new ContentPolicyException(String.format("Could not detect mime type for filename %s!", fileName));
+                throw new ContentPolicyException("Could not detect mime type for filename %s!".formatted(fileName));
             }
 
             if (!properties.getContent().getMimeWhitelist().contains(ctx.getMimeType())) {
                 throw new ContentPolicyException(
-                        String.format("Detected mime type %s for filename %s not allowed!", ctx.getMimeType(), fileName));
+                        "Detected mime type %s for filename %s not allowed!".formatted(ctx.getMimeType(), fileName));
             }
         }
     }

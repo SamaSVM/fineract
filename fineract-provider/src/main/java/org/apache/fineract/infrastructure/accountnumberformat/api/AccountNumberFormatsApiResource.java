@@ -75,8 +75,15 @@ public class AccountNumberFormatsApiResource {
     @GET
     @Path("template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Account number format Template", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n"
-            + "\n" + "Field Defaults\n" + "Allowed Value Lists\n" + "\n" + "Example Request:\n" + "\n" + "accountnumberformats/template")
+    @Operation(summary = "Retrieve Account number format Template", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+
+            Field Defaults
+            Allowed Value Lists
+
+            Example Request:
+
+            accountnumberformats/template""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AccountNumberFormatsApiResourceSwagger.GetAccountNumberFormatsResponseTemplate.class)))
     public String retrieveTemplate(@Context final UriInfo uriInfo) {
 
@@ -91,8 +98,13 @@ public class AccountNumberFormatsApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Account number formats", description = "Example Requests:\n" + "\n" + "accountnumberformats\n" + "\n" + "\n"
-            + "accountnumberformats?fields=accountType,prefixType")
+    @Operation(summary = "List Account number formats", description = """
+            Example Requests:
+
+            accountnumberformats
+
+
+            accountnumberformats?fields=accountType,prefixType""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = AccountNumberFormatsApiResourceSwagger.GetAccountNumberFormatsIdResponse.class))))
     public String retrieveAll(@Context final UriInfo uriInfo) {
 
@@ -108,8 +120,16 @@ public class AccountNumberFormatsApiResource {
     @GET
     @Path("{accountNumberFormatId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve an Account number format", description = "Example Requests:\n" + "\n" + "accountnumberformats/1\n" + "\n"
-            + "\n" + "accountnumberformats/1?template=true\n" + "\n" + "\n" + "accountnumberformats/1?fields=accountType,prefixType")
+    @Operation(summary = "Retrieve an Account number format", description = """
+            Example Requests:
+
+            accountnumberformats/1
+
+
+            accountnumberformats/1?template=true
+
+
+            accountnumberformats/1?fields=accountType,prefixType""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AccountNumberFormatsApiResourceSwagger.GetAccountNumberFormatsIdResponse.class)))
     public String retrieveOne(@Context final UriInfo uriInfo,
             @PathParam("accountNumberFormatId") @Parameter(description = "accountNumberFormatId") final Long accountNumberFormatId) {
@@ -132,8 +152,10 @@ public class AccountNumberFormatsApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create an Account number format", description = "Note: You may associate a single Account number format for a given account type\n"
-            + "Mandatory Fields for Account number formats\n" + "accountType")
+    @Operation(summary = "Create an Account number format", description = """
+            Note: You may associate a single Account number format for a given account type
+            Mandatory Fields for Account number formats
+            accountType""")
     @RequestBody(content = @Content(schema = @Schema(implementation = AccountNumberFormatsApiResourceSwagger.PostAccountNumberFormatsRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AccountNumberFormatsApiResourceSwagger.PostAccountNumberFormatsResponse.class)))
     public String create(@Parameter(hidden = true) final String apiRequestBodyAsJson) {

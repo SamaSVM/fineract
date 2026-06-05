@@ -28,11 +28,12 @@ import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConn
 import org.apache.fineract.infrastructure.core.service.database.DatabasePasswordEncryptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.stereotype.Component;
 
 @Component
+@DependsOnDatabaseInitialization
 public class TenantDataSourceFactory {
 
     private static final Logger LOG = LoggerFactory.getLogger(TenantDataSourceFactory.class);
@@ -42,7 +43,6 @@ public class TenantDataSourceFactory {
 
     private final DatabasePasswordEncryptor databasePasswordEncryptor;
 
-    @Autowired
     public TenantDataSourceFactory(HikariConfig hikariConfig, @Qualifier("hikariTenantDataSource") HikariDataSource tenantDataSource,
             DatabasePasswordEncryptor databasePasswordEncryptor) {
         this.hikariConfig = hikariConfig;

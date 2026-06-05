@@ -87,7 +87,7 @@ public final class ThreadLocalContextUtil {
     public static LocalDate getBusinessDateByType(BusinessDateType businessDateType) {
         Assert.notNull(businessDateType, "Business date type cannot be null!");
         LocalDate localDate = getBusinessDates().get(businessDateType);
-        Assert.notNull(localDate, String.format("Business date with type `%s` is not initialised!", businessDateType));
+        Assert.notNull(localDate, "Business date with type `%s` is not initialised!".formatted(businessDateType));
         return localDate;
     }
 

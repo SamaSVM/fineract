@@ -95,7 +95,7 @@ public class LoanCOBPerformanceRestTest extends BaseLoanIntegrationTest {
         LOG.info("========================================================================");
 
         // Table header
-        LOG.info(String.format("%-25s | %-20s | %-20s | %-20s", "Test Configuration", "Loan Creation Time", "First COB Run Time",
+        LOG.info("%-25s | %-20s | %-20s | %-20s".formatted("Test Configuration", "Loan Creation Time", "First COB Run Time",
                 "Second COB Run Time"));
         LOG.info("-------------------------------------------------------------------------");
 
@@ -109,7 +109,7 @@ public class LoanCOBPerformanceRestTest extends BaseLoanIntegrationTest {
             long firstCobTime = (long) metrics.get("firstCOBTimeMs");
             long secondCobTime = (long) metrics.get("secondCOBTimeMs");
 
-            LOG.info(String.format("%-25s | %-20s | %-20s | %-20s", testName + " (" + loanCount + " loans)",
+            LOG.info("%-25s | %-20s | %-20s | %-20s".formatted(testName + " (" + loanCount + " loans)",
                     createTime + " ms (" + (createTime / loanCount) + " ms/loan)",
                     firstCobTime + " ms (" + (firstCobTime / loanCount) + " ms/loan)",
                     secondCobTime + " ms (" + (secondCobTime / loanCount) + " ms/loan)"));
@@ -155,12 +155,12 @@ public class LoanCOBPerformanceRestTest extends BaseLoanIntegrationTest {
 
                 double secondCOBRatio = (double) ((long) maxMetrics.get("secondCOBTimeMs")) / ((long) minMetrics.get("secondCOBTimeMs"));
 
-                LOG.info(String.format("Loan count increased by a factor of %.2f (from %d to %d)", loanCountRatio, minLoans, maxLoans));
-                LOG.info(String.format("Loan creation time increased by a factor of %.2f (scaling efficiency: %.2f%%)", createTimeRatio,
+                LOG.info("Loan count increased by a factor of %.2f (from %d to %d)".formatted(loanCountRatio, minLoans, maxLoans));
+                LOG.info("Loan creation time increased by a factor of %.2f (scaling efficiency: %.2f%%)".formatted(createTimeRatio,
                         (loanCountRatio / createTimeRatio) * 100));
-                LOG.info(String.format("First COB run time increased by a factor of %.2f (scaling efficiency: %.2f%%)", firstCOBRatio,
+                LOG.info("First COB run time increased by a factor of %.2f (scaling efficiency: %.2f%%)".formatted(firstCOBRatio,
                         (loanCountRatio / firstCOBRatio) * 100));
-                LOG.info(String.format("Second COB run time increased by a factor of %.2f (scaling efficiency: %.2f%%)", secondCOBRatio,
+                LOG.info("Second COB run time increased by a factor of %.2f (scaling efficiency: %.2f%%)".formatted(secondCOBRatio,
                         (loanCountRatio / secondCOBRatio) * 100));
                 LOG.info("------------------------------------------------------------------------");
                 LOG.info("Note: Scaling efficiency > 100% indicates better than linear scaling");

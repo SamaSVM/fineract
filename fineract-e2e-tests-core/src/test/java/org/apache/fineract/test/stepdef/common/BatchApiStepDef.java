@@ -80,11 +80,12 @@ import org.apache.fineract.test.messaging.event.loan.LoanRescheduledDueAdjustSch
 import org.apache.fineract.test.stepdef.AbstractStepDef;
 import org.apache.fineract.test.support.TestContextKey;
 import org.springframework.beans.factory.annotation.Autowired;
+import tools.jackson.core.JacksonException;
 
 @Slf4j
 public class BatchApiStepDef extends AbstractStepDef {
 
-    private static final com.fasterxml.jackson.databind.ObjectMapper OBJECT_MAPPER = org.apache.fineract.client.feign.ObjectMapperFactory
+    private static final tools.jackson.databind.ObjectMapper OBJECT_MAPPER = org.apache.fineract.client.feign.ObjectMapperFactory
             .getShared();
     private static final String DATE_FORMAT = "dd MMMM yyyy";
     private static final String DEFAULT_LOCALE = "en";
@@ -682,7 +683,7 @@ public class BatchApiStepDef extends AbstractStepDef {
     public void checkGivenStepResult(int nr, int resultStatusCode) {
         List<BatchResponse> batchResponseList = testContext().get(TestContextKey.BATCH_API_CALL_RESPONSE);
         BatchResponse stepResponse = batchResponseList.stream().filter(r -> r.getRequestId() == nr).findAny()
-                .orElseThrow(() -> new IllegalStateException(String.format("Request id %s not found", nr)));
+                .orElseThrow(() -> new IllegalStateException("Request id %s not found".formatted(nr)));
 
         assertThat(stepResponse.getStatusCode()).as(ErrorMessageHelper.wrongStatusCode(stepResponse.getStatusCode(), resultStatusCode))
                 .isEqualTo(resultStatusCode);
@@ -692,7 +693,7 @@ public class BatchApiStepDef extends AbstractStepDef {
     public void errorCodeInStep(int step, int errorCode) {
         List<BatchResponse> batchResponseList = testContext().get(TestContextKey.BATCH_API_CALL_RESPONSE);
         BatchResponse response = batchResponseList.stream().filter(r -> r.getRequestId() == step).findAny()
-                .orElseThrow(() -> new IllegalStateException(String.format("Step %s is not found", step)));
+                .orElseThrow(() -> new IllegalStateException("Step %s is not found".formatted(step)));
         ErrorResponse errorResponse = fromJson(response.getBody(), ErrorResponse.class);
 
         String developerMessageActual = errorResponse.getDeveloperMessage();
@@ -850,7 +851,7 @@ public class BatchApiStepDef extends AbstractStepDef {
         } else if (nr == 2) {
             clientExternalId = testContext().get(TestContextKey.BATCH_API_CALL_CLIENT_EXTERNAL_ID_2);
         } else {
-            throw new IllegalStateException(String.format("Nr. %s client external ID not found", nr));
+            throw new IllegalStateException("Nr. %s client external ID not found".formatted(nr));
         }
 
         Map<String, Object> clientQueryParams = new HashMap<>();
@@ -867,7 +868,7 @@ public class BatchApiStepDef extends AbstractStepDef {
         } else if (nr == 2) {
             loanExternalId = testContext().get(TestContextKey.BATCH_API_CALL_LOAN_EXTERNAL_ID_2);
         } else {
-            throw new IllegalStateException(String.format("Nr. %s loan external ID not found", nr));
+            throw new IllegalStateException("Nr. %s loan external ID not found".formatted(nr));
         }
 
         Map<String, Object> loanQueryParams = new HashMap<>();
@@ -884,7 +885,7 @@ public class BatchApiStepDef extends AbstractStepDef {
         } else if (nr == 2) {
             loanExternalId = testContext().get(TestContextKey.BATCH_API_CALL_LOAN_EXTERNAL_ID_2);
         } else {
-            throw new IllegalStateException(String.format("Nr. %s loan external ID not found", nr));
+            throw new IllegalStateException("Nr. %s loan external ID not found".formatted(nr));
         }
 
         Map<String, Object> loanQueryParams = new HashMap<>();
@@ -908,7 +909,7 @@ public class BatchApiStepDef extends AbstractStepDef {
         } else if (nr == 2) {
             clientExternalId = testContext().get(TestContextKey.BATCH_API_CALL_CLIENT_EXTERNAL_ID_2);
         } else {
-            throw new IllegalStateException(String.format("Nr. %s client external id mot found", nr));
+            throw new IllegalStateException("Nr. %s client external id mot found".formatted(nr));
         }
 
         // Feign throws exceptions on errors instead of returning error in response body
@@ -946,7 +947,7 @@ public class BatchApiStepDef extends AbstractStepDef {
         } else if (nr == 2) {
             loanExternalId = testContext().get(TestContextKey.BATCH_API_CALL_LOAN_EXTERNAL_ID_2);
         } else {
-            throw new IllegalStateException(String.format("Nr. %s loan external id mot found", nr));
+            throw new IllegalStateException("Nr. %s loan external id mot found".formatted(nr));
         }
 
         Map<String, Object> loanQueryParams = new HashMap<>();
@@ -1298,8 +1299,8 @@ public class BatchApiStepDef extends AbstractStepDef {
         batchRequest.reference(referenceId);
         batchRequest.headers(setHeaders(idempotencyKey));
 
-        String interestPauseRequest = String
-                .format("{\"dateFormat\":\"dd MMMM yyyy\",\"locale\":\"en\",\"startDate\":\"%s\",\"endDate\":\"%s\"}", startDate, endDate);
+        String interestPauseRequest = "{\"dateFormat\":\"dd MMMM yyyy\",\"locale\":\"en\",\"startDate\":\"%s\",\"endDate\":\"%s\"}"
+                .formatted(startDate, endDate);
         batchRequest.body(interestPauseRequest);
 
         return batchRequest;
@@ -1314,8 +1315,8 @@ public class BatchApiStepDef extends AbstractStepDef {
         batchRequest.reference(referenceId);
         batchRequest.headers(setHeaders(idempotencyKey));
 
-        String interestPauseRequest = String
-                .format("{\"dateFormat\":\"dd MMMM yyyy\",\"locale\":\"en\",\"startDate\":\"%s\",\"endDate\":\"%s\"}", startDate, endDate);
+        String interestPauseRequest = "{\"dateFormat\":\"dd MMMM yyyy\",\"locale\":\"en\",\"startDate\":\"%s\",\"endDate\":\"%s\"}"
+                .formatted(startDate, endDate);
         batchRequest.body(interestPauseRequest);
 
         return batchRequest;
@@ -1344,7 +1345,7 @@ public class BatchApiStepDef extends AbstractStepDef {
 
         // Parse the loan ID from the response
         String loanCreateResponseBody = loanCreateResponse.getBody();
-        com.fasterxml.jackson.databind.JsonNode loanCreateJson = readTree(loanCreateResponseBody);
+        tools.jackson.databind.JsonNode loanCreateJson = readTree(loanCreateResponseBody);
         long loanId = loanCreateJson.get("loanId").asLong();
 
         // Get the loan details
@@ -1376,7 +1377,7 @@ public class BatchApiStepDef extends AbstractStepDef {
     private static String toJson(Object obj) {
         try {
             return OBJECT_MAPPER.writeValueAsString(obj);
-        } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException("Error serializing object to JSON", e);
         }
     }
@@ -1384,15 +1385,15 @@ public class BatchApiStepDef extends AbstractStepDef {
     private static <T> T fromJson(String json, Class<T> clazz) {
         try {
             return OBJECT_MAPPER.readValue(json, clazz);
-        } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException("Error deserializing JSON to object", e);
         }
     }
 
-    private static com.fasterxml.jackson.databind.JsonNode readTree(String json) {
+    private static tools.jackson.databind.JsonNode readTree(String json) {
         try {
             return OBJECT_MAPPER.readTree(json);
-        } catch (com.fasterxml.jackson.core.JsonProcessingException e) {
+        } catch (JacksonException e) {
             throw new RuntimeException("Error parsing JSON tree", e);
         }
     }

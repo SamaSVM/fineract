@@ -18,7 +18,6 @@
  */
 package org.apache.fineract.test.messaging;
 
-import static java.lang.String.format;
 import static org.awaitility.Awaitility.await;
 
 import java.math.BigDecimal;
@@ -88,7 +87,7 @@ public class EventAssertion {
             });
 
             String receivedEventsLogParam = eventStore.getReceivedEvents().stream().map(LoggedEvent::new).map(LoggedEvent::toString)
-                    .reduce("", (s, e) -> format("%s%s%n", s, e));
+                    .reduce("", (s, e) -> "%s%s%n".formatted(s, e));
             Assertions.fail("%s has been received, but it was unexpected. Events received but not verified: %s", event.getEventName(),
                     receivedEventsLogParam);
         } catch (ConditionTimeoutException e) {
@@ -119,7 +118,7 @@ public class EventAssertion {
                     .until(() -> eventStore.findByType(event).stream().anyMatch(filter));
 
             String receivedEventsLogParam = eventStore.getReceivedEvents().stream().map(LoggedEvent::new).map(LoggedEvent::toString)
-                    .reduce("", (s, e) -> format("%s%s%n", s, e));
+                    .reduce("", (s, e) -> "%s%s%n".formatted(s, e));
             Assertions.fail("%s has been received, but it was unexpected. Events received but not verified: %s", event.getEventName(),
                     receivedEventsLogParam);
         } catch (ConditionTimeoutException e) {

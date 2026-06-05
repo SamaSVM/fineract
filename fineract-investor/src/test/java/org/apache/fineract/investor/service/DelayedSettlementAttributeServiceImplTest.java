@@ -27,13 +27,15 @@ import java.util.List;
 import java.util.stream.Stream;
 import org.apache.fineract.infrastructure.core.service.Page;
 import org.apache.fineract.investor.data.ExternalTransferLoanProductAttributesData;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class DelayedSettlementAttributeServiceImplTest {
 
     private static final Long LOAN_PRODUCT_ID = 1L;
@@ -73,8 +75,6 @@ public class DelayedSettlementAttributeServiceImplTest {
         @InjectMocks
         private DelayedSettlementAttributeServiceImpl testSubject;
 
-        TestContext() {
-            MockitoAnnotations.openMocks(this);
-        }
+        TestContext() {}
     }
 }

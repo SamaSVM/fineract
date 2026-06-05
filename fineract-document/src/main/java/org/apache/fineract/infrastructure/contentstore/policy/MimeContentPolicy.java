@@ -40,8 +40,8 @@ public class MimeContentPolicy implements ContentPolicy {
                     .detect(ContentDetectorContext.builder().inputStream(ctx.getInputStream()).inputStreamEnabled(true).build());
 
             if (!Strings.CI.equals(result.getMimeType(), ctx.getMimeType())) {
-                throw new ContentPolicyException(String.format("Detected file type (%s), but mime type (%s) was provided. Mismatch!",
-                        result.getMimeType(), ctx.getMimeType()));
+                throw new ContentPolicyException("Detected file type (%s), but mime type (%s) was provided. Mismatch!"
+                        .formatted(result.getMimeType(), ctx.getMimeType()));
             }
         }
     }

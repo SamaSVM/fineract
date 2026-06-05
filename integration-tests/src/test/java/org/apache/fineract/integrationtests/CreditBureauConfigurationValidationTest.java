@@ -214,7 +214,7 @@ public class CreditBureauConfigurationValidationTest {
     private void assertValidationErrorInMessage(String message, String expectedFieldInError) {
         assertNotNull(message, "Exception message should not be null");
         assertTrue(message.contains(expectedFieldInError),
-                String.format("Expected validation error for field '%s' in message: %s", expectedFieldInError, message));
+                "Expected validation error for field '%s' in message: %s".formatted(expectedFieldInError, message));
         log.info("Received expected validation error for field '{}'", expectedFieldInError);
     }
 }

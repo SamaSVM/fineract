@@ -45,11 +45,12 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/audits")
 @Component
-@Tag(name = "Audits", description = "Every non-read Mifos API request is audited. A fully processed request can not be changed or deleted. See maker checker api for situations where an audit is not fully processed.\n"
-        + "\n"
-        + "Permissions: To search and look at audit entries a user needs to be attached to a role that has one of the ALL_FUNCTIONS, ALL_FUNCTIONS_READ or READ_AUDIT permissions.\n"
-        + "\n"
-        + "Data Scope: A user can only see audits that are within their data scope. However, 'head office' users can see all audits including those that aren't office/branch related e.g. Loan Product changes.\")")
+@Tag(name = "Audits", description = """
+        Every non-read Mifos API request is audited. A fully processed request can not be changed or deleted. See maker checker api for situations where an audit is not fully processed.
+
+        Permissions: To search and look at audit entries a user needs to be attached to a role that has one of the ALL_FUNCTIONS, ALL_FUNCTIONS_READ or READ_AUDIT permissions.
+
+        Data Scope: A user can only see audits that are within their data scope. However, 'head office' users can see all audits including those that aren't office/branch related e.g. Loan Product changes.")""")
 @RequiredArgsConstructor
 public class AuditsApiResource {
 
@@ -62,10 +63,20 @@ public class AuditsApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Audits", description = "Get a 200 list of audits that match the criteria supplied and sorted by audit id in descending order, and are within the requestors' data scope. Also it supports pagination and sorting\n"
-            + "\n" + "Example Requests:\n" + "\n" + "audits\n" + "\n" + "audits?fields=madeOnDate,maker,processingResult\n" + "\n"
-            + "audits?makerDateTimeFrom=2013-03-25 08:00:00&makerDateTimeTo=2013-04-04 18:00:00\n" + "\n" + "audits?officeId=1\n" + "\n"
-            + "audits?officeId=1&includeJson=true")
+    @Operation(summary = "List Audits", description = """
+            Get a 200 list of audits that match the criteria supplied and sorted by audit id in descending order, and are within the requestors' data scope. Also it supports pagination and sorting
+
+            Example Requests:
+
+            audits
+
+            audits?fields=madeOnDate,maker,processingResult
+
+            audits?makerDateTimeFrom=2013-03-25 08:00:00&makerDateTimeTo=2013-04-04 18:00:00
+
+            audits?officeId=1
+
+            audits?officeId=1&includeJson=true""")
     public String retrieveAuditEntries(@Context final UriInfo uriInfo, @BeanParam AuditRequest auditRequest,
             @QueryParam("offset") @Parameter(description = "offset") final Integer offset,
             @QueryParam("limit") @Parameter(description = "limit") final Integer limit,
@@ -87,8 +98,11 @@ public class AuditsApiResource {
     @GET
     @Path("{auditId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve an Audit Entry", description = "Example Requests:\n" + "\n" + "audits/20\n"
-            + "audits/20?fields=madeOnDate,maker,processingResult")
+    @Operation(summary = "Retrieve an Audit Entry", description = """
+            Example Requests:
+
+            audits/20
+            audits/20?fields=madeOnDate,maker,processingResult""")
     public AuditData retrieveAuditEntry(@PathParam("auditId") @Parameter final Long auditId) {
         context.authenticatedUser().validateHasReadPermission(RESOURCE_NAME_FOR_PERMISSIONS);
         return auditReadPlatformService.retrieveAuditEntry(auditId);
@@ -98,8 +112,13 @@ public class AuditsApiResource {
     @GET
     @Path("/searchtemplate")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Audit Search Template", description = "This is a convenience resource. It can be useful when building an Audit Search UI. \"appUsers\" are data scoped to the office/branch the requestor is associated with.\n"
-            + "\n" + "Example Requests:\n" + "\n" + "audits/searchtemplate\n" + "audits/searchtemplate?fields=actionNames")
+    @Operation(summary = "Audit Search Template", description = """
+            This is a convenience resource. It can be useful when building an Audit Search UI. "appUsers" are data scoped to the office/branch the requestor is associated with.
+
+            Example Requests:
+
+            audits/searchtemplate
+            audits/searchtemplate?fields=actionNames""")
     public AuditSearchData retrieveAuditSearchTemplate() {
         this.context.authenticatedUser().validateHasReadPermission(RESOURCE_NAME_FOR_PERMISSIONS);
         return this.auditReadPlatformService.retrieveSearchTemplate("audit");

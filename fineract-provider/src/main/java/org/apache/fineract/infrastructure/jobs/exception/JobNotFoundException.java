@@ -33,7 +33,7 @@ public class JobNotFoundException extends AbstractPlatformResourceNotFoundExcept
     }
 
     public JobNotFoundException(IdTypeResolver.IdType idType, String jobId) {
-        super("error.msg.sheduler.job.id.invalid", String.format("Job with %s: %s cannot be found", idType, jobId), idType, jobId);
+        super("error.msg.sheduler.job.id.invalid", "Job with %s: %s cannot be found".formatted(idType, jobId), idType, jobId);
     }
 
     public JobNotFoundException(final String identifier, NoSuchJobException e) {

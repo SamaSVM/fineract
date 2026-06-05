@@ -18,8 +18,6 @@
  */
 package org.apache.fineract.infrastructure.core.service.database;
 
-import static java.lang.String.format;
-
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.Collection;
@@ -31,13 +29,15 @@ import lombok.RequiredArgsConstructor;
 import org.apache.fineract.infrastructure.core.service.DateUtils;
 import org.apache.fineract.infrastructure.dataqueries.data.ResultsetColumnHeaderData;
 import org.apache.logging.log4j.util.Strings;
+import org.jspecify.annotations.NonNull;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.data.domain.Sort;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
+@DependsOnDatabaseInitialization
 @RequiredArgsConstructor
 public class DatabaseSpecificSQLGenerator {
 
@@ -52,23 +52,23 @@ public class DatabaseSpecificSQLGenerator {
 
     public String escape(String arg) {
         if (databaseTypeResolver.isMySQL()) {
-            return format("`%s`", arg);
+            return "`%s`".formatted(arg);
         } else if (databaseTypeResolver.isPostgreSQL()) {
-            return format("\"%s\"", arg);
+            return "\"%s\"".formatted(arg);
         }
         return arg;
     }
 
     public String formatValue(JdbcJavaType columnType, String value) {
-        return (columnType.isStringType() || columnType.isAnyDateType()) ? format("'%s'", value) : value;
+        return (columnType.isStringType() || columnType.isAnyDateType()) ? "'%s'".formatted(value) : value;
     }
 
     public String groupConcat(String arg) {
         if (databaseTypeResolver.isMySQL()) {
-            return format("GROUP_CONCAT(%s)", arg);
+            return "GROUP_CONCAT(%s)".formatted(arg);
         } else if (databaseTypeResolver.isPostgreSQL()) {
             // STRING_AGG only works with strings
-            return format("STRING_AGG(%s::varchar, ',')", arg);
+            return "STRING_AGG(%s::varchar, ',')".formatted(arg);
         } else {
             throw new IllegalStateException("Database type is not supported for group concat " + databaseTypeResolver.databaseType());
         }
@@ -80,9 +80,9 @@ public class DatabaseSpecificSQLGenerator {
 
     public String limit(int count, int offset) {
         if (databaseTypeResolver.isMySQL()) {
-            return format("LIMIT %s,%s", offset, count);
+            return "LIMIT %s,%s".formatted(offset, count);
         } else if (databaseTypeResolver.isPostgreSQL()) {
-            return format("LIMIT %s OFFSET %s", count, offset);
+            return "LIMIT %s OFFSET %s".formatted(count, offset);
         } else {
             throw new IllegalStateException("Database type is not supported for limit " + databaseTypeResolver.databaseType());
         }
@@ -107,14 +107,14 @@ public class DatabaseSpecificSQLGenerator {
     public String countQueryResult(@NonNull String sql) {
         // Needs to remove the limit and offset
         sql = sql.replaceAll("LIMIT \\d+", "").replaceAll("OFFSET \\d+", "").trim();
-        return format("SELECT COUNT(*) FROM (%s) AS temp", sql);
+        return "SELECT COUNT(*) FROM (%s) AS temp".formatted(sql);
     }
 
     public String currentBusinessDate() {
         if (databaseTypeResolver.isMySQL()) {
-            return format("DATE('%s')", DateUtils.getBusinessLocalDate().format(DateUtils.DEFAULT_DATE_FORMATTER));
+            return "DATE('%s')".formatted(DateUtils.getBusinessLocalDate().format(DateUtils.DEFAULT_DATE_FORMATTER));
         } else if (databaseTypeResolver.isPostgreSQL()) {
-            return format("DATE '%s'", DateUtils.getBusinessLocalDate().format(DateUtils.DEFAULT_DATE_FORMATTER));
+            return "DATE '%s'".formatted(DateUtils.getBusinessLocalDate().format(DateUtils.DEFAULT_DATE_FORMATTER));
         } else {
             throw new IllegalStateException("Database type is not supported for current date " + databaseTypeResolver.databaseType());
         }
@@ -122,9 +122,9 @@ public class DatabaseSpecificSQLGenerator {
 
     public String currentTenantDate() {
         if (databaseTypeResolver.isMySQL()) {
-            return format("DATE('%s')", DateUtils.getLocalDateOfTenant().format(DateUtils.DEFAULT_DATE_FORMATTER));
+            return "DATE('%s')".formatted(DateUtils.getLocalDateOfTenant().format(DateUtils.DEFAULT_DATE_FORMATTER));
         } else if (databaseTypeResolver.isPostgreSQL()) {
-            return format("DATE '%s'", DateUtils.getLocalDateOfTenant().format(DateUtils.DEFAULT_DATE_FORMATTER));
+            return "DATE '%s'".formatted(DateUtils.getLocalDateOfTenant().format(DateUtils.DEFAULT_DATE_FORMATTER));
         } else {
             throw new IllegalStateException("Database type is not supported for current date " + databaseTypeResolver.databaseType());
         }
@@ -132,9 +132,9 @@ public class DatabaseSpecificSQLGenerator {
 
     public String currentTenantDateTime() {
         if (databaseTypeResolver.isMySQL()) {
-            return format("TIMESTAMP('%s')", DateUtils.getLocalDateTimeOfSystem().format(DateUtils.DEFAULT_DATETIME_FORMATTER));
+            return "TIMESTAMP('%s')".formatted(DateUtils.getLocalDateTimeOfSystem().format(DateUtils.DEFAULT_DATETIME_FORMATTER));
         } else if (databaseTypeResolver.isPostgreSQL()) {
-            return format("TIMESTAMP '%s'", DateUtils.getLocalDateTimeOfSystem().format(DateUtils.DEFAULT_DATETIME_FORMATTER));
+            return "TIMESTAMP '%s'".formatted(DateUtils.getLocalDateTimeOfSystem().format(DateUtils.DEFAULT_DATETIME_FORMATTER));
         } else {
             throw new IllegalStateException("Database type is not supported for current date time" + databaseTypeResolver.databaseType());
         }
@@ -142,9 +142,9 @@ public class DatabaseSpecificSQLGenerator {
 
     public String subDate(String date, String multiplier, String unit) {
         if (databaseTypeResolver.isMySQL()) {
-            return format("DATE_SUB(%s, INTERVAL %s %s)", date, multiplier, unit);
+            return "DATE_SUB(%s, INTERVAL %s %s)".formatted(date, multiplier, unit);
         } else if (databaseTypeResolver.isPostgreSQL()) {
-            return format("(%s::TIMESTAMP - %s * INTERVAL '1 %s')", date, multiplier, unit);
+            return "(%s::TIMESTAMP - %s * INTERVAL '1 %s')".formatted(date, multiplier, unit);
         } else {
             throw new IllegalStateException("Database type is not supported for subtracting date " + databaseTypeResolver.databaseType());
         }
@@ -152,9 +152,9 @@ public class DatabaseSpecificSQLGenerator {
 
     public String dateDiff(String date1, String date2) {
         if (databaseTypeResolver.isMySQL()) {
-            return format("DATEDIFF(%s, %s)", date1, date2);
+            return "DATEDIFF(%s, %s)".formatted(date1, date2);
         } else if (databaseTypeResolver.isPostgreSQL()) {
-            return format("EXTRACT(DAY FROM (%s::TIMESTAMP - %s::TIMESTAMP))", date1, date2);
+            return "EXTRACT(DAY FROM (%s::TIMESTAMP - %s::TIMESTAMP))".formatted(date1, date2);
         } else {
             throw new IllegalStateException("Database type is not supported for date diff " + databaseTypeResolver.databaseType());
         }
@@ -162,9 +162,9 @@ public class DatabaseSpecificSQLGenerator {
 
     public String castChar(String sql) {
         if (databaseTypeResolver.isMySQL()) {
-            return format("CAST(%s AS CHAR) COLLATE utf8mb4_unicode_ci", sql);
+            return "CAST(%s AS CHAR) COLLATE utf8mb4_unicode_ci".formatted(sql);
         } else if (databaseTypeResolver.isPostgreSQL()) {
-            return format("%s::CHAR", sql);
+            return "%s::CHAR".formatted(sql);
         } else {
             throw new IllegalStateException(
                     "Database type is not supported for casting to character " + databaseTypeResolver.databaseType());
@@ -173,9 +173,9 @@ public class DatabaseSpecificSQLGenerator {
 
     public String castInteger(String sql) {
         if (databaseTypeResolver.isMySQL()) {
-            return format("CAST(%s AS SIGNED INTEGER)", sql);
+            return "CAST(%s AS SIGNED INTEGER)".formatted(sql);
         } else if (databaseTypeResolver.isPostgreSQL()) {
-            return format("%s::INTEGER", sql);
+            return "%s::INTEGER".formatted(sql);
         } else {
             throw new IllegalStateException("Database type is not supported for casting to bigint " + databaseTypeResolver.databaseType());
         }
@@ -193,9 +193,9 @@ public class DatabaseSpecificSQLGenerator {
 
     public String castJson(String sql) {
         if (databaseTypeResolver.isMySQL()) {
-            return format("%s", sql);
+            return "%s".formatted(sql);
         } else if (databaseTypeResolver.isPostgreSQL()) {
-            return format("%s ::json", sql);
+            return "%s ::json".formatted(sql);
         } else {
             throw new IllegalStateException("Database type is not supported for casting to json " + databaseTypeResolver.databaseType());
         }
@@ -231,7 +231,8 @@ public class DatabaseSpecificSQLGenerator {
             String joinType) {
         String join = Strings.isEmpty(joinType) ? "JOIN" : (joinType + " JOIN");
         alias = Strings.isEmpty(alias) ? "" : (" " + alias);
-        return format("%s %s%s ON %s = %s", join, escape(definition), alias, alias(escape(fkCol), alias), alias(escape(refCol), refAlias));
+        return "%s %s%s ON %s = %s".formatted(join, escape(definition), alias, alias(escape(fkCol), alias),
+                alias(escape(refCol), refAlias));
     }
 
     public String buildOrderBy(List<Sort.Order> orders, String alias, boolean embedded) {

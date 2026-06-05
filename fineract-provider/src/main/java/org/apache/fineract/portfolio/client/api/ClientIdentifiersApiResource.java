@@ -62,8 +62,9 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/clients/{clientId}/identifiers")
 @Component
-@Tag(name = "Client Identifier", description = "Client Identifiers refer to documents that are used to uniquely identify a customer\n"
-        + "Ex: Drivers License, Passport, Ration card etc ")
+@Tag(name = "Client Identifier", description = """
+        Client Identifiers refer to documents that are used to uniquely identify a customer
+        Ex: Drivers License, Passport, Ration card etc """)
 @RequiredArgsConstructor
 public class ClientIdentifiersApiResource {
 
@@ -82,8 +83,12 @@ public class ClientIdentifiersApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List all Identifiers for a Client", operationId = "retrieveAllClientIdentifiers", description = "Example Requests:\n"
-            + "clients/1/identifiers\n" + "\n" + "\n" + "clients/1/identifiers?fields=documentKey,documentType,description")
+    @Operation(summary = "List all Identifiers for a Client", operationId = "retrieveAllClientIdentifiers", description = """
+            Example Requests:
+            clients/1/identifiers
+
+
+            clients/1/identifiers?fields=documentKey,documentType,description""")
     public List<ClientIdentifierData> retrieveAllClientIdentifiers(
             @PathParam("clientId") @Parameter(description = "clientId") final Long clientId) {
 
@@ -95,8 +100,15 @@ public class ClientIdentifiersApiResource {
     @GET
     @Path("template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Client Identifier Details Template", operationId = "retrieveTemplateClientIdentifier", description = "This is a convenience resource useful for building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n"
-            + "\n" + " Field Defaults\n" + " Allowed description Lists\n" + "\n\nExample Request:\n" + "clients/1/identifiers/template")
+    @Operation(summary = "Retrieve Client Identifier Details Template", operationId = "retrieveTemplateClientIdentifier", description = """
+            This is a convenience resource useful for building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+
+             Field Defaults
+             Allowed description Lists
+
+
+            Example Request:
+            clients/1/identifiers/template""")
     public ClientIdentifierData newClientIdentifierDetails(
             @PathParam("clientId") @Parameter(description = "clientId") final Long clientId) {
 
@@ -110,8 +122,9 @@ public class ClientIdentifiersApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create an Identifier for a Client", operationId = "createClientIdentifier", description = "Mandatory Fields\n"
-            + "documentKey, documentTypeId ")
+    @Operation(summary = "Create an Identifier for a Client", operationId = "createClientIdentifier", description = """
+            Mandatory Fields
+            documentKey, documentTypeId """)
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = ClientIdentifiersApiResourceSwagger.PostClientsClientIdIdentifiersRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ClientIdentifiersApiResourceSwagger.PostClientsClientIdIdentifiersResponse.class)))
     public CommandProcessingResult createClientIdentifier(@PathParam("clientId") @Parameter(description = "clientId") final Long clientId,
@@ -138,9 +151,14 @@ public class ClientIdentifiersApiResource {
     @GET
     @Path("{identifierId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Client Identifier", operationId = "retrieveOneClientIdentifier", description = "Example Requests:\n"
-            + "clients/1/identifier/2\n" + "\n" + "\n" + "clients/1/identifier/2?template=true\n" + "\n"
-            + "clients/1/identifiers/2?fields=documentKey,documentType,description")
+    @Operation(summary = "Retrieve a Client Identifier", operationId = "retrieveOneClientIdentifier", description = """
+            Example Requests:
+            clients/1/identifier/2
+
+
+            clients/1/identifier/2?template=true
+
+            clients/1/identifiers/2?fields=documentKey,documentType,description""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ClientIdentifiersApiResourceSwagger.GetClientsClientIdIdentifiersResponse.class)))
     public String retrieveClientIdentifiers(@PathParam("clientId") @Parameter(description = "clientId") final Long clientId,
             @PathParam("identifierId") @Parameter(description = "identifierId") final Long clientIdentifierId,

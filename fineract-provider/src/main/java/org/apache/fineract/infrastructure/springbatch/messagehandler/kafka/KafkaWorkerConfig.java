@@ -23,7 +23,7 @@ import static org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS
 import static org.apache.kafka.clients.consumer.ConsumerConfig.GROUP_ID_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG;
-import static org.springframework.kafka.support.serializer.JsonDeserializer.TRUSTED_PACKAGES;
+import static org.springframework.kafka.support.serializer.JacksonJsonDeserializer.TRUSTED_PACKAGES;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +41,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.kafka.support.serializer.JsonDeserializer;
+import org.springframework.kafka.support.serializer.JacksonJsonDeserializer;
 
 @Configuration
 @Conditional(KafkaWorkerCondition.class)
@@ -61,7 +61,7 @@ public class KafkaWorkerConfig {
         props.put(BOOTSTRAP_SERVERS_CONFIG, kafkaProperties.getBootstrapServers());
         props.put(GROUP_ID_CONFIG, kafkaProperties.getConsumer().getGroupId());
         props.put(KEY_DESERIALIZER_CLASS_CONFIG, IntegerDeserializer.class);
-        props.put(VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
+        props.put(VALUE_DESERIALIZER_CLASS_CONFIG, JacksonJsonDeserializer.class);
         props.put(TRUSTED_PACKAGES, "*");
         props.put(AUTO_OFFSET_RESET_CONFIG, "earliest");
         return new DefaultKafkaConsumerFactory<>(props);

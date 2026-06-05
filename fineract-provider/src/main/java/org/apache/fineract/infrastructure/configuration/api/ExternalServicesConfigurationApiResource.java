@@ -50,9 +50,21 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/externalservice")
 @Component
-@Tag(name = "External Services", description = "External Services Configuration related to set of supported configurations for third party services like Amazon S3 and SMTP:\n"
-        + "\n" + "S3 (Amazon S3):\n" + "s3_access_key -\n" + "s3_bucket_name -\n" + "s3_secret_key -\n" + "\n" + "\n"
-        + "SMTP (Email Service):\n" + "username -\n" + "password -\n" + "host -\n" + "port -\n" + "useTLS -")
+@Tag(name = "External Services", description = """
+        External Services Configuration related to set of supported configurations for third party services like Amazon S3 and SMTP:
+
+        S3 (Amazon S3):
+        s3_access_key -
+        s3_bucket_name -
+        s3_secret_key -
+
+
+        SMTP (Email Service):
+        username -
+        password -
+        host -
+        port -
+        useTLS -""")
 @RequiredArgsConstructor
 public class ExternalServicesConfigurationApiResource {
 
@@ -65,8 +77,14 @@ public class ExternalServicesConfigurationApiResource {
     @GET
     @Path("{servicename}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve External Services Configuration", description = "Returns a external Service configurations based on the Service Name.\n"
-            + "\n" + "Service Names supported are S3 and SMTP.\n" + "\n" + "Example Requests:\n" + "\n" + "externalservice/SMTP")
+    @Operation(summary = "Retrieve External Services Configuration", description = """
+            Returns a external Service configurations based on the Service Name.
+
+            Service Names supported are S3 and SMTP.
+
+            Example Requests:
+
+            externalservice/SMTP""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ExternalServicesPropertiesData.class)))
     public String retrieveOne(@PathParam("servicename") @Parameter(description = "servicename") final String serviceName,
             @Context final UriInfo uriInfo) {
@@ -82,8 +100,12 @@ public class ExternalServicesConfigurationApiResource {
     @Path("{servicename}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Update External Service", description = "Updates the external Service Configuration for a Service Name.\n" + "\n"
-            + "Example: \n" + "\n" + "externalservice/S3")
+    @Operation(summary = "Update External Service", description = """
+            Updates the external Service Configuration for a Service Name.
+
+            Example:\s
+
+            externalservice/S3""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = ExternalServicesConfigurationApiResourceSwagger.PutExternalServiceRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK")
     public String updateExternalServiceProperties(

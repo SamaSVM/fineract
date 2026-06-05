@@ -124,9 +124,14 @@ public class LoanCapitalizedIncomeApiResource {
     @GET
     @Path("{loanId}/capitalized-incomes/{loanTransactionId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a capitalized income allocation data", operationId = "retrieveCapitalizedIncomeAllocationData", description = "Retrieves capitalized income allocation data according to the Loan ID and Loan Transaction ID"
-            + "Example Requests:\n" + "\n" + "/loans/1/capitalized-incomes/1\n" + "\n" + "\n"
-            + "/loans/1/capitalized-incomes/1?fields=baseLoanTransaction,unrecognizedAmount")
+    @Operation(summary = "Retrieve a capitalized income allocation data", operationId = "retrieveCapitalizedIncomeAllocationData", description = """
+            Retrieves capitalized income allocation data according to the Loan ID and Loan Transaction ID\
+            Example Requests:
+
+            /loans/1/capitalized-incomes/1
+
+
+            /loans/1/capitalized-incomes/1?fields=baseLoanTransaction,unrecognizedAmount""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanAmortizationAllocationApiResourceSwagger.LoanAmortizationAllocationResponse.class)))
     public String retrieveCapitalizedIncomeAllocationData(@PathParam("loanId") @Parameter(description = "loanId") final Long loanId,
             @PathParam("loanTransactionId") @Parameter(description = "loanTransactionId") final Long loanTransactionId,
@@ -140,9 +145,14 @@ public class LoanCapitalizedIncomeApiResource {
     @GET
     @Path("external-id/{loanExternalId}/capitalized-incomes/{loanTransactionId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a capitalized income allocation data", operationId = "getCapitalizedIncomeAllocationDataByLoanExternalId", description = "Retrieves capitalized income allocation data according to the Loan external ID and Loan Transaction ID"
-            + "Example Requests:\n" + "\n" + "/loans/external-id/1/capitalized-incomes/1\n" + "\n" + "\n"
-            + "/loans/external-id/1/capitalized-incomes/1?fields=baseLoanTransaction,unrecognizedAmount")
+    @Operation(summary = "Retrieve a capitalized income allocation data", operationId = "getCapitalizedIncomeAllocationDataByLoanExternalId", description = """
+            Retrieves capitalized income allocation data according to the Loan external ID and Loan Transaction ID\
+            Example Requests:
+
+            /loans/external-id/1/capitalized-incomes/1
+
+
+            /loans/external-id/1/capitalized-incomes/1?fields=baseLoanTransaction,unrecognizedAmount""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanAmortizationAllocationApiResourceSwagger.LoanAmortizationAllocationResponse.class)))
     public String getCapitalizedIncomeAllocationDataByLoanExternalId(
             @PathParam("loanExternalId") @Parameter(description = "loanExternalId") final String loanExternalId,
@@ -157,9 +167,14 @@ public class LoanCapitalizedIncomeApiResource {
     @GET
     @Path("{loanId}/capitalized-incomes/external-id/{loanTransactionExternalId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a capitalized income allocation data", operationId = "getCapitalizedIncomeAllocationDataByTransactionExternalId", description = "Retrieves capitalized income allocation data according to the Loan ID and Loan Transaction external ID"
-            + "Example Requests:\n" + "\n" + "/loans/1/capitalized-incomes/external-id/1\n" + "\n" + "\n"
-            + "/loans/1/capitalized-incomes/external-id/1?fields=baseLoanTransaction,unrecognizedAmount")
+    @Operation(summary = "Retrieve a capitalized income allocation data", operationId = "getCapitalizedIncomeAllocationDataByTransactionExternalId", description = """
+            Retrieves capitalized income allocation data according to the Loan ID and Loan Transaction external ID\
+            Example Requests:
+
+            /loans/1/capitalized-incomes/external-id/1
+
+
+            /loans/1/capitalized-incomes/external-id/1?fields=baseLoanTransaction,unrecognizedAmount""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanAmortizationAllocationApiResourceSwagger.LoanAmortizationAllocationResponse.class)))
     public String getCapitalizedIncomeAllocationDataByTransactionExternalId(
             @PathParam("loanId") @Parameter(description = "loanId") final Long loanId,
@@ -174,9 +189,14 @@ public class LoanCapitalizedIncomeApiResource {
     @GET
     @Path("external-id/{loanExternalId}/capitalized-incomes/external-id/{loanTransactionExternalId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a capitalized income allocation data", operationId = "getCapitalizedIncomeAllocationDataByExternalIds", description = "Retrieves capitalized income allocation data according to the Loan external ID and Loan Transaction external ID"
-            + "Example Requests:\n" + "\n" + "/loans/external-id/1/capitalized-incomes/1\n" + "\n" + "\n"
-            + "/loans/external-id/1/capitalized-incomes/1?fields=baseLoanTransaction,unrecognizedAmount")
+    @Operation(summary = "Retrieve a capitalized income allocation data", operationId = "getCapitalizedIncomeAllocationDataByExternalIds", description = """
+            Retrieves capitalized income allocation data according to the Loan external ID and Loan Transaction external ID\
+            Example Requests:
+
+            /loans/external-id/1/capitalized-incomes/1
+
+
+            /loans/external-id/1/capitalized-incomes/1?fields=baseLoanTransaction,unrecognizedAmount""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanAmortizationAllocationApiResourceSwagger.LoanAmortizationAllocationResponse.class)))
     public String getCapitalizedIncomeAllocationDataByExternalIds(
             @PathParam("loanExternalId") @Parameter(description = "loanExternalId") final String loanExternalId,

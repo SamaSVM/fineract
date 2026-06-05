@@ -44,14 +44,14 @@ public class FineractMultipartEncoder implements Encoder {
 
     @Override
     public void encode(Object object, Type bodyType, RequestTemplate template) throws EncodeException {
-        if (object instanceof MultipartData) {
-            encodeMultipart((MultipartData) object, template);
-        } else if (object instanceof File) {
-            encodeFileAsMultipart((File) object, template);
-        } else if (object instanceof String && template.headers().containsKey("Content-Type")) {
+        if (object instanceof MultipartData data) {
+            encodeMultipart(data, template);
+        } else if (object instanceof File file) {
+            encodeFileAsMultipart(file, template);
+        } else if (object instanceof String string && template.headers().containsKey("Content-Type")) {
             String contentType = template.headers().get("Content-Type").iterator().next();
             if (contentType.startsWith("text/html") || contentType.startsWith("text/plain") || contentType.startsWith("application/json")) {
-                byte[] bodyBytes = ((String) object).getBytes(StandardCharsets.UTF_8);
+                byte[] bodyBytes = string.getBytes(StandardCharsets.UTF_8);
                 template.body(bodyBytes, StandardCharsets.UTF_8);
             } else {
                 delegate.encode(object, bodyType, template);

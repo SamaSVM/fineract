@@ -62,11 +62,12 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/holidays")
 @Component
-@Tag(name = "Holidays", description = "Some MFI's span large regions where different branch offices might observe different holidays. They need the ability to define holidays for specific branch offices and be able to set the repayment rule to follow during those holidays.\n"
-        + "\n"
-        + "The reschedule of repayments to repaymentsRescheduledTo date during defined holidays is turned on/off by enabling/disabling reschedule-repayments-on-holidays in Global configurations.\n"
-        + "\n"
-        + "Allow Repayment transactions on a defined holidays is turned on/off by enabling/disabling allow-transactions-on-holiday in Global configurations.")
+@Tag(name = "Holidays", description = """
+        Some MFI's span large regions where different branch offices might observe different holidays. They need the ability to define holidays for specific branch offices and be able to set the repayment rule to follow during those holidays.
+
+        The reschedule of repayments to repaymentsRescheduledTo date during defined holidays is turned on/off by enabling/disabling reschedule-repayments-on-holidays in Global configurations.
+
+        Allow Repayment transactions on a defined holidays is turned on/off by enabling/disabling allow-transactions-on-holiday in Global configurations.""")
 @RequiredArgsConstructor
 public class HolidaysApiResource {
 
@@ -97,8 +98,10 @@ public class HolidaysApiResource {
     @Path("{holidayId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Activate a Holiday", description = "Always Holidays are created in pending state. This API allows to activate a holiday.\n"
-            + "\n" + "Only the active holidays are considered for rescheduling the loan repayment.")
+    @Operation(summary = "Activate a Holiday", description = """
+            Always Holidays are created in pending state. This API allows to activate a holiday.
+
+            Only the active holidays are considered for rescheduling the loan repayment.""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = HolidaysApiResourceSwagger.PostHolidaysHolidayIdRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = HolidaysApiResourceSwagger.PostHolidaysHolidayIdResponse.class)))
     public String handleCommands(@PathParam("holidayId") @Parameter(description = "holidayId") final Long holidayId,

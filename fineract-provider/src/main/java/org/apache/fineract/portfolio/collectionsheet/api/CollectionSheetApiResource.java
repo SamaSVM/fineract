@@ -65,10 +65,14 @@ public class CollectionSheetApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Generate Individual Collection Sheet | Save Collection Sheet", description = "Generate Individual Collection Sheet:\n\n"
-            + "This Api retrieves repayment details of all individual loans under a office as on a specified meeting date.\n\n"
-            + "Save Collection Sheet:\n\n"
-            + "This Api allows the loan officer to perform bulk repayments of individual loans and deposit of mandatory savings on a given meeting date.")
+    @Operation(summary = "Generate Individual Collection Sheet | Save Collection Sheet", description = """
+            Generate Individual Collection Sheet:
+
+            This Api retrieves repayment details of all individual loans under a office as on a specified meeting date.
+
+            Save Collection Sheet:
+
+            This Api allows the loan officer to perform bulk repayments of individual loans and deposit of mandatory savings on a given meeting date.""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = CollectionSheetRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CollectionSheetApiResourceSwagger.PostCollectionSheetResponse.class)))
     public Response generateCollectionSheet(@QueryParam("command") @Parameter(description = "command") final String commandParam,

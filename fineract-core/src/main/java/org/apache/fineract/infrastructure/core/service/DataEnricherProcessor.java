@@ -21,17 +21,15 @@ package org.apache.fineract.infrastructure.core.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class DataEnricherProcessor {
 
-    private final List<DataEnricher<?>> enhancers;
+    private final List<DataEnricher> enhancers;
 
-    @Autowired
-    public DataEnricherProcessor(Optional<List<DataEnricher<?>>> enhancers) {
-        this.enhancers = enhancers.orElse(new ArrayList<>());
+    public DataEnricherProcessor(Optional<List<DataEnricher>> enhancers) {
+        this.enhancers = enhancers.orElse(new ArrayList<DataEnricher>());
     }
 
     public <T> T enrich(T source) {

@@ -47,7 +47,7 @@ dependencies {
         exclude group: 'org.skyscreamer'
     }
     testImplementation (
-            'org.mockito:mockito-inline',
+            'org.mockito:mockito-core',
             'org.openjdk.jmh:jmh-core',
             'org.testcontainers:junit-jupiter',
             )

@@ -39,3 +39,10 @@ tasks.named('shadowJar', ShadowJar) {
         exclude("*.xml")
     }
 }
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}
+
+dependencies {
+    annotationProcessor "org.projectlombok:lombok-mapstruct-binding:0.2.0"
+}

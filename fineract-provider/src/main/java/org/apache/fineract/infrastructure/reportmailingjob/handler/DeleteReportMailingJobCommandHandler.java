@@ -24,7 +24,6 @@ import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.infrastructure.reportmailingjob.ReportMailingJobConstants;
 import org.apache.fineract.infrastructure.reportmailingjob.service.ReportMailingJobWritePlatformService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,7 +33,6 @@ public class DeleteReportMailingJobCommandHandler implements NewCommandSourceHan
 
     private final ReportMailingJobWritePlatformService reportMailingJobWritePlatformService;
 
-    @Autowired
     public DeleteReportMailingJobCommandHandler(final ReportMailingJobWritePlatformService reportMailingJobWritePlatformService) {
         this.reportMailingJobWritePlatformService = reportMailingJobWritePlatformService;
     }

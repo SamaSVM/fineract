@@ -100,9 +100,14 @@ public class LoanBuyDownFeeApiResource {
     @GET
     @Path("{loanId}/buydown-fees/{loanTransactionId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a BuyDown Fees allocation data", description = "Retrieves BuyDown Fees allocation data according to the Loan ID and Loan Transaction ID"
-            + "Example Requests:\n" + "\n" + "/loans/1/buydown-fees/1\n" + "\n" + "\n"
-            + "/loans/1/buydown-fees/1?fields=baseLoanTransaction,unrecognizedAmount")
+    @Operation(summary = "Retrieve a BuyDown Fees allocation data", description = """
+            Retrieves BuyDown Fees allocation data according to the Loan ID and Loan Transaction ID\
+            Example Requests:
+
+            /loans/1/buydown-fees/1
+
+
+            /loans/1/buydown-fees/1?fields=baseLoanTransaction,unrecognizedAmount""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanAmortizationAllocationApiResourceSwagger.LoanAmortizationAllocationResponse.class)))
     public String retrieveBuyDownFeesAllocationData(@PathParam("loanId") @Parameter(description = "loanId") final Long loanId,
             @PathParam("loanTransactionId") @Parameter(description = "loanTransactionId") final Long loanTransactionId,
@@ -116,9 +121,14 @@ public class LoanBuyDownFeeApiResource {
     @GET
     @Path("external-id/{loanExternalId}/buydown-fees/{loanTransactionId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a BuyDown Fees allocation data", description = "Retrieves BuyDown Fees allocation data according to the Loan external ID and Loan Transaction ID"
-            + "Example Requests:\n" + "\n" + "/loans/external-id/1/buydown-fees/1\n" + "\n" + "\n"
-            + "/loans/external-id/1/buydown-fees/1?fields=baseLoanTransaction,unrecognizedAmount")
+    @Operation(summary = "Retrieve a BuyDown Fees allocation data", description = """
+            Retrieves BuyDown Fees allocation data according to the Loan external ID and Loan Transaction ID\
+            Example Requests:
+
+            /loans/external-id/1/buydown-fees/1
+
+
+            /loans/external-id/1/buydown-fees/1?fields=baseLoanTransaction,unrecognizedAmount""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanAmortizationAllocationApiResourceSwagger.LoanAmortizationAllocationResponse.class)))
     public String getBuyDownFeesAllocationDataByLoanExternalId(
             @PathParam("loanExternalId") @Parameter(description = "loanExternalId") final String loanExternalId,
@@ -133,9 +143,14 @@ public class LoanBuyDownFeeApiResource {
     @GET
     @Path("{loanId}/buydown-fees/external-id/{loanTransactionExternalId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a BuyDown Fees allocation data", description = "Retrieves BuyDown Fees allocation data according to the Loan ID and Loan Transaction external ID"
-            + "Example Requests:\n" + "\n" + "/loans/1/buydown-fees/external-id/1\n" + "\n" + "\n"
-            + "/loans/1/buydown-fees/external-id/1?fields=baseLoanTransaction,unrecognizedAmount")
+    @Operation(summary = "Retrieve a BuyDown Fees allocation data", description = """
+            Retrieves BuyDown Fees allocation data according to the Loan ID and Loan Transaction external ID\
+            Example Requests:
+
+            /loans/1/buydown-fees/external-id/1
+
+
+            /loans/1/buydown-fees/external-id/1?fields=baseLoanTransaction,unrecognizedAmount""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanAmortizationAllocationApiResourceSwagger.LoanAmortizationAllocationResponse.class)))
     public String getBuyDownFeesAllocationDataByTransactionExternalId(
             @PathParam("loanId") @Parameter(description = "loanId") final Long loanId,
@@ -150,9 +165,14 @@ public class LoanBuyDownFeeApiResource {
     @GET
     @Path("external-id/{loanExternalId}/buydown-fees/external-id/{loanTransactionExternalId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a BuyDown Fees allocation data", description = "Retrieves BuyDown Fees allocation data according to the Loan external ID and Loan Transaction external ID"
-            + "Example Requests:\n" + "\n" + "/loans/external-id/1/buydown-fees/1\n" + "\n" + "\n"
-            + "/loans/external-id/1/buydown-fees/1?fields=baseLoanTransaction,unrecognizedAmount")
+    @Operation(summary = "Retrieve a BuyDown Fees allocation data", description = """
+            Retrieves BuyDown Fees allocation data according to the Loan external ID and Loan Transaction external ID\
+            Example Requests:
+
+            /loans/external-id/1/buydown-fees/1
+
+
+            /loans/external-id/1/buydown-fees/1?fields=baseLoanTransaction,unrecognizedAmount""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanAmortizationAllocationApiResourceSwagger.LoanAmortizationAllocationResponse.class)))
     public String getBuyDownFeesAllocationDataByExternalIds(
             @PathParam("loanExternalId") @Parameter(description = "loanExternalId") final String loanExternalId,

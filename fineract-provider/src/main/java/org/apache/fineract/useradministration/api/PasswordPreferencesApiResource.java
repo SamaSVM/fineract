@@ -51,9 +51,12 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/" + PasswordPreferencesApiConstants.RESOURCE_NAME)
 @Component
-@Tag(name = "Password preferences", description = "This API enables management of password policy for user administration.\n" + "\n"
-        + "There is no Apache Fineract functionality for creating a validation policy. The validation policies come pre-installed.\n" + "\n"
-        + "Validation policies may be updated")
+@Tag(name = "Password preferences", description = """
+        This API enables management of password policy for user administration.
+
+        There is no Apache Fineract functionality for creating a validation policy. The validation policies come pre-installed.
+
+        Validation policies may be updated""")
 @RequiredArgsConstructor
 public class PasswordPreferencesApiResource {
 
@@ -102,8 +105,11 @@ public class PasswordPreferencesApiResource {
     @GET
     @Path("/template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Application Password validation policies", tags = { "Password preferences" }, description = "ARGUMENTS\n"
-            + "Example Requests:\n" + "\n" + "passwordpreferences")
+    @Operation(summary = "List Application Password validation policies", tags = { "Password preferences" }, description = """
+            ARGUMENTS
+            Example Requests:
+
+            passwordpreferences""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = PasswordPreferencesApiResourceSwagger.GetPasswordPreferencesTemplateResponse.class)))) })
     public String template(@Context final UriInfo uriInfo) {

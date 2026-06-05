@@ -27,7 +27,7 @@ import org.apache.fineract.cob.domain.LockingService;
 import org.apache.fineract.portfolio.loanaccount.domain.Loan;
 import org.apache.fineract.portfolio.loanaccount.domain.LoanRepository;
 import org.mockito.Mockito;
-import org.springframework.batch.item.Chunk;
+import org.springframework.batch.infrastructure.item.Chunk;
 
 public class LoanItemWriterStepDefinitions implements En {
 

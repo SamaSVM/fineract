@@ -38,7 +38,6 @@ import org.apache.fineract.infrastructure.core.exception.PlatformApiDataValidati
 import org.apache.fineract.infrastructure.core.serialization.FromJsonHelper;
 import org.apache.fineract.portfolio.account.AccountDetailConstants;
 import org.apache.fineract.portfolio.account.api.AccountTransfersApiConstants;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -54,7 +53,6 @@ public class AccountTransfersDataValidator {
             AccountDetailConstants.toAccountIdParamName, AccountTransfersApiConstants.transferDateParamName,
             AccountTransfersApiConstants.transferAmountParamName, AccountTransfersApiConstants.transferDescriptionParamName));
 
-    @Autowired
     public AccountTransfersDataValidator(final FromJsonHelper fromApiJsonHelper,
             final AccountTransfersDetailDataValidator accountTransfersDetailDataValidator) {
         this.fromApiJsonHelper = fromApiJsonHelper;

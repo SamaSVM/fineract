@@ -21,13 +21,13 @@ package org.apache.fineract.infrastructure.jobs;
 import org.apache.fineract.infrastructure.core.service.database.RoutingDataSource;
 import org.apache.fineract.infrastructure.jobs.config.FineractDataFieldMaxValueIncrementerFactory;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
-import org.springframework.batch.core.explore.JobExplorer;
-import org.springframework.batch.core.explore.support.JobExplorerFactoryBean;
 import org.springframework.batch.core.launch.support.TaskExecutorJobLauncher;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.repository.dao.Jackson2ExecutionContextStringSerializer;
-import org.springframework.batch.core.repository.support.JobRepositoryFactoryBean;
-import org.springframework.batch.item.database.support.DataFieldMaxValueIncrementerFactory;
+import org.springframework.batch.core.repository.explore.JobExplorer;
+import org.springframework.batch.core.repository.explore.support.JdbcJobExplorerFactoryBean;
+import org.springframework.batch.core.repository.support.JdbcJobRepositoryFactoryBean;
+import org.springframework.batch.infrastructure.item.database.support.DataFieldMaxValueIncrementerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -54,7 +54,7 @@ public class ScheduledJobRunnerConfig {
             @Qualifier("jdbcTransactionManager") PlatformTransactionManager transactionManager,
             Jackson2ExecutionContextStringSerializer executionContextSerializer, DataFieldMaxValueIncrementerFactory incrementerFactory)
             throws Exception {
-        JobRepositoryFactoryBean factory = new JobRepositoryFactoryBean();
+        JdbcJobRepositoryFactoryBean factory = new JdbcJobRepositoryFactoryBean();
         factory.setDataSource(routingDataSource);
         factory.setTransactionManager(transactionManager);
         factory.setIsolationLevelForCreate("ISOLATION_READ_COMMITTED");
@@ -68,7 +68,7 @@ public class ScheduledJobRunnerConfig {
     public JobExplorer jobExplorer(RoutingDataSource routingDataSource,
             @Qualifier("jdbcTransactionManager") PlatformTransactionManager transactionManager,
             Jackson2ExecutionContextStringSerializer executionContextSerializer) throws Exception {
-        JobExplorerFactoryBean jobExplorerFactoryBean = new JobExplorerFactoryBean();
+        JdbcJobExplorerFactoryBean jobExplorerFactoryBean = new JdbcJobExplorerFactoryBean();
         jobExplorerFactoryBean.setDataSource(routingDataSource);
         jobExplorerFactoryBean.setTransactionManager(transactionManager);
         jobExplorerFactoryBean.setSerializer(executionContextSerializer);

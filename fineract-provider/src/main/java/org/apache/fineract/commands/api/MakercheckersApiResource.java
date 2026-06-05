@@ -66,10 +66,20 @@ public class MakercheckersApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Maker Checker Entries", description = "Get a list of entries that can be checked by the requestor that match the criteria supplied.\n"
-            + "\n" + "Example Requests:\n" + "\n" + "makercheckers\n" + "\n" + "makercheckers?fields=madeOnDate,maker,processingResult\n"
-            + "\n" + "makercheckers?makerDateTimeFrom=2013-03-25 08:00:00&makerDateTimeTo=2013-04-04 18:00:00\n" + "\n"
-            + "makercheckers?officeId=1\n" + "\n" + "makercheckers?officeId=1&includeJson=true")
+    @Operation(summary = "List Maker Checker Entries", description = """
+            Get a list of entries that can be checked by the requestor that match the criteria supplied.
+
+            Example Requests:
+
+            makercheckers
+
+            makercheckers?fields=madeOnDate,maker,processingResult
+
+            makercheckers?makerDateTimeFrom=2013-03-25 08:00:00&makerDateTimeTo=2013-04-04 18:00:00
+
+            makercheckers?officeId=1
+
+            makercheckers?officeId=1&includeJson=true""")
     public List<AuditData> retrieveCommands(@Context final UriInfo uriInfo, @BeanParam MakerCheckerRequest makerCheckerRequest) {
         final SQLBuilder extraCriteria = getExtraCriteria(makerCheckerRequest);
 
@@ -81,8 +91,13 @@ public class MakercheckersApiResource {
     @GET
     @Path("/searchtemplate")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Maker Checker Search Template", description = "This is a convenience resource. It can be useful when building a Checker Inbox UI. \"appUsers\" are data scoped to the office/branch the requestor is associated with. \"actionNames\" and \"entityNames\" returned are those that the requestor has Checker approval permissions for.\n"
-            + "\n" + "Example Requests:\n" + "\n" + "makercheckers/searchtemplate\n" + "makercheckers/searchtemplate?fields=entityNames")
+    @Operation(summary = "Maker Checker Search Template", description = """
+            This is a convenience resource. It can be useful when building a Checker Inbox UI. "appUsers" are data scoped to the office/branch the requestor is associated with. "actionNames" and "entityNames" returned are those that the requestor has Checker approval permissions for.
+
+            Example Requests:
+
+            makercheckers/searchtemplate
+            makercheckers/searchtemplate?fields=entityNames""")
     public AuditSearchData retrieveAuditSearchTemplate() {
         return readPlatformService.retrieveSearchTemplate("makerchecker");
     }

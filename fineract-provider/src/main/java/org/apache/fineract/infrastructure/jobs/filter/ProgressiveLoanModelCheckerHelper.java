@@ -18,10 +18,6 @@
  */
 package org.apache.fineract.infrastructure.jobs.filter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.json.JsonReadFeature;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -42,6 +38,11 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.core.JacksonException;
+import tools.jackson.core.json.JsonReadFeature;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.ObjectMapper;
+import tools.jackson.databind.json.JsonMapper;
 
 @RequiredArgsConstructor
 @Component
@@ -51,7 +52,7 @@ public class ProgressiveLoanModelCheckerHelper extends COBFilterApiMatcher imple
     private final LoanRepository loanRepository;
 
     private final LoanRescheduleRequestRepository loanRescheduleRequestRepository;
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private final ObjectMapper objectMapper = JsonMapper.builder().enable(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS).build();
 
     private static final List<HttpMethod> HTTP_METHODS = List.of(HttpMethod.POST, HttpMethod.PUT, HttpMethod.DELETE);
 
@@ -133,7 +134,7 @@ public class ProgressiveLoanModelCheckerHelper extends COBFilterApiMatcher imple
         return loanIds;
     }
 
-    private Long getTopLevelLoanIdFromBatchRequest(BatchRequest batchRequest) throws JsonProcessingException {
+    private Long getTopLevelLoanIdFromBatchRequest(BatchRequest batchRequest) throws JacksonException {
         String body = batchRequest.getBody();
         if (StringUtils.isNotBlank(body)) {
             JsonNode jsonNode = objectMapper.readTree(body);
@@ -162,9 +163,7 @@ public class ProgressiveLoanModelCheckerHelper extends COBFilterApiMatcher imple
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        objectMapper.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
-    }
+    public void afterPropertiesSet() throws Exception {}
 
     @Override
     public boolean isBypassUser() {

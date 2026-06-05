@@ -34,6 +34,7 @@ import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenant;
 import org.apache.fineract.infrastructure.core.domain.FineractPlatformTenantConnection;
 import org.apache.fineract.infrastructure.core.service.database.metrics.TenantConnectionPoolMetricsTrackerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.stereotype.Component;
 
 /**
@@ -41,6 +42,7 @@ import org.springframework.stereotype.Component;
  * variable
  */
 @Component
+@DependsOnDatabaseInitialization
 @Slf4j
 @RequiredArgsConstructor
 public class DataSourcePerTenantServiceFactory {

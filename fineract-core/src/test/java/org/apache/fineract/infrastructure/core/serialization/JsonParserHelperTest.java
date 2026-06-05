@@ -27,13 +27,33 @@ class JsonParserHelperTest {
 
     static final JsonParserHelper onTestUnit = new JsonParserHelper();
 
-    static final String testDataHasValues = "{\n" + "  \"integerNumber\": 10,\n" + "  \"doubleNumber\": 3.14,\n"
-            + "  \"string\": \"example\",\n" + "  \"arrayList\": [1, \"two\", 3.0],\n" + "  \"localDate\": \"2024-08-10\",\n"
-            + "  \"keyValue\": {\n" + "    \"key\": \"sampleKey\",\n" + "    \"value\": \"sampleValue\"\n" + "  }\n" + "}";
+    static final String testDataHasValues = """
+            {
+              "integerNumber": 10,
+              "doubleNumber": 3.14,
+              "string": "example",
+              "arrayList": [1, "two", 3.0],
+              "localDate": "2024-08-10",
+              "keyValue": {
+                "key": "sampleKey",
+                "value": "sampleValue"
+              }
+            }\
+            """;
 
-    static final String testDataValuesEmpty = "{\n" + "  \"integerNumber\": null,\n" + "  \"doubleNumber\": 0.0,\n"
-            + "  \"string\": \"\",\n" + "  \"arrayList\": [],\n" + "  \"localDate\": null,\n" + "  \"keyValue\": {\n"
-            + "    \"key\": \"\",\n" + "    \"value\": null\n" + "  }\n" + "}";
+    static final String testDataValuesEmpty = """
+            {
+              "integerNumber": null,
+              "doubleNumber": 0.0,
+              "string": "",
+              "arrayList": [],
+              "localDate": null,
+              "keyValue": {
+                "key": "",
+                "value": null
+              }
+            }\
+            """;
 
     static final String testDataValuesMissing = "{}";
 

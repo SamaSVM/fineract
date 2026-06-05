@@ -86,11 +86,12 @@ import org.springframework.util.CollectionUtils;
 
 @Path("/v1/recurringdepositproducts")
 @Component
-@Tag(name = "Recurring Deposit Product", description = "Recurring Deposits are a special kind of Term Deposits offered by MFI's. The Recurring Deposit Products (aka RD) product offerings are modeled using this API.\n"
-        + "\n"
-        + "Recurring Deposits help people with regular incomes to deposit a fixed amount every month (specified recurring frequency) into their Recurring Deposit account.\n"
-        + "\n"
-        + "When creating recurring deposit accounts, the details from the recurring deposit product are used to auto fill details of the recurring deposit account application process.")
+@Tag(name = "Recurring Deposit Product", description = """
+        Recurring Deposits are a special kind of Term Deposits offered by MFI's. The Recurring Deposit Products (aka RD) product offerings are modeled using this API.
+
+        Recurring Deposits help people with regular incomes to deposit a fixed amount every month (specified recurring frequency) into their Recurring Deposit account.
+
+        When creating recurring deposit accounts, the details from the recurring deposit product are used to auto fill details of the recurring deposit account application process.""")
 @RequiredArgsConstructor
 public class RecurringDepositProductsApiResource {
 
@@ -114,10 +115,14 @@ public class RecurringDepositProductsApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create a Recurring Deposit Product", operationId = "createRecurringDepositProduct", description = "Creates a Recurring Deposit Product\n\n"
-            + "Mandatory Fields: name, shortName, description, currencyCode, digitsAfterDecimal,inMultiplesOf, interestCompoundingPeriodType, interestPostingPeriodType, interestCalculationType, interestCalculationDaysInYearType, minDepositTerm, minDepositTermTypeId, accountingRule, depositAmount, charts\n\n"
-            + "Mandatory Fields for Cash based accounting (accountingRule = 2): savingsReferenceAccountId, savingsControlAccountId, interestOnSavingsAccountId, incomeFromFeeAccountId, transfersInSuspenseAccountId, incomeFromPenaltyAccountId\n\n"
-            + "Optional Fields: lockinPeriodFrequency, lockinPeriodFrequencyType, maxDepositTerm, maxDepositTermTypeId, inMultiplesOfDepositTerm, inMultiplesOfDepositTermTypeId, preClosurePenalApplicable, preClosurePenalInterest, preClosurePenalInterestOnTypeId, feeToIncomeAccountMappings, penaltyToIncomeAccountMappings, charges, minDepositAmount, maxDepositAmount, withHoldTax, taxGroupId")
+    @Operation(summary = "Create a Recurring Deposit Product", operationId = "createRecurringDepositProduct", description = """
+            Creates a Recurring Deposit Product
+
+            Mandatory Fields: name, shortName, description, currencyCode, digitsAfterDecimal,inMultiplesOf, interestCompoundingPeriodType, interestPostingPeriodType, interestCalculationType, interestCalculationDaysInYearType, minDepositTerm, minDepositTermTypeId, accountingRule, depositAmount, charts
+
+            Mandatory Fields for Cash based accounting (accountingRule = 2): savingsReferenceAccountId, savingsControlAccountId, interestOnSavingsAccountId, incomeFromFeeAccountId, transfersInSuspenseAccountId, incomeFromPenaltyAccountId
+
+            Optional Fields: lockinPeriodFrequency, lockinPeriodFrequencyType, maxDepositTerm, maxDepositTermTypeId, inMultiplesOfDepositTerm, inMultiplesOfDepositTermTypeId, preClosurePenalApplicable, preClosurePenalInterest, preClosurePenalInterestOnTypeId, feeToIncomeAccountMappings, penaltyToIncomeAccountMappings, charges, minDepositAmount, maxDepositAmount, withHoldTax, taxGroupId""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = RecurringDepositProductsApiResourceSwagger.PostRecurringDepositProductsRequest.class)))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RecurringDepositProductsApiResourceSwagger.PostRecurringDepositProductsResponse.class))) })
@@ -153,8 +158,15 @@ public class RecurringDepositProductsApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Recuring Deposit Products", operationId = "retrieveAllRecurringDepositProducts", description = "Lists Recuring Deposit Products\n\n"
-            + "Example Requests:\n" + "\n" + "recurringdepositproducts\n" + "\n" + "\n" + "recurringdepositproducts?fields=name")
+    @Operation(summary = "List Recuring Deposit Products", operationId = "retrieveAllRecurringDepositProducts", description = """
+            Lists Recuring Deposit Products
+
+            Example Requests:
+
+            recurringdepositproducts
+
+
+            recurringdepositproducts?fields=name""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = RecurringDepositProductsApiResourceSwagger.GetRecurringDepositProductsResponse.class)))) })
     public String retrieveAll(@Context final UriInfo uriInfo) {
@@ -173,9 +185,18 @@ public class RecurringDepositProductsApiResource {
     @GET
     @Path("{productId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Recurring Deposit Product", operationId = "retrieveOneRecurringDepositProduct", description = "Retrieves a Recurring Deposit Product\n\n"
-            + "Example Requests:\n" + "\n" + "recurringdepositproducts/1\n" + "\n" + "\n" + "recurringdepositproducts/1?template=true\n"
-            + "\n" + "\n" + "recurringdepositproducts/1?fields=name,description")
+    @Operation(summary = "Retrieve a Recurring Deposit Product", operationId = "retrieveOneRecurringDepositProduct", description = """
+            Retrieves a Recurring Deposit Product
+
+            Example Requests:
+
+            recurringdepositproducts/1
+
+
+            recurringdepositproducts/1?template=true
+
+
+            recurringdepositproducts/1?fields=name,description""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = RecurringDepositProductsApiResourceSwagger.GetRecurringDepositProductsProductIdResponse.class))) })
     public String retrieveOne(@PathParam("productId") @Parameter(description = "productId") final Long productId,

@@ -87,8 +87,15 @@ public class ProductsApiResource {
     @GET
     @Path("{productId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Share Product", operationId = "retrieveOneShareProduct", description = "Retrieves a Share Product\n\n"
-            + "Example Requests:\n" + "\n" + "products/share/1\n" + "\n" + "\n" + "products/share/1?template=true")
+    @Operation(summary = "Retrieve a Share Product", operationId = "retrieveOneShareProduct", description = """
+            Retrieves a Share Product
+
+            Example Requests:
+
+            products/share/1
+
+
+            products/share/1?template=true""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ProductsApiResourceSwagger.GetProductsTypeProductIdResponse.class))) })
     public String retrieveProduct(@PathParam("productId") @Parameter(description = "productId") final Long productId,
@@ -106,8 +113,14 @@ public class ProductsApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Share Products", operationId = "retrieveAllShareProducts", description = "Lists Share Products\n\n"
-            + "Mandatory Fields: limit, offset\n\n" + "Example Requests:\n" + "\n" + "shareproducts")
+    @Operation(summary = "List Share Products", operationId = "retrieveAllShareProducts", description = """
+            Lists Share Products
+
+            Mandatory Fields: limit, offset
+
+            Example Requests:
+
+            shareproducts""")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ProductsApiResourceSwagger.GetProductsTypeResponse.class))) })
     public String retrieveAllProducts(@PathParam("type") @Parameter(description = "type") final String productType,
@@ -127,10 +140,14 @@ public class ProductsApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create a Share Product", operationId = "createShareProduct", description = "Creates a Share Product\n\n"
-            + "Mandatory Fields: name, shortName, description, currencyCode, digitsAfterDecimal,inMultiplesOf, locale, totalShares, unitPrice, nominalShares,allowDividendCalculationForInactiveClients,accountingRule\n\n"
-            + "Mandatory Fields for Cash based accounting (accountingRule = 2): shareReferenceId, shareSuspenseId, shareEquityId, incomeFromFeeAccountId\n\n"
-            + "Optional Fields: sharesIssued, minimumShares, maximumShares, minimumActivePeriodForDividends, minimumactiveperiodFrequencyType, lockinPeriodFrequency, lockinPeriodFrequencyType, marketPricePeriods, chargesSelected")
+    @Operation(summary = "Create a Share Product", operationId = "createShareProduct", description = """
+            Creates a Share Product
+
+            Mandatory Fields: name, shortName, description, currencyCode, digitsAfterDecimal,inMultiplesOf, locale, totalShares, unitPrice, nominalShares,allowDividendCalculationForInactiveClients,accountingRule
+
+            Mandatory Fields for Cash based accounting (accountingRule = 2): shareReferenceId, shareSuspenseId, shareEquityId, incomeFromFeeAccountId
+
+            Optional Fields: sharesIssued, minimumShares, maximumShares, minimumActivePeriodForDividends, minimumactiveperiodFrequencyType, lockinPeriodFrequency, lockinPeriodFrequencyType, marketPricePeriods, chargesSelected""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = ProductsApiResourceSwagger.PostProductsTypeRequest.class)))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ProductsApiResourceSwagger.PostProductsTypeResponse.class))) })

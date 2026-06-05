@@ -93,7 +93,7 @@ public class DefaultSqlValidator implements SqlValidator {
 
             if (matcher.matches()) {
                 log.warn("SQL validation error: >> {} <<", statement);
-                throw new SqlValidationException(String.format("invalid SQL statement (detected '%s' pattern)", ref.getName()));
+                throw new SqlValidationException("invalid SQL statement (detected '%s' pattern)".formatted(ref.getName()));
             }
         }
     }

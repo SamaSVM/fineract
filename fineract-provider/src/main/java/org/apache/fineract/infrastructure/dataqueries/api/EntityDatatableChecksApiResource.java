@@ -63,10 +63,14 @@ public class EntityDatatableChecksApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Entity-Datatable Checks", description = "The list capability of Entity-Datatable Checks can support pagination.\n"
-            + "\n" + "OPTIONAL ARGUMENTS\n"
-            + "offset Integer optional, defaults to 0 Indicates the result from which pagination startslimit Integer optional, defaults to 200 Restricts the size of results returned. To override the default and return all entries you must explicitly pass a non-positive integer value for limit e.g. limit=0, or limit=-1\n"
-            + "Example Request:\n" + "\n" + "entityDatatableChecks?offset=0&limit=15")
+    @Operation(summary = "List Entity-Datatable Checks", description = """
+            The list capability of Entity-Datatable Checks can support pagination.
+
+            OPTIONAL ARGUMENTS
+            offset Integer optional, defaults to 0 Indicates the result from which pagination startslimit Integer optional, defaults to 200 Restricts the size of results returned. To override the default and return all entries you must explicitly pass a non-positive integer value for limit e.g. limit=0, or limit=-1
+            Example Request:
+
+            entityDatatableChecks?offset=0&limit=15""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = EntityDatatableChecksApiResourceSwagger.GetEntityDatatableChecksResponse.class))))
     public String retrieveAll(@Context final UriInfo uriInfo, @QueryParam("status") @Parameter(description = "status") final Integer status,
             @QueryParam("entity") @Parameter(description = "entity") final String entity,
@@ -83,8 +87,13 @@ public class EntityDatatableChecksApiResource {
     @GET
     @Path("template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Entity-Datatable Checks Template", description = "This is a convenience resource useful for building maintenance user interface screens for Entity-Datatable Checks applications. The template data returned consists of:\n"
-            + "\n" + "Allowed description Lists\n" + "Example Request:\n" + "\n" + "entityDatatableChecks/template")
+    @Operation(summary = "Retrieve Entity-Datatable Checks Template", description = """
+            This is a convenience resource useful for building maintenance user interface screens for Entity-Datatable Checks applications. The template data returned consists of:
+
+            Allowed description Lists
+            Example Request:
+
+            entityDatatableChecks/template""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EntityDatatableChecksApiResourceSwagger.GetEntityDatatableChecksTemplateResponse.class)))
     public String getTemplate(@Context final UriInfo uriInfo) {
 
@@ -96,8 +105,12 @@ public class EntityDatatableChecksApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create Entity-Datatable Checks", description = "Mandatory Fields : \n" + "entity, status, datatableName\n" + "\n"
-            + "Non-Mandatory Fields : \n" + "productId")
+    @Operation(summary = "Create Entity-Datatable Checks", description = """
+            Mandatory Fields :\s
+            entity, status, datatableName
+
+            Non-Mandatory Fields :\s
+            productId""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = EntityDatatableChecksApiResourceSwagger.PostEntityDatatableChecksTemplateRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = EntityDatatableChecksApiResourceSwagger.PostEntityDatatableChecksTemplateResponse.class)))
     public String createEntityDatatableCheck(@Parameter(hidden = true) final String apiRequestBodyAsJson) {

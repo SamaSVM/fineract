@@ -46,7 +46,6 @@ import org.apache.fineract.portfolio.savings.data.SavingsAccountTransactionDTO;
 import org.apache.fineract.portfolio.savings.exception.DepositAccountTransactionNotAllowedException;
 import org.apache.fineract.portfolio.savings.service.SavingsAccountDomainService;
 import org.apache.fineract.portfolio.savings.service.SavingsAccountPostInterestService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,7 +62,6 @@ public class SavingsAccountDomainServiceJpa implements SavingsAccountDomainServi
     private final BusinessEventNotifierService businessEventNotifierService;
     private final SavingsAccountPostInterestService savingsAccountPostInterestService;
 
-    @Autowired
     public SavingsAccountDomainServiceJpa(final SavingsAccountRepositoryWrapper savingsAccountRepository,
             final SavingsAccountTransactionRepository savingsAccountTransactionRepository,
             final ApplicationCurrencyRepositoryWrapper applicationCurrencyRepositoryWrapper,

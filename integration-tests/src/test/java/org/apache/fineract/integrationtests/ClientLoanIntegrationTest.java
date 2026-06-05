@@ -7303,7 +7303,7 @@ public class ClientLoanIntegrationTest extends BaseLoanIntegrationTest {
     private void validateNumberForEqualExcludePrecission(String val, String val2) {
         DecimalFormat twoDForm = new DecimalFormat("#");
         assertTrue(Float.valueOf(twoDForm.format(Float.valueOf(val))).compareTo(Float.valueOf(twoDForm.format(Float.valueOf(val2)))) == 0,
-                String.format("%s is not equal to %s", val, val2));
+                "%s is not equal to %s".formatted(val, val2));
     }
 
     private Integer createLoanProduct(final boolean multiDisburseLoan, final String accountingRule, final Account... accounts) {

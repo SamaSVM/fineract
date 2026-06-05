@@ -20,7 +20,6 @@ package org.apache.fineract.integrationtests;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.github.tomakehurst.wiremock.client.WireMock;
@@ -45,6 +44,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import tools.jackson.core.JacksonException;
 
 public class CreditBureauTest {
 
@@ -124,7 +124,7 @@ public class CreditBureauTest {
     }
 
     @Test
-    public void creditBureauIntegrationTest() throws JsonProcessingException {
+    public void creditBureauIntegrationTest() throws JacksonException {
         ObjectNode jsonResponse = MAPPER.createObjectNode();
         jsonResponse.put("access_token", "AccessToken");
         jsonResponse.put("expires_in", 3600);
@@ -162,7 +162,7 @@ public class CreditBureauTest {
     }
 
     @Test
-    public void creditBureauNoLoanTest() throws JsonProcessingException {
+    public void creditBureauNoLoanTest() throws JacksonException {
         ObjectNode jsonResponse = MAPPER.createObjectNode();
         jsonResponse.put("access_token", "AccessToken");
         jsonResponse.put("expires_in", 3600);

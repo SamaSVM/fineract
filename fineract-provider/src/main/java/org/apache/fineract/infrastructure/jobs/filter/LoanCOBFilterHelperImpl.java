@@ -19,9 +19,6 @@
 
 package org.apache.fineract.infrastructure.jobs.filter;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.json.JsonReadFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -56,6 +53,8 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+import tools.jackson.core.JacksonException;
+import tools.jackson.databind.JsonNode;
 
 @RequiredArgsConstructor
 @Component
@@ -191,7 +190,7 @@ public class LoanCOBFilterHelperImpl extends COBFilterApiMatcher implements Loan
         return loanIds;
     }
 
-    private Long getTopLevelLoanIdFromBatchRequest(BatchRequest batchRequest) throws JsonProcessingException {
+    private Long getTopLevelLoanIdFromBatchRequest(BatchRequest batchRequest) throws JacksonException {
         String body = batchRequest.getBody();
         if (StringUtils.isNotBlank(body)) {
             JsonNode jsonNode = objectMapper.readTree(body);
@@ -230,8 +229,6 @@ public class LoanCOBFilterHelperImpl extends COBFilterApiMatcher implements Loan
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
-        objectMapper.configure(JsonReadFeature.ALLOW_UNESCAPED_CONTROL_CHARS.mappedFeature(), true);
-    }
+    public void afterPropertiesSet() throws Exception {}
 
 }

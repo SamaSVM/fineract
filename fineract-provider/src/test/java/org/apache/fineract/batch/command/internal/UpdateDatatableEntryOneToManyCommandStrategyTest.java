@@ -28,14 +28,16 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.fineract.batch.domain.BatchRequest;
 import org.apache.fineract.batch.domain.BatchResponse;
 import org.apache.fineract.infrastructure.dataqueries.api.DatatablesApiResource;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Test class for {@link UpdateDatatableEntryOneToManyCommandStrategy}.
  */
+@ExtendWith(MockitoExtension.class)
 public class UpdateDatatableEntryOneToManyCommandStrategyTest {
 
     /**
@@ -79,7 +81,7 @@ public class UpdateDatatableEntryOneToManyCommandStrategyTest {
     private BatchRequest getBatchRequest(final String datatableName, final Long loanId, final Long datatableEntryId) {
 
         final BatchRequest br = new BatchRequest();
-        String relativeUrl = String.format("datatables/%s/%s/%s", datatableName, loanId, datatableEntryId);
+        String relativeUrl = "datatables/%s/%s/%s".formatted(datatableName, loanId, datatableEntryId);
 
         br.setRequestId(Long.valueOf(RandomStringUtils.randomNumeric(5)));
         br.setRelativeUrl(relativeUrl);
@@ -103,7 +105,6 @@ public class UpdateDatatableEntryOneToManyCommandStrategyTest {
         private final UpdateDatatableEntryOneToManyCommandStrategy subjectToTest;
 
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             subjectToTest = new UpdateDatatableEntryOneToManyCommandStrategy(datatablesApiResource);
         }
     }

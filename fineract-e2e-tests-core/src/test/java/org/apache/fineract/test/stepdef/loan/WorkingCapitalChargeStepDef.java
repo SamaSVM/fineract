@@ -285,7 +285,7 @@ public class WorkingCapitalChargeStepDef extends AbstractStepDef {
                         : new Utils.DoubleFormatter(balance.getPenaltyOutstanding().doubleValue()).format());
                 case "Penalty Paid" -> actualValues.add(balance.getPenaltyPaid() == null ? null
                         : new Utils.DoubleFormatter(balance.getPenaltyPaid().doubleValue()).format());
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;
@@ -323,7 +323,7 @@ public class WorkingCapitalChargeStepDef extends AbstractStepDef {
                     actualValues.add(charge.getChargeCalculationType() == null ? null : charge.getChargeCalculationType().getCode());
                 case "Charge Payment mode" ->
                     actualValues.add(charge.getChargePaymentMode() == null ? null : charge.getChargePaymentMode().getCode());
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;

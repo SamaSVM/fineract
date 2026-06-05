@@ -87,7 +87,7 @@ public final class Utils {
         public String format() {
             boolean isWholeNumber = (value % 1.0 == 0);
 
-            String result = isWholeNumber ? String.format("%.1f", value) : String.format("%.2f", value);
+            String result = isWholeNumber ? "%.1f".formatted(value) : "%.2f".formatted(value);
 
             // For non-whole numbers, remove trailing '0' if it exists
             if (!isWholeNumber && result.endsWith("0")) {

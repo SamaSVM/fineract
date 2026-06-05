@@ -413,7 +413,7 @@ public class WorkingCapitalLoanAccountStepDef extends AbstractStepDef {
         final CallFailedRuntimeException exception = fail(
                 () -> fineractClient.workingCapitalLoans().submitWorkingCapitalLoanApplication(request));
         assertThat(exception.getDeveloperMessage())
-                .contains(String.format("Working Capital Near Breach with id %s was not found.", nearBreachId));
+                .contains("Working Capital Near Breach with id %s was not found.".formatted(nearBreachId));
         assertThat(exception.getStatus()).as("HTTP status").isEqualTo(404);
     }
 
@@ -920,7 +920,7 @@ public class WorkingCapitalLoanAccountStepDef extends AbstractStepDef {
 
         assertThat(exception.getStatus()).as("HTTP status code should be 403").isEqualTo(403);
         assertThat(exception.getMessage()).as("Should contain no parameters error")
-                .contains(String.format("Working Capital Loan with identifier %d cannot be modified in its current state.", loanId));
+                .contains("Working Capital Loan with identifier %d cannot be modified in its current state.".formatted(loanId));
         log.info("Verified modification failed with disbursed Active status empty request");
     }
 
@@ -2016,7 +2016,7 @@ public class WorkingCapitalLoanAccountStepDef extends AbstractStepDef {
                 case "totalDiscountFeeAdjustment" ->
                     actualValues.add(response.getBalance() == null || response.getBalance().getTotalDiscountFeeAdjustment() == null ? null
                             : new Utils.DoubleFormatter(response.getBalance().getTotalDiscountFeeAdjustment().doubleValue()).format());
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;
@@ -2717,7 +2717,7 @@ public class WorkingCapitalLoanAccountStepDef extends AbstractStepDef {
             case "actualAmortizationAmount" -> asText(period.getActualAmortizationAmount());
             case "expectedDiscountFeeBalance" -> asText(period.getExpectedDiscountFeeBalance());
             case "actualDiscountFeeBalance" -> asText(period.getActualDiscountFeeBalance());
-            default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+            default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
         };
     }
 
@@ -3109,12 +3109,12 @@ public class WorkingCapitalLoanAccountStepDef extends AbstractStepDef {
                 Object actual = methods.get(iM).invoke(actualValues);
                 String expected = expectedValues.get(iM);
                 String message = "Line " + (i + 1) + " has miss match on field: " + header.get(iM);
-                if (actual instanceof BigDecimal) {
-                    Assertions.assertEquals(Double.parseDouble(expected), ((BigDecimal) actual).doubleValue(), message);
-                } else if (actual instanceof LoanTransactionEnumData) {
-                    Assertions.assertEquals(expected, ((LoanTransactionEnumData) actual).getValue(), message);
-                } else if (actual instanceof LocalDate) {
-                    Assertions.assertEquals(expected, FORMATTER.format((LocalDate) actual), message);
+                if (actual instanceof BigDecimal decimal) {
+                    Assertions.assertEquals(Double.parseDouble(expected), decimal.doubleValue(), message);
+                } else if (actual instanceof LoanTransactionEnumData data) {
+                    Assertions.assertEquals(expected, data.getValue(), message);
+                } else if (actual instanceof LocalDate date) {
+                    Assertions.assertEquals(expected, FORMATTER.format(date), message);
                 } else {
                     Assertions.assertEquals(expectedValues.get(iM), actual == null ? null : actual.toString(), message);
                 }
@@ -3131,14 +3131,14 @@ public class WorkingCapitalLoanAccountStepDef extends AbstractStepDef {
         TransactionType resolvedTransactionType = resolveTransactionType(transactionType);
         List<GetWorkingCapitalLoanTransactionIdResponse> transactionsMatch = findMatchingTransactions(loanId, resolvedTransactionType,
                 transactionDate, false);
-        GetWorkingCapitalLoanTransactionIdResponse transaction = transactionsMatch.stream().findFirst().orElseThrow(
-                () -> new IllegalStateException(String.format("No %s transaction found on %s", transactionType, transactionDate)));
+        GetWorkingCapitalLoanTransactionIdResponse transaction = transactionsMatch.stream().findFirst()
+                .orElseThrow(() -> new IllegalStateException("No %s transaction found on %s".formatted(transactionType, transactionDate)));
 
         // Get detailed transaction information including classification
         GetWorkingCapitalLoanTransactionIdResponse transactionDetails = ok(() -> fineractClient.workingCapitalLoanTransactions()
                 .retrieveWorkingCapitalLoanTransactionById(loanId, transaction.getId()));
 
-        assertThat(transactionDetails.getClassification()).as(String.format("%s transaction should have classification", transactionType))
+        assertThat(transactionDetails.getClassification()).as("%s transaction should have classification".formatted(transactionType))
                 .isNotNull();
         assertThat(transactionDetails.getClassification().getName()).as("Classification name should match expected value")
                 .isEqualTo(expectedClassification);
@@ -3280,7 +3280,7 @@ public class WorkingCapitalLoanAccountStepDef extends AbstractStepDef {
                         : new Utils.DoubleFormatter(rateChangeData.getNewRate().doubleValue()).format());
                 case "Reversed" ->
                     actualValues.add(rateChangeData.getReversed() == null ? null : String.valueOf(rateChangeData.getReversed()));
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;
@@ -3301,7 +3301,7 @@ public class WorkingCapitalLoanAccountStepDef extends AbstractStepDef {
             }
         }
 
-        throw new IllegalStateException(String.format("Code [%s] with code value [%s] cannot be found", codeName, codeValueName));
+        throw new IllegalStateException("Code [%s] with code value [%s] cannot be found".formatted(codeName, codeValueName));
     }
 
 }

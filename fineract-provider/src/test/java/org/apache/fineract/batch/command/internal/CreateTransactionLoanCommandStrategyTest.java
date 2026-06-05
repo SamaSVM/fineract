@@ -29,14 +29,16 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.fineract.batch.domain.BatchRequest;
 import org.apache.fineract.batch.domain.BatchResponse;
 import org.apache.fineract.portfolio.loanaccount.api.LoanTransactionsApiResource;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Test class for {@link CreateTransactionLoanCommandStrategy}.
  */
+@ExtendWith(MockitoExtension.class)
 public class CreateTransactionLoanCommandStrategyTest {
 
     /**
@@ -112,7 +114,6 @@ public class CreateTransactionLoanCommandStrategyTest {
          * Constructor.
          */
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             subjectToTest = new CreateTransactionLoanCommandStrategy(loanTransactionsApiResource);
         }
     }

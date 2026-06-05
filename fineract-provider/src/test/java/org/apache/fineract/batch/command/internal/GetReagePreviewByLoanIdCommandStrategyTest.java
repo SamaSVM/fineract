@@ -37,19 +37,21 @@ import org.apache.fineract.infrastructure.core.serialization.DefaultToApiJsonSer
 import org.apache.fineract.portfolio.loanaccount.api.LoanTransactionsApiResource;
 import org.apache.fineract.portfolio.loanaccount.api.request.ReAgePreviewRequest;
 import org.apache.fineract.portfolio.loanaccount.loanschedule.data.LoanScheduleData;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Test class for {@link GetReagePreviewByLoanIdCommandStrategy}.
  */
+@ExtendWith(MockitoExtension.class)
 public class GetReagePreviewByLoanIdCommandStrategyTest {
 
     /**
@@ -266,7 +268,6 @@ public class GetReagePreviewByLoanIdCommandStrategyTest {
          * Constructor.
          */
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             subjectToTest = new GetReagePreviewByLoanIdCommandStrategy(loanTransactionsApiResource, toApiJsonSerializer);
         }
     }

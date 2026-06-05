@@ -21,6 +21,7 @@ package org.apache.fineract.infrastructure.jobs.service;
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -43,17 +44,19 @@ import org.apache.fineract.useradministration.domain.AppUser;
 import org.apache.fineract.useradministration.domain.AppUserRepositoryWrapper;
 import org.quartz.JobExecutionException;
 import org.springframework.batch.core.BatchStatus;
-import org.springframework.batch.core.Job;
-import org.springframework.batch.core.JobExecution;
-import org.springframework.batch.core.JobParameter;
-import org.springframework.batch.core.JobParameters;
-import org.springframework.batch.core.JobParametersBuilder;
-import org.springframework.batch.core.JobParametersInvalidException;
-import org.springframework.batch.core.explore.JobExplorer;
-import org.springframework.batch.core.launch.JobLauncher;
-import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
-import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
-import org.springframework.batch.core.repository.JobRestartException;
+import org.springframework.batch.core.job.Job;
+import org.springframework.batch.core.job.JobExecution;
+import org.springframework.batch.core.job.JobInstance;
+import org.springframework.batch.core.job.parameters.InvalidJobParametersException;
+import org.springframework.batch.core.job.parameters.JobParameter;
+import org.springframework.batch.core.job.parameters.JobParameters;
+import org.springframework.batch.core.job.parameters.JobParametersBuilder;
+import org.springframework.batch.core.job.parameters.JobParametersIncrementer;
+import org.springframework.batch.core.launch.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.launch.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.launch.JobOperator;
+import org.springframework.batch.core.launch.JobRestartException;
+import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -63,8 +66,8 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class JobStarter {
 
-    private final JobExplorer jobExplorer;
-    private final JobLauncher jobLauncher;
+    private final JobRepository jobExplorer;
+    private final JobOperator jobLauncher;
     private final JobParameterRepository jobParameterRepository;
     private final List<JobParameterProvider<?>> jobParameterProviders;
     private final JobNameService jobNameService;
@@ -77,7 +80,7 @@ public class JobStarter {
 
     public JobExecution run(Job job, ScheduledJobDetail scheduledJobDetail, Set<JobParameterDTO> jobParameterDTOSet,
             String tenantIdentifier) throws JobInstanceAlreadyCompleteException, JobExecutionAlreadyRunningException,
-            JobParametersInvalidException, JobRestartException, JobExecutionException {
+            InvalidJobParametersException, JobRestartException, JobExecutionException {
 
         boolean contextInitialized = false;
         final FineractPlatformTenant existingTenant = ThreadLocalContextUtil.getTenant();
@@ -96,13 +99,24 @@ public class JobStarter {
                 ThreadLocalContextUtil.setBusinessDates(businessDates);
             }
 
-            Map<String, JobParameter<?>> jobParameterMap = getJobParameter(scheduledJobDetail);
-            JobParameters jobParameters = new JobParametersBuilder(jobExplorer).getNextJobParameters(job)
-                    .addJobParameters(new JobParameters(jobParameterMap))
-                    .addJobParameters(new JobParameters(provideCustomJobParameters(
-                            jobNameService.getJobByHumanReadableName(scheduledJobDetail.getJobName()).getEnumStyleName(),
-                            jobParameterDTOSet)))
-                    .toJobParameters();
+            Set<JobParameter<?>> jobParameterSet = getJobParameter(scheduledJobDetail);
+            Set<JobParameter<?>> customParams = provideCustomJobParameters(
+                    jobNameService.getJobByHumanReadableName(scheduledJobDetail.getJobName()).getEnumStyleName(), jobParameterDTOSet);
+            JobParametersBuilder builder = new JobParametersBuilder();
+            JobParametersIncrementer incrementer = job.getJobParametersIncrementer();
+            if (incrementer != null) {
+                JobInstance lastInstance = jobExplorer.getLastJobInstance(job.getName());
+                JobParameters lastParams = new JobParameters();
+                if (lastInstance != null) {
+                    JobExecution lastExecution = jobExplorer.getLastJobExecution(lastInstance);
+                    if (lastExecution != null) {
+                        lastParams = lastExecution.getJobParameters();
+                    }
+                }
+                builder.addJobParameters(incrementer.getNext(lastParams));
+            }
+            JobParameters jobParameters = builder.addJobParameters(new JobParameters(jobParameterSet))
+                    .addJobParameters(new JobParameters(customParams)).toJobParameters();
             JobExecution result = jobLauncher.run(job, jobParameters);
             if (FAILED_STATUSES.contains(result.getStatus())) {
                 throw new JobExecutionException(result.getExitStatus().toString());
@@ -115,21 +129,24 @@ public class JobStarter {
         }
     }
 
-    protected Map<String, org.springframework.batch.core.JobParameter<?>> getJobParameter(ScheduledJobDetail scheduledJobDetail) {
+    protected Set<JobParameter<?>> getJobParameter(ScheduledJobDetail scheduledJobDetail) {
         List<org.apache.fineract.infrastructure.jobs.domain.JobParameter> jobParameterList = jobParameterRepository
                 .findJobParametersByJobId(scheduledJobDetail.getId());
-        Map<String, JobParameter<?>> jobParameterMap = new HashMap<>();
+        Set<JobParameter<?>> jobParameterSet = new HashSet<>();
         for (org.apache.fineract.infrastructure.jobs.domain.JobParameter jobParameter : jobParameterList) {
-            jobParameterMap.put(jobParameter.getParameterName(), new JobParameter<>(jobParameter.getParameterValue(), String.class));
+            jobParameterSet.add(new JobParameter<>(jobParameter.getParameterName(), jobParameter.getParameterValue(), String.class, true));
         }
-        return jobParameterMap;
+        return jobParameterSet;
     }
 
-    protected Map<String, JobParameter<?>> provideCustomJobParameters(String jobName, Set<JobParameterDTO> jobParameterDTOSet) {
+    protected Set<JobParameter<?>> provideCustomJobParameters(String jobName, Set<JobParameterDTO> jobParameterDTOSet) {
         Optional<JobParameterProvider<?>> jobParameterProvider = jobParameterProviders.stream()
                 .filter(provider -> provider.canProvideParametersForJob(jobName)).findFirst();
-        Map<String, ? extends JobParameter<?>> map = jobParameterProvider
+        @SuppressWarnings("unchecked")
+        Map<String, JobParameter<Object>> map = (Map<String, JobParameter<Object>>) (Map<?, ?>) jobParameterProvider
                 .map(parameterProvider -> parameterProvider.provide(jobParameterDTOSet)).orElse(Collections.emptyMap());
-        return map.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
+        return map.entrySet().stream()
+                .map(e -> new JobParameter<>(e.getKey(), e.getValue().value(), e.getValue().type(), e.getValue().identifying()))
+                .collect(Collectors.toSet());
     }
 }

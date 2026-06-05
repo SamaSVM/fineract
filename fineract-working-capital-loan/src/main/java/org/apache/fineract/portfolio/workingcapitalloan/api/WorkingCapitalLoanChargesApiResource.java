@@ -74,8 +74,16 @@ public class WorkingCapitalLoanChargesApiResource {
     @GET
     @Path("{loanId}/charges/template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Working Capital Loan Charges Template", operationId = "retrieveTemplateWorkingCapitalLoanCharge", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n"
-            + "\n" + "Field Defaults\n" + "Allowed description Lists\n" + "Example Request:\n" + "\n" + "loans/1/charges/template\n" + "\n")
+    @Operation(summary = "Retrieve Working Capital Loan Charges Template", operationId = "retrieveTemplateWorkingCapitalLoanCharge", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+
+            Field Defaults
+            Allowed description Lists
+            Example Request:
+
+            loans/1/charges/template
+
+            """)
     @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true)
     public WorkingCapitalLoanChargeData retrieveTemplate(@PathParam("loanId") @Parameter(description = "loanId") final Long loanId) {
         return retrieveTemplate(loanId, null);
@@ -84,8 +92,16 @@ public class WorkingCapitalLoanChargesApiResource {
     @GET
     @Path("external-id/{loanExternalId}/charges/template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Working Capital Loan Charges Template", operationId = "retrieveTemplateWorkingCapitalLoanChargeByLoanExternalId", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n"
-            + "\n" + "Field Defaults\n" + "Allowed description Lists\n" + "Example Request:\n" + "\n" + "loans/1/charges/template\n" + "\n")
+    @Operation(summary = "Retrieve Working Capital Loan Charges Template", operationId = "retrieveTemplateWorkingCapitalLoanChargeByLoanExternalId", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+
+            Field Defaults
+            Allowed description Lists
+            Example Request:
+
+            loans/1/charges/template
+
+            """)
     @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true)
     public WorkingCapitalLoanChargeData retrieveTemplate(
             @PathParam("loanExternalId") @Parameter(description = "loanExternalId") final String loanExternalId) {
@@ -178,8 +194,15 @@ public class WorkingCapitalLoanChargesApiResource {
     @GET
     @Path("{loanId}/charges")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Loan Charges", operationId = "retrieveAllWorkingCapitalLoanChargesByLoanId", description = "It lists all the Loan Charges specific to a Loan \n\n"
-            + "Example Requests:\n" + "\n" + "loans/1/charges\n" + "\n" + "\n" + "loans/1/charges?fields=name,amountOrPercentage")
+    @Operation(summary = "List Loan Charges", operationId = "retrieveAllWorkingCapitalLoanChargesByLoanId", description = """
+            It lists all the Loan Charges specific to a Loan\s
+
+            Example Requests:
+
+            loans/1/charges
+
+
+            loans/1/charges?fields=name,amountOrPercentage""")
     @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true)
     public List<WorkingCapitalLoanChargeData> retrieveAllLoanCharges(
             @PathParam("loanId") @Parameter(description = "loanId") final Long loanId, @Context final UriInfo uriInfo) {
@@ -190,8 +213,15 @@ public class WorkingCapitalLoanChargesApiResource {
     @GET
     @Path("external-id/{loanExternalId}/charges")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Loan Charges", operationId = "retrieveAllWorkingCapitalLoanChargesByLoanExternalId", description = "It lists all the Loan Charges specific to a Loan \n\n"
-            + "Example Requests:\n" + "\n" + "loans/1/charges\n" + "\n" + "\n" + "loans/1/charges?fields=name,amountOrPercentage")
+    @Operation(summary = "List Loan Charges", operationId = "retrieveAllWorkingCapitalLoanChargesByLoanExternalId", description = """
+            It lists all the Loan Charges specific to a Loan\s
+
+            Example Requests:
+
+            loans/1/charges
+
+
+            loans/1/charges?fields=name,amountOrPercentage""")
     @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true)
     public List<WorkingCapitalLoanChargeData> retrieveAllLoanCharges(
             @PathParam("loanExternalId") @Parameter(description = "loanExternalId") final String loanExternalId,
@@ -203,8 +233,14 @@ public class WorkingCapitalLoanChargesApiResource {
     @GET
     @Path("{loanId}/charges/{loanChargeId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Loan Charge", description = "Retrieves Loan Charge according to the Loan ID and Loan Charge ID"
-            + "Example Requests:\n" + "\n" + "/loans/1/charges/1\n" + "\n" + "\n" + "/loans/1/charges/1?fields=name,amountOrPercentage")
+    @Operation(summary = "Retrieve a Loan Charge", description = """
+            Retrieves Loan Charge according to the Loan ID and Loan Charge ID\
+            Example Requests:
+
+            /loans/1/charges/1
+
+
+            /loans/1/charges/1?fields=name,amountOrPercentage""")
     @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true)
     public WorkingCapitalLoanChargeData retrieveWorkingCapitalLoanCharge(
             @PathParam("loanId") @Parameter(description = "loanId") final Long loanId,
@@ -216,9 +252,14 @@ public class WorkingCapitalLoanChargesApiResource {
     @GET
     @Path("{loanId}/charges/external-id/{loanChargeExternalId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Loan Charge", operationId = "retrieveWorkingCapitalLoanChargeByChargeExternalId", description = "Retrieves Loan Charge according to the Loan ID and Loan Charge External ID"
-            + "Example Requests:\n" + "\n" + "/loans/1/charges/1\n" + "\n" + "\n"
-            + "/loans/1/charges/external-id/1?fields=name,amountOrPercentage")
+    @Operation(summary = "Retrieve a Loan Charge", operationId = "retrieveWorkingCapitalLoanChargeByChargeExternalId", description = """
+            Retrieves Loan Charge according to the Loan ID and Loan Charge External ID\
+            Example Requests:
+
+            /loans/1/charges/1
+
+
+            /loans/1/charges/external-id/1?fields=name,amountOrPercentage""")
     @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true)
     public WorkingCapitalLoanChargeData retrieveWorkingCapitalLoanCharge(
             @PathParam("loanId") @Parameter(description = "loanId") final Long loanId,
@@ -230,8 +271,14 @@ public class WorkingCapitalLoanChargesApiResource {
     @GET
     @Path("external-id/{loanExternalId}/charges/{loanChargeId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Loan Charge", operationId = "retrieveWorkingCapitalLoanChargeByLoanExternalId", description = "Retrieves Loan Charge according to the Loan external ID and Loan Charge ID"
-            + "Example Requests:\n" + "\n" + "/loans/1/charges/1\n" + "\n" + "\n" + "/loans/1/charges/1?fields=name,amountOrPercentage")
+    @Operation(summary = "Retrieve a Loan Charge", operationId = "retrieveWorkingCapitalLoanChargeByLoanExternalId", description = """
+            Retrieves Loan Charge according to the Loan external ID and Loan Charge ID\
+            Example Requests:
+
+            /loans/1/charges/1
+
+
+            /loans/1/charges/1?fields=name,amountOrPercentage""")
     @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true)
     public WorkingCapitalLoanChargeData retrieveWorkingCapitalLoanCharge(
             @PathParam("loanExternalId") @Parameter(description = "loanExternalId") final String loanExternalId,
@@ -243,8 +290,14 @@ public class WorkingCapitalLoanChargesApiResource {
     @GET
     @Path("external-id/{loanExternalId}/charges/external-id/{loanChargeExternalId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Loan Charge", operationId = "retrieveWorkingCapitalLoanChargeByLoanAndChargeExternalId", description = "Retrieves Loan Charge according to the Loan External ID and Loan Charge External ID"
-            + "Example Requests:\n" + "\n" + "/loans/1/charges/1\n" + "\n" + "\n" + "/loans/1/charges/1?fields=name,amountOrPercentage")
+    @Operation(summary = "Retrieve a Loan Charge", operationId = "retrieveWorkingCapitalLoanChargeByLoanAndChargeExternalId", description = """
+            Retrieves Loan Charge according to the Loan External ID and Loan Charge External ID\
+            Example Requests:
+
+            /loans/1/charges/1
+
+
+            /loans/1/charges/1?fields=name,amountOrPercentage""")
     @ApiResponse(responseCode = "200", description = "OK", useReturnTypeSchema = true)
     public WorkingCapitalLoanChargeData retrieveWorkingCapitalLoanCharge(
             @PathParam("loanExternalId") @Parameter(description = "loanExternalId") final String loanExternalId,

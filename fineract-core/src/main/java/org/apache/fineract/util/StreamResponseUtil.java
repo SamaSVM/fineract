@@ -58,7 +58,7 @@ public final class StreamResponseUtil {
             return Response.ok(stream, content.getType()).build();
         } else {
             return Response.ok(stream, content.getType()).header(HttpHeaders.CONTENT_DISPOSITION,
-                    String.format("%s; filename=\"%s\"", content.getDispositionType(), content.getFileName())).build();
+                    "%s; filename=\"%s\"".formatted(content.getDispositionType(), content.getFileName())).build();
         }
     }
 
@@ -68,7 +68,7 @@ public final class StreamResponseUtil {
                 asyncResponse.resume(Response.ok(content.getStream(), content.getType()).build());
             } else {
                 asyncResponse.resume(Response.ok(content.getStream(), content.getType()).header(HttpHeaders.CONTENT_DISPOSITION,
-                        String.format("%s; filename=\"%s\"", content.getDispositionType(), content.getFileName())).build());
+                        "%s; filename=\"%s\"".formatted(content.getDispositionType(), content.getFileName())).build());
             }
         });
     }

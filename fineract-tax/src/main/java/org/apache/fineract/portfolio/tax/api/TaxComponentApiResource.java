@@ -95,9 +95,12 @@ public class TaxComponentApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create a new Tax Component", operationId = "createTaxComponent", description = "Creates a new Tax Component\n\n"
-            + "Mandatory Fields: name, percentage\n\n"
-            + "Optional Fields: debitAccountType, debitAccountId, creditAccountType, creditAccountId, startDate")
+    @Operation(summary = "Create a new Tax Component", operationId = "createTaxComponent", description = """
+            Creates a new Tax Component
+
+            Mandatory Fields: name, percentage
+
+            Optional Fields: debitAccountType, debitAccountId, creditAccountType, creditAccountId, startDate""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = TaxComponentApiResourceSwagger.PostTaxesComponentsRequest.class)))
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = TaxComponentApiResourceSwagger.PostTaxesComponentsResponse.class))) })

@@ -88,8 +88,11 @@ public class InterestRateChartsApiResource {
 
     @GET
     @Path("{chartId}")
-    @Operation(summary = "Retrieve a Chart", operationId = "retrieveOneInterestRateChart", description = "It retrieves the Interest Rate Chart\n"
-            + "Example Requests:\n" + "\n" + "interestratecharts/1")
+    @Operation(summary = "Retrieve a Chart", operationId = "retrieveOneInterestRateChart", description = """
+            It retrieves the Interest Rate Chart
+            Example Requests:
+
+            interestratecharts/1""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = InterestRateChartsApiResourceSwagger.GetInterestRateChartsResponse.class)))
     public InterestRateChartData retrieveOne(@PathParam("chartId") final Long chartId,
             @QueryParam("associations") final String associations) {

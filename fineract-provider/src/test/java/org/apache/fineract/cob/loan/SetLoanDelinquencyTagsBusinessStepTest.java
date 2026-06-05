@@ -25,7 +25,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -114,8 +113,6 @@ public class SetLoanDelinquencyTagsBusinessStepTest {
      */
     @Test
     public void testExecuteSuccessScenario() throws Exception {
-        // given
-        doNothing().when(loanAccountDomainService).setLoanDelinquencyTag(any(Loan.class), any(LocalDate.class), anyList());
         Loan loanForProcessing = createLoan();
 
         // when

@@ -65,11 +65,20 @@ public class LoanScheduleApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Calculate loan repayment schedule based on Loan term variations | Updates loan repayment schedule based on Loan term variations | Updates loan repayment schedule by removing Loan term variations", description = "Calculate loan repayment schedule based on Loan term variations:\n\n"
-            + "Mandatory Fields: exceptions,locale,dateFormat\n\n" + "Updates loan repayment schedule based on Loan term variations:\n\n"
-            + "Mandatory Fields: exceptions,locale,dateFormat\n\n" + "Updates loan repayment schedule by removing Loan term variations:\n\n"
-            + "It updates the loan repayment schedule by removing Loan term variations\n\n"
-            + "Showing request/response for 'Updates loan repayment schedule by removing Loan term variations'")
+    @Operation(summary = "Calculate loan repayment schedule based on Loan term variations | Updates loan repayment schedule based on Loan term variations | Updates loan repayment schedule by removing Loan term variations", description = """
+            Calculate loan repayment schedule based on Loan term variations:
+
+            Mandatory Fields: exceptions,locale,dateFormat
+
+            Updates loan repayment schedule based on Loan term variations:
+
+            Mandatory Fields: exceptions,locale,dateFormat
+
+            Updates loan repayment schedule by removing Loan term variations:
+
+            It updates the loan repayment schedule by removing Loan term variations
+
+            Showing request/response for 'Updates loan repayment schedule by removing Loan term variations'""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = LoanScheduleApiResourceSwagger.PostLoansLoanIdScheduleRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanScheduleApiResourceSwagger.PostLoansLoanIdScheduleResponse.class)))
     public String calculateLoanScheduleOrSubmitVariableSchedule(@PathParam("loanId") @Parameter(description = "loanId") final Long loanId,

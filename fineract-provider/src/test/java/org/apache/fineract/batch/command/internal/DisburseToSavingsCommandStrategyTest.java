@@ -29,14 +29,16 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.fineract.batch.domain.BatchRequest;
 import org.apache.fineract.batch.domain.BatchResponse;
 import org.apache.fineract.portfolio.loanaccount.api.LoansApiResource;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Test class for {@link DisburseToSavingsCommandStrategy}.
  */
+@ExtendWith(MockitoExtension.class)
 public class DisburseToSavingsCommandStrategyTest {
 
     /**
@@ -96,7 +98,7 @@ public class DisburseToSavingsCommandStrategyTest {
     private BatchRequest getBatchRequest(final Long loanId) {
         final BatchRequest br = new BatchRequest();
         br.setRequestId(Long.valueOf(RandomStringUtils.randomNumeric(5)));
-        br.setRelativeUrl(String.format("loans/%s?command=disburseToSavings", loanId));
+        br.setRelativeUrl("loans/%s?command=disburseToSavings".formatted(loanId));
         br.setMethod(HttpMethod.POST);
         br.setReference(Long.valueOf(RandomStringUtils.randomNumeric(5)));
         br.setBody("{\"actualDisbursementDate\":\"01 March 2026\",\"locale\":\"en\",\"dateFormat\":\"dd MMMM yyyy\"}");
@@ -117,7 +119,6 @@ public class DisburseToSavingsCommandStrategyTest {
         private final DisburseToSavingsCommandStrategy subjectToTest;
 
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             subjectToTest = new DisburseToSavingsCommandStrategy(loansApiResource);
         }
     }

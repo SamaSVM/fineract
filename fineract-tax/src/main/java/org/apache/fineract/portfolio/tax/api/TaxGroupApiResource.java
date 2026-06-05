@@ -99,9 +99,11 @@ public class TaxGroupApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create a new Tax Group", operationId = "createTaxGroup", description = "Create a new Tax Group\n"
-            + "Mandatory Fields: name and taxComponents\n" + "Mandatory Fields in taxComponents: taxComponentId\n"
-            + "Optional Fields in taxComponents: id, startDate and endDate")
+    @Operation(summary = "Create a new Tax Group", operationId = "createTaxGroup", description = """
+            Create a new Tax Group
+            Mandatory Fields: name and taxComponents
+            Mandatory Fields in taxComponents: taxComponentId
+            Optional Fields in taxComponents: id, startDate and endDate""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = TaxGroupApiResourceSwagger.PostTaxesGroupRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = TaxGroupApiResourceSwagger.PostTaxesGroupResponse.class)))
     public CommandProcessingResult createTaxGroup(@Parameter(hidden = true) TaxGroupRequest taxGroupRequest) {

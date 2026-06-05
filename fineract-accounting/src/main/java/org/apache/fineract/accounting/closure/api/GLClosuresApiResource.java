@@ -120,8 +120,9 @@ public class GLClosuresApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create an Accounting Closure", operationId = "createGLClosure", description = "Mandatory Fields\n"
-            + "officeId,closingDate")
+    @Operation(summary = "Create an Accounting Closure", operationId = "createGLClosure", description = """
+            Mandatory Fields
+            officeId,closingDate""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = GLClosuresApiResourceSwagger.PostGlClosuresRequest.class, description = "Request Body")))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = GLClosuresApiResourceSwagger.PostGlClosuresResponse.class)))
     public CommandProcessingResult createGLClosure(@Parameter(hidden = true) GLClosureRequest glClosureRequest) {

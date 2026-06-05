@@ -42,7 +42,6 @@ import org.apache.fineract.infrastructure.security.domain.TFAccessToken;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 import org.apache.fineract.infrastructure.security.service.TwoFactorService;
 import org.apache.fineract.useradministration.domain.AppUser;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,7 +55,6 @@ public class InvalidateTFAccessTokenCommandHandler implements NewCommandSourceHa
     private final PlatformSecurityContext securityContext;
     private final FromJsonHelper fromJsonHelper;
 
-    @Autowired
     public InvalidateTFAccessTokenCommandHandler(TwoFactorService twoFactorService, PlatformSecurityContext securityContext,
             FromJsonHelper fromJsonHelper) {
         this.twoFactorService = twoFactorService;

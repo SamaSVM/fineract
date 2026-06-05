@@ -23,7 +23,7 @@ public class LockedReadException extends Exception {
     private final Long id;
 
     public LockedReadException(Long id, Throwable t) {
-        super(String.format("Loan is in already locked state! loanId: %d", id), t);
+        super("Loan is in already locked state! loanId: %d".formatted(id), t);
         this.id = id;
     }
 

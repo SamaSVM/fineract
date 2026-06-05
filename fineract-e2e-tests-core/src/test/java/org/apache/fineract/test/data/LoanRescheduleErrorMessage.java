@@ -41,7 +41,7 @@ public enum LoanRescheduleErrorMessage {
         if (params.length != getExpectedParameterCount()) {
             throw new IllegalArgumentException("Expected " + getExpectedParameterCount() + " parameters, but got " + params.length);
         }
-        return String.format(this.messageTemplate, params);
+        return this.messageTemplate.formatted(params);
     }
 
     public int getExpectedParameterCount() {

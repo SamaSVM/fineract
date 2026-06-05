@@ -36,7 +36,6 @@ import org.apache.fineract.infrastructure.core.data.DataValidatorBuilder;
 import org.apache.fineract.infrastructure.core.exception.InvalidJsonException;
 import org.apache.fineract.infrastructure.core.serialization.FromJsonHelper;
 import org.apache.fineract.infrastructure.core.service.DateUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -66,7 +65,6 @@ public final class ClientFamilyMemberCommandFromApiJsonDeserializer {
     public static final String RELATION_SHIP_ID = "relationShipId";
     private final FromJsonHelper fromApiJsonHelper;
 
-    @Autowired
     public ClientFamilyMemberCommandFromApiJsonDeserializer(final FromJsonHelper fromApiJsonHelper) {
         this.fromApiJsonHelper = fromApiJsonHelper;
     }

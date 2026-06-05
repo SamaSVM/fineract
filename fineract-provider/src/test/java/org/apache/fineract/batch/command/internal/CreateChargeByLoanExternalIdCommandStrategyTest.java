@@ -32,16 +32,18 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.fineract.batch.domain.BatchRequest;
 import org.apache.fineract.batch.domain.BatchResponse;
 import org.apache.fineract.portfolio.loanaccount.api.LoanChargesApiResource;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Test class for {@link CreateChargeByLoanExternalIdCommandStrategy}.
  */
+@ExtendWith(MockitoExtension.class)
 class CreateChargeByLoanExternalIdCommandStrategyTest {
 
     /**
@@ -94,7 +96,7 @@ class CreateChargeByLoanExternalIdCommandStrategyTest {
         final BatchRequest br = new BatchRequest();
         String relativeUrl = "loans/external-id/" + loanExternalId + "/charges";
         if (StringUtils.isNotBlank(command)) {
-            relativeUrl = relativeUrl + String.format("?command=%s", command);
+            relativeUrl = relativeUrl + "?command=%s".formatted(command);
         }
         br.setRequestId(Long.valueOf(RandomStringUtils.secure().nextNumeric(5)));
         br.setRelativeUrl(relativeUrl);
@@ -131,7 +133,6 @@ class CreateChargeByLoanExternalIdCommandStrategyTest {
          * Constructor.
          */
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             subjectToTest = new CreateChargeByLoanExternalIdCommandStrategy(loanChargesApiResource);
         }
     }

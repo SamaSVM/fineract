@@ -18,15 +18,13 @@
  */
 package org.apache.fineract.infrastructure.core.service.database;
 
-import static java.lang.String.format;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.fineract.infrastructure.core.exception.PlatformServiceUnavailableException;
-import org.springframework.lang.NonNull;
+import org.jspecify.annotations.NonNull;
 
 @AllArgsConstructor
 @Getter
@@ -43,12 +41,12 @@ public enum SqlOperator {
         @Override
         public String formatImpl(@NonNull DatabaseSpecificSQLGenerator sqlGenerator, JdbcJavaType columnType, String definition,
                 String... values) {
-            return format("%s %s %s", definition, getSymbol(), sqlGenerator.formatValue(columnType, "%" + values[0] + "%"));
+            return "%s %s %s".formatted(definition, getSymbol(), sqlGenerator.formatValue(columnType, "%" + values[0] + "%"));
         }
 
         @Override
         public String formatPlaceholderImpl(String definition, int paramCount, String placeholder) {
-            return format("%s %s CONCAT('%%', %s, '%%')", definition, getSymbol(), placeholder);
+            return "%s %s CONCAT('%%', %s, '%%')".formatted(definition, getSymbol(), placeholder);
         }
     },
     NLIKE("NOT LIKE") { //
@@ -56,12 +54,12 @@ public enum SqlOperator {
         @Override
         public String formatImpl(@NonNull DatabaseSpecificSQLGenerator sqlGenerator, JdbcJavaType columnType, String definition,
                 String... values) {
-            return format("%s %s %s", definition, getSymbol(), sqlGenerator.formatValue(columnType, "%" + values[0] + "%"));
+            return "%s %s %s".formatted(definition, getSymbol(), sqlGenerator.formatValue(columnType, "%" + values[0] + "%"));
         }
 
         @Override
         public String formatPlaceholderImpl(String definition, int paramCount, String placeholder) {
-            return format("%s %s CONCAT('%%', %s, '%%')", definition, getSymbol(), placeholder);
+            return "%s %s CONCAT('%%', %s, '%%')".formatted(definition, getSymbol(), placeholder);
         }
     },
     BTW("BETWEEN", 2) { //
@@ -69,13 +67,13 @@ public enum SqlOperator {
         @Override
         public String formatImpl(@NonNull DatabaseSpecificSQLGenerator sqlGenerator, JdbcJavaType columnType, String definition,
                 String... values) {
-            return format("%s %s %s AND %s", definition, getSymbol(), sqlGenerator.formatValue(columnType, values[0]),
+            return "%s %s %s AND %s".formatted(definition, getSymbol(), sqlGenerator.formatValue(columnType, values[0]),
                     sqlGenerator.formatValue(columnType, values[1]));
         }
 
         @Override
         public String formatPlaceholderImpl(String definition, int paramCount, String placeholder) {
-            return format("%s %s %s AND %s", definition, getSymbol(), placeholder, placeholder);
+            return "%s %s %s AND %s".formatted(definition, getSymbol(), placeholder, placeholder);
         }
     },
     NBTW("NOT BETWEEN", 2) { //
@@ -83,13 +81,13 @@ public enum SqlOperator {
         @Override
         public String formatImpl(@NonNull DatabaseSpecificSQLGenerator sqlGenerator, JdbcJavaType columnType, String definition,
                 String... values) {
-            return format("%s %s %s AND %s", definition, getSymbol(), sqlGenerator.formatValue(columnType, values[0]),
+            return "%s %s %s AND %s".formatted(definition, getSymbol(), sqlGenerator.formatValue(columnType, values[0]),
                     sqlGenerator.formatValue(columnType, values[1]));
         }
 
         @Override
         public String formatPlaceholderImpl(String definition, int paramCount, String placeholder) {
-            return format("%s %s %s AND %s", definition, getSymbol(), placeholder, placeholder);
+            return "%s %s %s AND %s".formatted(definition, getSymbol(), placeholder, placeholder);
         }
     },
     IN("IN", -1) { //
@@ -97,18 +95,18 @@ public enum SqlOperator {
         @Override
         public String formatImpl(@NonNull DatabaseSpecificSQLGenerator sqlGenerator, JdbcJavaType columnType, String definition,
                 String... values) {
-            return format("%s %s (%s)", definition, getSymbol(),
+            return "%s %s (%s)".formatted(definition, getSymbol(),
                     Arrays.stream(values).map(e -> sqlGenerator.formatValue(columnType, e)).collect(Collectors.joining(", ")));
         }
 
         @Override
         protected String formatPlaceholderImpl(String definition, int paramCount, String placeholder) {
-            return format("%s %s (%s)", definition, getSymbol(), placeholder + (", " + placeholder).repeat(paramCount - 1));
+            return "%s %s (%s)".formatted(definition, getSymbol(), placeholder + (", " + placeholder).repeat(paramCount - 1));
         }
 
         @Override
         protected String formatNamedParamImpl(String definition, int paramCount, String namedParam) {
-            return format("%s %s (%s)", definition, getSymbol(), namedParam);
+            return "%s %s (%s)".formatted(definition, getSymbol(), namedParam);
         }
     },
     NIN("NOT IN", -1) { //
@@ -116,18 +114,18 @@ public enum SqlOperator {
         @Override
         public String formatImpl(@NonNull DatabaseSpecificSQLGenerator sqlGenerator, JdbcJavaType columnType, String definition,
                 String... values) {
-            return format("%s %s (%s)", definition, getSymbol(),
+            return "%s %s (%s)".formatted(definition, getSymbol(),
                     Arrays.stream(values).map(e -> sqlGenerator.formatValue(columnType, e)).collect(Collectors.joining(", ")));
         }
 
         @Override
         protected String formatPlaceholderImpl(String definition, int paramCount, String placeholder) {
-            return format("%s %s (%s)", definition, getSymbol(), placeholder + (", " + placeholder).repeat(paramCount - 1));
+            return "%s %s (%s)".formatted(definition, getSymbol(), placeholder + (", " + placeholder).repeat(paramCount - 1));
         }
 
         @Override
         protected String formatNamedParamImpl(String definition, int paramCount, String namedParam) {
-            return format("%s %s (%s)", definition, getSymbol(), namedParam);
+            return "%s %s (%s)".formatted(definition, getSymbol(), namedParam);
         }
     },
     NULL("IS NULL", 0), //
@@ -166,8 +164,8 @@ public enum SqlOperator {
 
     protected String formatImpl(@NonNull DatabaseSpecificSQLGenerator sqlGenerator, JdbcJavaType columnType, String definition,
             String... values) {
-        return paramCount == 0 ? format("%s %s", definition, symbol)
-                : format("%s %s %s", definition, symbol, sqlGenerator.formatValue(columnType, values[0]));
+        return paramCount == 0 ? "%s %s".formatted(definition, symbol)
+                : "%s %s %s".formatted(definition, symbol, sqlGenerator.formatValue(columnType, values[0]));
     }
 
     public String formatNamedParam(@NonNull DatabaseSpecificSQLGenerator sqlGenerator, String definition, int paramCount, String alias) {
@@ -194,7 +192,7 @@ public enum SqlOperator {
     }
 
     protected String formatPlaceholderImpl(String definition, int paramCount, String placeholder) {
-        return paramCount == 0 ? format("%s %s", definition, symbol) : format("%s %s %s", definition, symbol, placeholder);
+        return paramCount == 0 ? "%s %s".formatted(definition, symbol) : "%s %s %s".formatted(definition, symbol, placeholder);
     }
 
     public void validateValues(String... values) {

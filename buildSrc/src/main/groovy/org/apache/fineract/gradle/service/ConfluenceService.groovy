@@ -18,8 +18,8 @@
  */
 package org.apache.fineract.gradle.service
 
-import com.fasterxml.jackson.databind.DeserializationFeature
-import com.fasterxml.jackson.databind.ObjectMapper
+import tools.jackson.databind.ObjectMapper
+import tools.jackson.databind.json.JsonMapper
 import okhttp3.ConnectionPool
 import okhttp3.Credentials
 import okhttp3.Interceptor
@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
 import retrofit2.http.*
 
 import java.util.concurrent.TimeUnit
@@ -63,13 +62,12 @@ class ConfluenceService {
                     }
                 })
 
-        ObjectMapper mapper = new ObjectMapper()
-                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+        ObjectMapper mapper = new JsonMapper()
 
         Retrofit.Builder builder = new Retrofit.Builder()
                 .baseUrl(config.url)
                 .client(okClient.build())
-                .addConverterFactory(JacksonConverterFactory.create(mapper))
+                .addConverterFactory(Jackson3ConverterFactory.create(mapper))
 
         Retrofit retrofit = builder.build()
 

@@ -87,7 +87,7 @@ public class LoanChargeStepDef extends AbstractStepDef {
         if (chargeType.equals(ChargeProductType.LOAN_DISBURSEMENT_PERCENTAGE_FEE.name())
                 || chargeType.equals(ChargeProductType.LOAN_TRANCHE_DISBURSEMENT_PERCENTAGE_FEE.name())
                 || chargeType.equals(ChargeProductType.LOAN_INSTALLMENT_FEE_PERCENTAGE_AMOUNT_PLUS_INTEREST.name())) {
-            throw new IllegalStateException(String.format("The requested %s charge is NOT due date type, cannot be used here", chargeType));
+            throw new IllegalStateException("The requested %s charge is NOT due date type, cannot be used here".formatted(chargeType));
         }
 
         PostLoansLoanIdChargesRequest loanIdChargesRequest = LoanChargeRequestFactory.defaultLoanChargeRequest().chargeId(chargeTypeId)
@@ -112,7 +112,7 @@ public class LoanChargeStepDef extends AbstractStepDef {
                 && !chargeType.equals(ChargeProductType.LOAN_TRANCHE_DISBURSEMENT_PERCENTAGE_FEE.name())
                 && !chargeType.equals(ChargeProductType.LOAN_INSTALLMENT_FEE_PERCENTAGE_AMOUNT.name())
                 && !chargeType.equals(ChargeProductType.LOAN_INSTALLMENT_FEE_PERCENTAGE_AMOUNT_PLUS_INTEREST.name())) {
-            throw new IllegalStateException(String.format("The requested %s charge is due date type, cannot be used here", chargeType));
+            throw new IllegalStateException("The requested %s charge is due date type, cannot be used here".formatted(chargeType));
         }
 
         PostLoansLoanIdChargesRequest loanIdChargesRequest = LoanChargeRequestFactory.defaultLoanChargeRequest().chargeId(chargeTypeId)
@@ -136,7 +136,7 @@ public class LoanChargeStepDef extends AbstractStepDef {
                 && !chargeType.equals(ChargeProductType.LOAN_INSTALLMENT_FEE_PERCENTAGE_INTEREST.name())
                 && !chargeType.equals(ChargeProductType.LOAN_INSTALLMENT_FEE_PERCENTAGE_AMOUNT_PLUS_INTEREST.name())) {
             throw new IllegalStateException(
-                    String.format("The requested %s charge is not installment fee type, cannot be used here", chargeType));
+                    "The requested %s charge is not installment fee type, cannot be used here".formatted(chargeType));
         }
 
         final PostLoansLoanIdChargesRequest loanIdChargesRequest = LoanChargeRequestFactory.defaultLoanChargeRequest()
@@ -327,14 +327,14 @@ public class LoanChargeStepDef extends AbstractStepDef {
 
         ErrorMessageType errorMsgType = ErrorMessageType.valueOf(errorMessageType);
         String errorMessageExpectedRaw = errorMsgType.getValue();
-        String errorMessageExpected = String.format(errorMessageExpectedRaw, loanId);
+        String errorMessageExpected = errorMessageExpectedRaw.formatted(loanId);
 
         ChargeProductType chargeProductType = ChargeProductType.valueOf(chargeType);
         Long chargeTypeId = chargeProductResolver.resolve(chargeProductType);
         if (chargeType.equals(ChargeProductType.LOAN_DISBURSEMENT_PERCENTAGE_FEE.name())
                 || chargeType.equals(ChargeProductType.LOAN_TRANCHE_DISBURSEMENT_PERCENTAGE_FEE.name())
                 || chargeType.equals(ChargeProductType.LOAN_INSTALLMENT_FEE_PERCENTAGE_AMOUNT_PLUS_INTEREST.name())) {
-            throw new IllegalStateException(String.format("The requested %s charge is NOT due date type, cannot be used here", chargeType));
+            throw new IllegalStateException("The requested %s charge is NOT due date type, cannot be used here".formatted(chargeType));
         }
 
         PostLoansLoanIdChargesRequest loanIdChargesRequest = LoanChargeRequestFactory.defaultLoanChargeRequest().chargeId(chargeTypeId)

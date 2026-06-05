@@ -334,9 +334,8 @@ public class LoanReAgingService {
         if (userProvidedTxnAmount != null) {
             final BigDecimal calculatedReageTxnAmount = reAgeTransaction.getAmount();
             if (!MathUtil.isEqualTo(calculatedReageTxnAmount, userProvidedTxnAmount)) {
-                String errorMessage = String.format(
-                        "User provided re-age amount (%s) is not matching with the calculated re-age amount (%s)", userProvidedTxnAmount,
-                        calculatedReageTxnAmount);
+                String errorMessage = "User provided re-age amount (%s) is not matching with the calculated re-age amount (%s)"
+                        .formatted(userProvidedTxnAmount, calculatedReageTxnAmount);
                 throw new GeneralPlatformDomainRuleException("error.msg.loan.reage.amount.not.match.with.calculated.reage.amount",
                         errorMessage, userProvidedTxnAmount, calculatedReageTxnAmount);
             }

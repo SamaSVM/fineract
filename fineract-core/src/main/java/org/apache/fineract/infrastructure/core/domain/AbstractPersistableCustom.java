@@ -25,6 +25,7 @@ import jakarta.persistence.MappedSuperclass;
 import jakarta.persistence.PostLoad;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Transient;
+import java.io.Serial;
 import java.io.Serializable;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -50,6 +51,7 @@ import org.springframework.data.domain.Persistable;
 @NoArgsConstructor
 public abstract class AbstractPersistableCustom<T extends Serializable> implements Persistable<T>, Serializable {
 
+    @Serial
     private static final long serialVersionUID = 9181640245194392646L;
 
     @Id

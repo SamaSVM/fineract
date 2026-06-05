@@ -26,7 +26,6 @@ import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResultBuilder;
 import org.apache.fineract.infrastructure.security.data.TwoFactorConfigurationValidator;
 import org.apache.fineract.infrastructure.security.service.TwoFactorConfigurationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +38,6 @@ public class UpdateTwoFactorConfigCommandHandler implements NewCommandSourceHand
     private final TwoFactorConfigurationService configurationService;
     private final TwoFactorConfigurationValidator dataValidator;
 
-    @Autowired
     public UpdateTwoFactorConfigCommandHandler(TwoFactorConfigurationService configurationService,
             TwoFactorConfigurationValidator dataValidator) {
         this.configurationService = configurationService;

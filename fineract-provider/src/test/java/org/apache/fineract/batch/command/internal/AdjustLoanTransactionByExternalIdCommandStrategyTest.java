@@ -32,14 +32,16 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.fineract.batch.domain.BatchRequest;
 import org.apache.fineract.batch.domain.BatchResponse;
 import org.apache.fineract.portfolio.loanaccount.api.LoanTransactionsApiResource;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Test class for {@link AdjustLoanTransactionByExternalIdCommandStrategy}.
  */
+@ExtendWith(MockitoExtension.class)
 public class AdjustLoanTransactionByExternalIdCommandStrategyTest {
 
     /**
@@ -116,12 +118,12 @@ public class AdjustLoanTransactionByExternalIdCommandStrategyTest {
     private BatchRequest getBatchRequest(final String loanExternalId, final String transactionExternalId, final String transactionCommand) {
 
         final BatchRequest br = new BatchRequest();
-        String relativeUrl = String.format("loans/external-id/%s/transactions/external-id/%s", loanExternalId, transactionExternalId);
+        String relativeUrl = "loans/external-id/%s/transactions/external-id/%s".formatted(loanExternalId, transactionExternalId);
 
         br.setRequestId(Long.valueOf(RandomStringUtils.randomNumeric(5)));
         br.setRelativeUrl(relativeUrl);
         if (StringUtils.isNotBlank(transactionCommand)) {
-            br.setRelativeUrl(br.getRelativeUrl() + String.format("?command=%s", transactionCommand));
+            br.setRelativeUrl(br.getRelativeUrl() + "?command=%s".formatted(transactionCommand));
         }
         br.setMethod(HttpMethod.POST);
         br.setReference(Long.valueOf(RandomStringUtils.randomNumeric(5)));
@@ -156,7 +158,6 @@ public class AdjustLoanTransactionByExternalIdCommandStrategyTest {
          * Constructor.
          */
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             subjectToTest = new AdjustLoanTransactionByExternalIdCommandStrategy(loanTransactionsApiResource);
         }
     }

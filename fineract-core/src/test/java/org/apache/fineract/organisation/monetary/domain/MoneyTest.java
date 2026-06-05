@@ -147,7 +147,7 @@ class MoneyTest {
     void testPlusDouble(double amountToAdd, BigDecimal expected) {
         Money result = tenDollars.plus(amountToAdd);
         assertEquals(0, result.getAmount().compareTo(expected),
-                () -> String.format("tenDollars.plus(%s): expected %s but got %s", amountToAdd, expected, result.getAmount()));
+                () -> "tenDollars.plus(%s): expected %s but got %s".formatted(amountToAdd, expected, result.getAmount()));
     }
 
     @Test
@@ -219,7 +219,7 @@ class MoneyTest {
     void testRoundToMultiplesOfBigDecimal(BigDecimal existingVal, Integer inMultiplesOf, BigDecimal expected) {
         BigDecimal result = Money.roundToMultiplesOf(existingVal, inMultiplesOf);
         assertEquals(0, result.compareTo(expected),
-                () -> String.format("roundToMultiplesOf(%s, %s): expected %s but got %s", existingVal, inMultiplesOf, expected, result));
+                () -> "roundToMultiplesOf(%s, %s): expected %s but got %s".formatted(existingVal, inMultiplesOf, expected, result));
     }
 
     @Test
@@ -260,7 +260,7 @@ class MoneyTest {
     })
     // @formatter:on
     void testCeilingReturnsNaN(double n, double s) {
-        assertTrue(Double.isNaN(Money.ceiling(n, s)), () -> String.format("ceiling(%s, %s) should be NaN", n, s));
+        assertTrue(Double.isNaN(Money.ceiling(n, s)), () -> "ceiling(%s, %s) should be NaN".formatted(n, s));
     }
 
     // @formatter:off
@@ -288,7 +288,7 @@ class MoneyTest {
     })
     // @formatter:on
     void testCeilingReturnsDouble(double n, double s, double expected) {
-        assertEquals(expected, Money.ceiling(n, s), 0.0001, () -> String.format("ceiling(%s, %s): expected %s", n, s, expected));
+        assertEquals(expected, Money.ceiling(n, s), 0.0001, () -> "ceiling(%s, %s): expected %s".formatted(n, s, expected));
     }
 
     // @formatter:off
@@ -313,7 +313,7 @@ class MoneyTest {
     })
     // @formatter:on
     void testFloorReturnsNaN(double n, double s) {
-        assertTrue(Double.isNaN(Money.floor(n, s)), () -> String.format("floor(%s, %s) should be NaN", n, s));
+        assertTrue(Double.isNaN(Money.floor(n, s)), () -> "floor(%s, %s) should be NaN".formatted(n, s));
     }
 
     // @formatter:off
@@ -348,7 +348,7 @@ class MoneyTest {
     })
     // @formatter:on
     void testFloorReturnsDouble(double n, double s, double expected) {
-        assertEquals(expected, Money.floor(n, s), 0.0001, () -> String.format("floor(%s, %s): expected %s", n, s, expected));
+        assertEquals(expected, Money.floor(n, s), 0.0001, () -> "floor(%s, %s): expected %s".formatted(n, s, expected));
     }
 
     @Test

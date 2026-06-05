@@ -93,3 +93,6 @@ jib {
         }
     }
 }
+tasks.withType(Test).configureEach {
+    useJUnitPlatform()
+}

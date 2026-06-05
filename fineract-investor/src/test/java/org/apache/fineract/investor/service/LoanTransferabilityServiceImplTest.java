@@ -38,7 +38,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -156,8 +155,6 @@ public class LoanTransferabilityServiceImplTest {
         @InjectMocks
         private LoanTransferabilityServiceImpl testSubject;
 
-        TestContext() {
-            MockitoAnnotations.openMocks(this);
-        }
+        TestContext() {}
     }
 }

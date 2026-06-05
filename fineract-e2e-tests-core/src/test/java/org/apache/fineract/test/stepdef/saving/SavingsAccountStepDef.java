@@ -350,7 +350,7 @@ public class SavingsAccountStepDef extends AbstractStepDef {
                         t.getRunningBalance() == null ? null : new Utils.DoubleFormatter(t.getRunningBalance().doubleValue()).format());
                 case "Reverted" -> actualValues.add(String.valueOf(t.getReversed()));
 
-                default -> throw new IllegalStateException(String.format("Header name %s cannot be found", headerName));
+                default -> throw new IllegalStateException("Header name %s cannot be found".formatted(headerName));
             }
         }
         return actualValues;

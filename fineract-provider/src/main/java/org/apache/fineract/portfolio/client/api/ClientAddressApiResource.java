@@ -74,8 +74,9 @@ public class ClientAddressApiResource {
     @Path("/{clientid}/addresses")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create an address for a Client", operationId = "createClientAddress", description = "Mandatory Fields : \n"
-            + "type and clientId")
+    @Operation(summary = "Create an address for a Client", operationId = "createClientAddress", description = """
+            Mandatory Fields :\s
+            type and clientId""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = ClientAddressRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = ClientAddressApiResourcesSwagger.PostClientClientIdAddressesResponse.class)))
     public CommandProcessingResult addClientAddress(@QueryParam("type") @Parameter(description = "type") final long addressTypeId,

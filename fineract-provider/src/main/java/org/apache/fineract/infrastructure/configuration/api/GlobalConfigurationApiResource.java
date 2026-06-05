@@ -55,15 +55,17 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/configurations")
 @Component
-@Tag(name = "Global Configuration", description = "Global configuration related to set of supported enable/disable configurations:\n" + "\n"
-        + "maker-checker - defaults to false - if true turns on maker-checker functionality\n"
-        + "reschedule-future-repayments - defaults to false - if true reschedules repayemnts which falls on a non-working day to configured repayment rescheduling rule\n"
-        + "allow-transactions-on-non-workingday - defaults to false - if true allows transactions on non-working days\n"
-        + "reschedule-repayments-on-holidays - defaults to false - if true reschedules repayemnts which falls on a non-working day to defined reschedule date\n"
-        + "allow-transactions-on-holiday - defaults to false - if true allows transactions on holidays\n"
-        + "savings-interest-posting-current-period-end - Set it at the database level before any savings interest is posted. When set as false(default), interest will be posted on the first date of next period. If set as true, interest will be posted on last date of current period. There is no difference in the interest amount posted.\n"
-        + "financial-year-beginning-month - Set it at the database level before any savings interest is posted. Allowed values 1 - 12 (January - December). Interest posting periods are evaluated based on this configuration.\n"
-        + "meetings-mandatory-for-jlg-loans - if set to true, enforces all JLG loans to follow a meeting schedule belonging to either the parent group or Center.")
+@Tag(name = "Global Configuration", description = """
+        Global configuration related to set of supported enable/disable configurations:
+
+        maker-checker - defaults to false - if true turns on maker-checker functionality
+        reschedule-future-repayments - defaults to false - if true reschedules repayemnts which falls on a non-working day to configured repayment rescheduling rule
+        allow-transactions-on-non-workingday - defaults to false - if true allows transactions on non-working days
+        reschedule-repayments-on-holidays - defaults to false - if true reschedules repayemnts which falls on a non-working day to defined reschedule date
+        allow-transactions-on-holiday - defaults to false - if true allows transactions on holidays
+        savings-interest-posting-current-period-end - Set it at the database level before any savings interest is posted. When set as false(default), interest will be posted on the first date of next period. If set as true, interest will be posted on last date of current period. There is no difference in the interest amount posted.
+        financial-year-beginning-month - Set it at the database level before any savings interest is posted. Allowed values 1 - 12 (January - December). Interest posting periods are evaluated based on this configuration.
+        meetings-mandatory-for-jlg-loans - if set to true, enforces all JLG loans to follow a meeting schedule belonging to either the parent group or Center.""")
 @RequiredArgsConstructor
 public class GlobalConfigurationApiResource {
 
@@ -80,10 +82,19 @@ public class GlobalConfigurationApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Global Configuration | Retrieve Global Configuration for surveys", description = "Returns the list global enable/disable configurations.\n"
-            + "\n" + "Example Requests:\n" + "\n" + "configurations\n\n" + "\n"
-            + "Returns the list global enable/disable survey configurations.\n" + "\n" + "Example Requests:\n" + "\n"
-            + "configurations/survey")
+    @Operation(summary = "Retrieve Global Configuration | Retrieve Global Configuration for surveys", description = """
+            Returns the list global enable/disable configurations.
+
+            Example Requests:
+
+            configurations
+
+
+            Returns the list global enable/disable survey configurations.
+
+            Example Requests:
+
+            configurations/survey""")
     @ApiResponse(responseCode = "200", description = "List of example \\n response \\nsurveys response   \\ngiven below", content = @Content(schema = @Schema(implementation = GlobalConfigurationApiResourceSwagger.GetGlobalConfigurationsResponse.class)))
     public String retrieveConfiguration(@Context final UriInfo uriInfo,
             @DefaultValue("false") @QueryParam("survey") @Parameter(description = "survey") final boolean survey) {
@@ -99,8 +110,12 @@ public class GlobalConfigurationApiResource {
     @GET
     @Path("{configId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Global Configuration", operationId = "retrieveOneGlobalConfiguration", description = "Returns a global enable/disable configurations.\n"
-            + "\n" + "Example Requests:\n" + "\n" + "configurations/1")
+    @Operation(summary = "Retrieve Global Configuration", operationId = "retrieveOneGlobalConfiguration", description = """
+            Returns a global enable/disable configurations.
+
+            Example Requests:
+
+            configurations/1""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = GlobalConfigurationPropertyData.class)))
     public String retrieveOne(@PathParam("configId") @Parameter(description = "configId") final Long configId,
             @Context final UriInfo uriInfo) {
@@ -116,8 +131,12 @@ public class GlobalConfigurationApiResource {
     @GET
     @Path("name/{name}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Global Configuration", description = "Returns a global enable/disable configuration.\n" + "\n"
-            + "Example Requests:\n" + "\n" + "configurations/name/enable-address")
+    @Operation(summary = "Retrieve Global Configuration", description = """
+            Returns a global enable/disable configuration.
+
+            Example Requests:
+
+            configurations/name/enable-address""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = GlobalConfigurationPropertyData.class)))
     public String retrieveOneByName(@PathParam("name") @Parameter(description = "name") final String name, @Context final UriInfo uriInfo) {
 

@@ -28,6 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -110,6 +111,7 @@ public class CompatibilityConfig {
     }
 
     @Bean
+    @DependsOnDatabaseInitialization
     public HikariConfig hikariConfig() {
         Environment environment = context.getEnvironment();
         HikariConfig hc = new HikariConfig();

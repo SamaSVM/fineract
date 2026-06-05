@@ -28,7 +28,6 @@ import org.apache.fineract.infrastructure.codes.service.CodeValueReadPlatformSer
 import org.apache.fineract.infrastructure.core.domain.JdbcSupport;
 import org.apache.fineract.infrastructure.security.service.PlatformSecurityContext;
 import org.apache.fineract.portfolio.client.data.ClientFamilyMembersData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
@@ -40,7 +39,6 @@ public class ClientFamilyMembersReadPlatformServiceImpl implements ClientFamilyM
     private final PlatformSecurityContext context;
     private final CodeValueReadPlatformService codeValueReadPlatformService;
 
-    @Autowired
     public ClientFamilyMembersReadPlatformServiceImpl(final PlatformSecurityContext context, final JdbcTemplate jdbcTemplate,
             final CodeValueReadPlatformService codeValueReadPlatformService) {
         this.context = context;

@@ -30,16 +30,18 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.fineract.batch.domain.BatchRequest;
 import org.apache.fineract.batch.domain.BatchResponse;
 import org.apache.fineract.portfolio.loanaccount.api.LoanTransactionsApiResource;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * Test class for {@link GetLoanTransactionByIdCommandStrategy}.
  */
+@ExtendWith(MockitoExtension.class)
 public class GetLoanTransactionByIdCommandStrategyTest {
 
     private static Stream<Arguments> provideQueryParameters() {
@@ -135,7 +137,6 @@ public class GetLoanTransactionByIdCommandStrategyTest {
          */
 
         TestContext() {
-            MockitoAnnotations.openMocks(this);
             subjectToTest = new GetLoanTransactionByIdCommandStrategy(loanTransactionsApiResource);
         }
     }

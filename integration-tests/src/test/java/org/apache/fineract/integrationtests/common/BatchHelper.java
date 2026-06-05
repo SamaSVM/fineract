@@ -528,8 +528,7 @@ public final class BatchHelper {
 
         final BatchRequest br = new BatchRequest();
         br.setRequestId(requestId);
-        br.setRelativeUrl(
-                String.format("v1/loans/external-id/%s/charges/external-id/%s?command=adjustment", loanExternalId, chargeExternalId));
+        br.setRelativeUrl("v1/loans/external-id/%s/charges/external-id/%s?command=adjustment".formatted(loanExternalId, chargeExternalId));
         br.setMethod("POST");
         br.setReference(reference);
         br.setBody("{\"amount\":7.00,\"locale\":\"en\"}");
@@ -641,7 +640,7 @@ public final class BatchHelper {
     public static BatchRequest getChargeByLoanExternalIdChargeExternalId(final Long requestId, final Long reference,
             final String loanExternalId, final String chargeExternalId) {
         return getChargeById(requestId, reference,
-                String.format("v1/loans/external-id/%s/charges/external-id/%s", loanExternalId, chargeExternalId));
+                "v1/loans/external-id/%s/charges/external-id/%s".formatted(loanExternalId, chargeExternalId));
     }
 
     /**
@@ -867,7 +866,7 @@ public final class BatchHelper {
 
         br.setRequestId(requestId);
         br.setReference(reference);
-        br.setRelativeUrl(String.format("v1/loans/$.loanId/transactions?command=%s", transactionCommand));
+        br.setRelativeUrl("v1/loans/$.loanId/transactions?command=%s".formatted(transactionCommand));
         br.setMethod("POST");
         String dateString = date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"));
         br.setBody(String.format("{\"locale\": \"en\", \"dateFormat\": \"dd MMMM yyyy\", "
@@ -912,7 +911,7 @@ public final class BatchHelper {
 
         br.setRequestId(requestId);
         br.setReference(reference);
-        br.setRelativeUrl(String.format("v1/loans/external-id/$.externalId/transactions?command=%s", transactionCommand));
+        br.setRelativeUrl("v1/loans/external-id/$.externalId/transactions?command=%s".formatted(transactionCommand));
         br.setMethod("POST");
         String dateString = date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"));
         br.setBody(String.format(
@@ -1015,7 +1014,7 @@ public final class BatchHelper {
 
         br.setRequestId(requestId);
         br.setReference(referenceId);
-        br.setRelativeUrl(String.format("v1/loans/$.loanId/transactions?command=%s", "charge-off"));
+        br.setRelativeUrl("v1/loans/$.loanId/transactions?command=%s".formatted("charge-off"));
         br.setMethod("POST");
         String dateString = date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"));
         br.setBody(String.format("{\"locale\": \"en\", \"dateFormat\": \"dd MMMM yyyy\", " + "\"transactionDate\": \"%s\", \"note\":null}",
@@ -1148,9 +1147,9 @@ public final class BatchHelper {
         final BatchRequest br = new BatchRequest();
         String relativeUrl;
         if (subResourceExternalId) {
-            relativeUrl = String.format("v1/loans/external-id/%s/transactions/external-id/$.subResourceExternalId", loanExternalId);
+            relativeUrl = "v1/loans/external-id/%s/transactions/external-id/$.subResourceExternalId".formatted(loanExternalId);
         } else {
-            relativeUrl = String.format("v1/loans/external-id/%s/transactions/external-id/$.resourceExternalId", loanExternalId);
+            relativeUrl = "v1/loans/external-id/%s/transactions/external-id/$.resourceExternalId".formatted(loanExternalId);
         }
 
         br.setRequestId(requestId);
@@ -1251,7 +1250,7 @@ public final class BatchHelper {
     public static BatchRequest getLoanByIdRequest(final Long loanId, final Long requestId, final Long referenceId,
             final String queryParameter) {
         final BatchRequest br = new BatchRequest();
-        String relativeUrl = String.format("v1/loans/%s", loanId);
+        String relativeUrl = "v1/loans/%s".formatted(loanId);
         if (queryParameter != null) {
             relativeUrl = relativeUrl + "?" + queryParameter;
         }
@@ -1281,7 +1280,7 @@ public final class BatchHelper {
     public static BatchRequest getDatatableByIdRequest(final Long loanId, final String datatableName, final String queryParameter,
             final Long referenceId) {
         final BatchRequest br = new BatchRequest();
-        String relativeUrl = String.format("v1/datatables/%s/%s", datatableName, loanId);
+        String relativeUrl = "v1/datatables/%s/%s".formatted(datatableName, loanId);
         if (queryParameter != null) {
             relativeUrl = relativeUrl + "?" + queryParameter;
         }
@@ -1313,7 +1312,7 @@ public final class BatchHelper {
     public static BatchRequest getDatatableEntryByIdRequest(final Long loanId, final String datatableName, final String appTableId,
             final String queryParameter, final Long referenceId) {
         final BatchRequest br = new BatchRequest();
-        String relativeUrl = String.format("v1/datatables/%s/%s/%s", datatableName, loanId, appTableId);
+        String relativeUrl = "v1/datatables/%s/%s/%s".formatted(datatableName, loanId, appTableId);
         if (queryParameter != null) {
             relativeUrl = relativeUrl + "?" + queryParameter;
         }
@@ -1341,7 +1340,7 @@ public final class BatchHelper {
     public static BatchRequest createDatatableEntryRequest(final String entityId, final String datatableName,
             final List<String> columnNames) {
         final BatchRequest br = new BatchRequest();
-        final String relativeUrl = String.format("v1/datatables/%s/%s", datatableName, entityId);
+        final String relativeUrl = "v1/datatables/%s/%s".formatted(datatableName, entityId);
         final Map<String, Object> datatableEntryMap = new HashMap<>();
         datatableEntryMap.putAll(columnNames.stream().collect(Collectors.toMap(v -> v, v -> Utils.randomStringGenerator("VAL_", 3))));
         final String datatableEntryRequestJsonString = new Gson().toJson(datatableEntryMap);
@@ -1371,7 +1370,7 @@ public final class BatchHelper {
     public static BatchRequest updateDatatableEntryByEntryIdRequest(final Long loanId, final String datatableName,
             final Long datatableEntryId, final List<String> columnNames) {
         final BatchRequest br = new BatchRequest();
-        final String relativeUrl = String.format("v1/datatables/%s/%s/%s", datatableName, loanId, datatableEntryId);
+        final String relativeUrl = "v1/datatables/%s/%s/%s".formatted(datatableName, loanId, datatableEntryId);
         final Map<String, Object> datatableEntryMap = new HashMap<>();
         datatableEntryMap.putAll(columnNames.stream().collect(Collectors.toMap(v -> v, v -> Utils.randomStringGenerator("VAL_", 3))));
         final String datatableEntryRequestJsonString = new Gson().toJson(datatableEntryMap);
@@ -1389,8 +1388,8 @@ public final class BatchHelper {
     public static BatchRequest deleteDatatableEntryRequest(final String entityId, final String datatableName,
             final String datatableEntryId) {
         final BatchRequest br = new BatchRequest();
-        final String relativeUrl = datatableEntryId == null ? String.format("v1/datatables/%s/%s", datatableName, entityId)
-                : String.format("v1/datatables/%s/%s/%s", datatableName, entityId, datatableEntryId);
+        final String relativeUrl = datatableEntryId == null ? "v1/datatables/%s/%s".formatted(datatableName, entityId)
+                : "v1/datatables/%s/%s/%s".formatted(datatableName, entityId, datatableEntryId);
         br.setRequestId(4570L);
         br.setReference(4569L);
         br.setRelativeUrl(relativeUrl);
@@ -1450,7 +1449,7 @@ public final class BatchHelper {
 
         br.setRequestId(requestId);
         br.setReference(reference);
-        br.setRelativeUrl(String.format("v1/loans/external-id/%s/transactions/external-id/%s", loanExternalId, transactionExternalId));
+        br.setRelativeUrl("v1/loans/external-id/%s/transactions/external-id/%s".formatted(loanExternalId, transactionExternalId));
         br.setMethod("POST");
         String dateString = date.format(DateTimeFormatter.ofPattern("dd MMMM yyyy"));
         br.setBody(String.format(
@@ -1479,7 +1478,7 @@ public final class BatchHelper {
         br.setReference(reference);
         br.setRelativeUrl("v1/loans/$.loanId/transactions/$.resourceId?command=chargeback");
         br.setMethod("POST");
-        br.setBody(String.format("{\"locale\": \"en\", \"transactionAmount\": %s, \"paymentTypeId\": 2}", amount));
+        br.setBody("{\"locale\": \"en\", \"transactionAmount\": %s, \"paymentTypeId\": 2}".formatted(amount));
 
         return br;
 
@@ -1541,7 +1540,7 @@ public final class BatchHelper {
     public static BatchRequest queryDatatableEntries(final String datatableName, final String columnName, final String columnValue,
             final String columnResult) {
         final BatchRequest br = new BatchRequest();
-        String relativeUrl = String.format("v1/datatables/%s/query", datatableName);
+        String relativeUrl = "v1/datatables/%s/query".formatted(datatableName);
         relativeUrl += "?columnFilter=" + columnName + "&" + "valueFilter=" + columnValue + "&" + "resultColumns=" + columnResult;
 
         br.setRequestId(1L);
@@ -1564,7 +1563,7 @@ public final class BatchHelper {
     public static BatchRequest updateDatatableEntry(final String datatableName, final String resourceId, final String columnName,
             final String columnValue) {
         final BatchRequest br = new BatchRequest();
-        final String relativeUrl = String.format("v1/datatables/%s/%s", datatableName, resourceId);
+        final String relativeUrl = "v1/datatables/%s/%s".formatted(datatableName, resourceId);
         final Map<String, Object> datatableEntryMap = new HashMap<>();
         datatableEntryMap.put(columnName, columnValue);
         final String datatableEntryRequestJsonString = new Gson().toJson(datatableEntryMap);
@@ -1592,7 +1591,7 @@ public final class BatchHelper {
     public static BatchRequest updateDatatableEntry(final String datatableName, final String resourceId, final String subResourceId,
             final String columnName, final String columnValue) {
         final BatchRequest br = new BatchRequest();
-        final String relativeUrl = String.format("v1/datatables/%s/%s/%s", datatableName, resourceId, subResourceId);
+        final String relativeUrl = "v1/datatables/%s/%s/%s".formatted(datatableName, resourceId, subResourceId);
         final Map<String, Object> datatableEntryMap = new HashMap<>();
         datatableEntryMap.put(columnName, columnValue);
         final String datatableEntryRequestJsonString = new Gson().toJson(datatableEntryMap);
@@ -1621,7 +1620,7 @@ public final class BatchHelper {
     public static BatchRequest getSavingAccount(final Long requestId, final Long accountId, final String queryParameter,
             final Long referenceId) {
         final BatchRequest br = new BatchRequest();
-        String relativeUrl = String.format("v1/savingsaccounts/%s", accountId);
+        String relativeUrl = "v1/savingsaccounts/%s".formatted(accountId);
         if (queryParameter != null) {
             relativeUrl = relativeUrl + "?" + queryParameter;
         }

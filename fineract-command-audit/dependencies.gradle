@@ -44,7 +44,7 @@ dependencies {
         exclude group: 'org.skyscreamer'
     }
     testImplementation (
-            'org.mockito:mockito-inline',
+            'org.mockito:mockito-core',
             'org.testcontainers:junit-jupiter',
             )
 }

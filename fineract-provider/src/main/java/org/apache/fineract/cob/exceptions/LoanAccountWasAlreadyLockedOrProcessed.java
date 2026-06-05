@@ -21,6 +21,6 @@ package org.apache.fineract.cob.exceptions;
 public class LoanAccountWasAlreadyLockedOrProcessed extends Exception {
 
     public LoanAccountWasAlreadyLockedOrProcessed(Long loanId) {
-        super(String.format("Loan is in already locked state, or has been already processed! loanId: %d", loanId));
+        super("Loan is in already locked state, or has been already processed! loanId: %d".formatted(loanId));
     }
 }

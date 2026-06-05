@@ -417,7 +417,7 @@ public class EventCheckHelper {
             return transactionDate.equals(DATE_FORMATTER.format(t.getTransactionDate())) && expectedCode.equals(t.getType().getCode())
                     && !Boolean.TRUE.equals(t.getReversed());
         }).reduce((first, second) -> second)
-                .orElseThrow(() -> new IllegalStateException(String.format("%s transaction not found", transactionType)));
+                .orElseThrow(() -> new IllegalStateException("%s transaction not found".formatted(transactionType)));
     }
 
     public EventAssertion.EventAssertionBuilder<LoanTransactionDataV1> transactionEventCheck(
@@ -441,7 +441,7 @@ public class EventCheckHelper {
             case REFUND_BY_CASH -> LoanRefundPostBusinessEvent.class;
             case INTEREST_PAYMENT_WAIVER -> LoanTransactionInterestPaymentWaiverPostEvent.class;
             case INTEREST_REFUND -> LoanTransactionInterestRefundPostEvent.class;
-            default -> throw new IllegalStateException(String.format("transaction type %s cannot be found", transactionType.getValue()));
+            default -> throw new IllegalStateException("transaction type %s cannot be found".formatted(transactionType.getValue()));
         };
 
         EventAssertion.EventAssertionBuilder<LoanTransactionDataV1> eventBuilder = eventAssertion.assertEvent(eventClass, transactionId);

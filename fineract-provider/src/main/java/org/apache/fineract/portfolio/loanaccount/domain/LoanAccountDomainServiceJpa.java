@@ -816,8 +816,7 @@ public class LoanAccountDomainServiceJpa implements LoanAccountDomainService {
                 businessEventNotifierService.notifyPreBusinessEvent(new LoanTransactionMerchantIssuedRefundPreBusinessEvent(loan));
             case PAYOUT_REFUND ->
                 businessEventNotifierService.notifyPreBusinessEvent(new LoanTransactionPayoutRefundPreBusinessEvent(loan));
-            default ->
-                throw new UnsupportedOperationException(String.format("Not configured loan transaction type: %s!", loanTransactionType));
+            default -> throw new UnsupportedOperationException("Not configured loan transaction type: %s!".formatted(loanTransactionType));
         }
         LoanTransaction refundTransaction = LoanTransaction.refund(loan, loanTransactionType, transactionAmount, paymentDetail,
                 transactionDate, txnExternalId);
@@ -884,8 +883,7 @@ public class LoanAccountDomainServiceJpa implements LoanAccountDomainService {
                     .notifyPostBusinessEvent(new LoanTransactionMerchantIssuedRefundPostBusinessEvent(refundTransaction));
             case PAYOUT_REFUND ->
                 businessEventNotifierService.notifyPostBusinessEvent(new LoanTransactionPayoutRefundPostBusinessEvent(refundTransaction));
-            default ->
-                throw new UnsupportedOperationException(String.format("Not configured loan transaction type: %s!", loanTransactionType));
+            default -> throw new UnsupportedOperationException("Not configured loan transaction type: %s!".formatted(loanTransactionType));
         }
 
         if (interestRefundTransaction != null) {

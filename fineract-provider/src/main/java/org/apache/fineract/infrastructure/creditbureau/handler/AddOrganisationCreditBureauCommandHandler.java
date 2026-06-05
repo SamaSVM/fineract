@@ -23,7 +23,6 @@ import org.apache.fineract.commands.handler.NewCommandSourceHandler;
 import org.apache.fineract.infrastructure.core.api.JsonCommand;
 import org.apache.fineract.infrastructure.core.data.CommandProcessingResult;
 import org.apache.fineract.infrastructure.creditbureau.service.OrganisationCreditBureauWritePlatflormService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -32,7 +31,6 @@ public class AddOrganisationCreditBureauCommandHandler implements NewCommandSour
 
     private final OrganisationCreditBureauWritePlatflormService writePlatformService;
 
-    @Autowired
     public AddOrganisationCreditBureauCommandHandler(final OrganisationCreditBureauWritePlatflormService writePlatformService) {
         this.writePlatformService = writePlatformService;
     }

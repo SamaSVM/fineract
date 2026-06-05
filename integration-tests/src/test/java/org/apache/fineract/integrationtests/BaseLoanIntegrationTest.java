@@ -1190,11 +1190,11 @@ public abstract class BaseLoanIntegrationTest extends IntegrationTest {
             Double actualTotalDue = Utils.getDoubleValue(actualPeriods.get(i).getTotalDueForPeriod());
 
             if (shouldEqual) {
-                assertEquals(savedTotalDue, actualTotalDue, String.format(
-                        "Period %d should be identical in both responses. Expected: %s, Actual: %s", i + 1, savedTotalDue, actualTotalDue));
+                assertEquals(savedTotalDue, actualTotalDue, "Period %d should be identical in both responses. Expected: %s, Actual: %s"
+                        .formatted(i + 1, savedTotalDue, actualTotalDue));
             } else {
-                assertNotEquals(savedTotalDue, actualTotalDue, String
-                        .format("Period %d should differ between responses. Saved: %s, Actual: %s", i + 1, savedTotalDue, actualTotalDue));
+                assertNotEquals(savedTotalDue, actualTotalDue,
+                        "Period %d should differ between responses. Saved: %s, Actual: %s".formatted(i + 1, savedTotalDue, actualTotalDue));
             }
         }
     }

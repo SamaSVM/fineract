@@ -355,25 +355,44 @@ public class FixedDepositAccountsApiResource {
     @Path("{accountId}")
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Approve fixed deposit application | Undo approval fixed deposit application | Reject fixed deposit application | Withdraw fixed deposit application | Activate a fixed deposit account | Close a fixed deposit account | Premature Close a fixed deposit account | Calculate Premature amount on Fixed deposit account | Calculate Interest on Fixed Deposit Account | Post Interest on Fixed Deposit Account", description = "Approve fixed deposit application:\n\n"
-            + "Approves fixed deposit application so long as its in 'Submitted and pending approval' state.\n\n"
-            + "Undo approval fixed deposit application:\n\n"
-            + "Will move 'approved' fixed deposit application back to 'Submitted and pending approval' state.\n\n"
-            + "Reject fixed deposit application:\n\n"
-            + "Rejects fixed deposit application so long as its in 'Submitted and pending approval' state.\n\n"
-            + "Withdraw fixed deposit application:\n\n"
-            + "Used when an applicant withdraws from the fixed deposit application. It must be in 'Submitted and pending approval' state.\n\n"
-            + "Close a fixed deposit account:\n\n"
-            + "Results in a Matured fixed deposit account being converted into a 'closed' fixed deposit account.\n\n"
-            + "Premature Close a fixed deposit account:\n\n"
-            + "Results in an Active fixed deposit account being converted into a 'Premature Closed' fixed deposit account with options to withdraw prematured amount. (premature amount is calculated using interest rate chart applicable along with penal interest if any.)\n\n"
-            + "Calculate Premature amount on Fixed deposit account:\n\n"
-            + "Calculate premature amount on fixed deposit account till premature close date. Premature amount is calculated based on interest chart and penal interest applicable.\n\n"
-            + "Calculate Interest on Fixed Deposit Account:\n\n"
-            + "Calculates interest earned on a fixed deposit account based on todays date. It does not attempt to post or credit the interest on the account. That is responsibility of the Post Interest API that will likely be called by overnight process.\n\n"
-            + "Post Interest on Fixed Deposit Account:\n\n"
-            + "Calculates and Posts interest earned on a fixed deposit account based on today's date and whether an interest posting or crediting event is due.\n\n"
-            + "Showing request/response for Calculate Interest on Fixed Deposit Account", operationId = "handleCommandsFixedDepositAccount")
+    @Operation(summary = "Approve fixed deposit application | Undo approval fixed deposit application | Reject fixed deposit application | Withdraw fixed deposit application | Activate a fixed deposit account | Close a fixed deposit account | Premature Close a fixed deposit account | Calculate Premature amount on Fixed deposit account | Calculate Interest on Fixed Deposit Account | Post Interest on Fixed Deposit Account", description = """
+            Approve fixed deposit application:
+
+            Approves fixed deposit application so long as its in 'Submitted and pending approval' state.
+
+            Undo approval fixed deposit application:
+
+            Will move 'approved' fixed deposit application back to 'Submitted and pending approval' state.
+
+            Reject fixed deposit application:
+
+            Rejects fixed deposit application so long as its in 'Submitted and pending approval' state.
+
+            Withdraw fixed deposit application:
+
+            Used when an applicant withdraws from the fixed deposit application. It must be in 'Submitted and pending approval' state.
+
+            Close a fixed deposit account:
+
+            Results in a Matured fixed deposit account being converted into a 'closed' fixed deposit account.
+
+            Premature Close a fixed deposit account:
+
+            Results in an Active fixed deposit account being converted into a 'Premature Closed' fixed deposit account with options to withdraw prematured amount. (premature amount is calculated using interest rate chart applicable along with penal interest if any.)
+
+            Calculate Premature amount on Fixed deposit account:
+
+            Calculate premature amount on fixed deposit account till premature close date. Premature amount is calculated based on interest chart and penal interest applicable.
+
+            Calculate Interest on Fixed Deposit Account:
+
+            Calculates interest earned on a fixed deposit account based on todays date. It does not attempt to post or credit the interest on the account. That is responsibility of the Post Interest API that will likely be called by overnight process.
+
+            Post Interest on Fixed Deposit Account:
+
+            Calculates and Posts interest earned on a fixed deposit account based on today's date and whether an interest posting or crediting event is due.
+
+            Showing request/response for Calculate Interest on Fixed Deposit Account""", operationId = "handleCommandsFixedDepositAccount")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = FixedDepositAccountsApiResourceSwagger.PostFixedDepositAccountsAccountIdRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = FixedDepositAccountsApiResourceSwagger.PostFixedDepositAccountsAccountIdResponse.class)))
     public String handleCommands(@PathParam("accountId") @Parameter(description = "accountId") final Long accountId,

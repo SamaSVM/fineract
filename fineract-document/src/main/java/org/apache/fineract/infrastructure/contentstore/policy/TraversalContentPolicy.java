@@ -37,7 +37,7 @@ public class TraversalContentPolicy implements ContentPolicy {
     @Override
     public void check(ContentPolicyContext ctx) {
         if (overwriteSiblingsPattern.matcher(ctx.getPath()).matches()) {
-            throw new ContentPolicyException(String.format("Trying to overwrite a sibling file: %s", ctx.getPath()));
+            throw new ContentPolicyException("Trying to overwrite a sibling file: %s".formatted(ctx.getPath()));
         }
     }
 }

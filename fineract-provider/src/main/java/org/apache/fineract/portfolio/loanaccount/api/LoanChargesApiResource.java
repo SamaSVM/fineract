@@ -68,9 +68,10 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/loans")
 @Component
-@Tag(name = "Loan Charges", description = "Its typical for MFIs to add extra costs for their loan products. They can be either Fees or Penalties.\n"
-        + "\n"
-        + "Loan Charges are instances of Charges and represent either fees and penalties for loan products. Refer Charges for documentation of the various properties of a charge, Only additional properties ( specific to the context of a Charge being associated with a Loan) are described here")
+@Tag(name = "Loan Charges", description = """
+        Its typical for MFIs to add extra costs for their loan products. They can be either Fees or Penalties.
+
+        Loan Charges are instances of Charges and represent either fees and penalties for loan products. Refer Charges for documentation of the various properties of a charge, Only additional properties ( specific to the context of a Charge being associated with a Loan) are described here""")
 @RequiredArgsConstructor
 public class LoanChargesApiResource {
 
@@ -94,8 +95,15 @@ public class LoanChargesApiResource {
     @GET
     @Path("{loanId}/charges")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Loan Charges", description = "It lists all the Loan Charges specific to a Loan \n\n" + "Example Requests:\n"
-            + "\n" + "loans/1/charges\n" + "\n" + "\n" + "loans/1/charges?fields=name,amountOrPercentage")
+    @Operation(summary = "List Loan Charges", description = """
+            It lists all the Loan Charges specific to a Loan\s
+
+            Example Requests:
+
+            loans/1/charges
+
+
+            loans/1/charges?fields=name,amountOrPercentage""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = LoanChargesApiResourceSwagger.GetLoansLoanIdChargesChargeIdResponse.class))))
     public String retrieveAllLoanCharges(@PathParam("loanId") @Parameter(description = "loanId") final Long loanId,
             @Context final UriInfo uriInfo) {
@@ -106,8 +114,15 @@ public class LoanChargesApiResource {
     @GET
     @Path("external-id/{loanExternalId}/charges")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Loan Charges", operationId = "retrieveAllLoanChargesByLoanExternalId", description = "It lists all the Loan Charges specific to a Loan \n\n"
-            + "Example Requests:\n" + "\n" + "loans/1/charges\n" + "\n" + "\n" + "loans/1/charges?fields=name,amountOrPercentage")
+    @Operation(summary = "List Loan Charges", operationId = "retrieveAllLoanChargesByLoanExternalId", description = """
+            It lists all the Loan Charges specific to a Loan\s
+
+            Example Requests:
+
+            loans/1/charges
+
+
+            loans/1/charges?fields=name,amountOrPercentage""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = LoanChargesApiResourceSwagger.GetLoansLoanIdChargesChargeIdResponse.class))))
     public String retrieveAllLoanCharges(
             @PathParam("loanExternalId") @Parameter(description = "loanExternalId") final String loanExternalId,
@@ -119,8 +134,16 @@ public class LoanChargesApiResource {
     @GET
     @Path("{loanId}/charges/template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Loan Charges Template", operationId = "retrieveTemplateLoanCharge", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n"
-            + "\n" + "Field Defaults\n" + "Allowed description Lists\n" + "Example Request:\n" + "\n" + "loans/1/charges/template\n" + "\n")
+    @Operation(summary = "Retrieve Loan Charges Template", operationId = "retrieveTemplateLoanCharge", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+
+            Field Defaults
+            Allowed description Lists
+            Example Request:
+
+            loans/1/charges/template
+
+            """)
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanChargesApiResourceSwagger.GetLoansLoanIdChargesTemplateResponse.class)))
     public String retrieveTemplate(@PathParam("loanId") @Parameter(description = "loanId") final Long loanId,
             @Context final UriInfo uriInfo) {
@@ -131,8 +154,16 @@ public class LoanChargesApiResource {
     @GET
     @Path("external-id/{loanExternalId}/charges/template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Loan Charges Template", operationId = "retrieveTemplateLoanChargeByLoanExternalId", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n"
-            + "\n" + "Field Defaults\n" + "Allowed description Lists\n" + "Example Request:\n" + "\n" + "loans/1/charges/template\n" + "\n")
+    @Operation(summary = "Retrieve Loan Charges Template", operationId = "retrieveTemplateLoanChargeByLoanExternalId", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+
+            Field Defaults
+            Allowed description Lists
+            Example Request:
+
+            loans/1/charges/template
+
+            """)
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanChargesApiResourceSwagger.GetLoansLoanIdChargesTemplateResponse.class)))
     public String retrieveTemplate(@PathParam("loanExternalId") @Parameter(description = "loanExternalId") final String loanExternalId,
             @Context final UriInfo uriInfo) {
@@ -143,8 +174,14 @@ public class LoanChargesApiResource {
     @GET
     @Path("{loanId}/charges/{loanChargeId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Loan Charge", description = "Retrieves Loan Charge according to the Loan ID and Loan Charge ID"
-            + "Example Requests:\n" + "\n" + "/loans/1/charges/1\n" + "\n" + "\n" + "/loans/1/charges/1?fields=name,amountOrPercentage")
+    @Operation(summary = "Retrieve a Loan Charge", description = """
+            Retrieves Loan Charge according to the Loan ID and Loan Charge ID\
+            Example Requests:
+
+            /loans/1/charges/1
+
+
+            /loans/1/charges/1?fields=name,amountOrPercentage""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanChargesApiResourceSwagger.GetLoansLoanIdChargesChargeIdResponse.class)))
     public String retrieveLoanCharge(@PathParam("loanId") @Parameter(description = "loanId") final Long loanId,
             @PathParam("loanChargeId") @Parameter(description = "loanChargeId") final Long loanChargeId, @Context final UriInfo uriInfo) {
@@ -155,9 +192,14 @@ public class LoanChargesApiResource {
     @GET
     @Path("{loanId}/charges/external-id/{loanChargeExternalId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Loan Charge", operationId = "retrieveLoanChargeByChargeExternalId", description = "Retrieves Loan Charge according to the Loan ID and Loan Charge External ID"
-            + "Example Requests:\n" + "\n" + "/loans/1/charges/1\n" + "\n" + "\n"
-            + "/loans/1/charges/external-id/1?fields=name,amountOrPercentage")
+    @Operation(summary = "Retrieve a Loan Charge", operationId = "retrieveLoanChargeByChargeExternalId", description = """
+            Retrieves Loan Charge according to the Loan ID and Loan Charge External ID\
+            Example Requests:
+
+            /loans/1/charges/1
+
+
+            /loans/1/charges/external-id/1?fields=name,amountOrPercentage""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanChargesApiResourceSwagger.GetLoansLoanIdChargesChargeIdResponse.class)))
     public String retrieveLoanCharge(@PathParam("loanId") @Parameter(description = "loanId") final Long loanId,
             @PathParam("loanChargeExternalId") @Parameter(description = "loanChargeExternalId") final String loanChargeExternalId,
@@ -169,8 +211,14 @@ public class LoanChargesApiResource {
     @GET
     @Path("external-id/{loanExternalId}/charges/{loanChargeId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Loan Charge", operationId = "retrieveLoanChargeByLoanExternalId", description = "Retrieves Loan Charge according to the Loan external ID and Loan Charge ID"
-            + "Example Requests:\n" + "\n" + "/loans/1/charges/1\n" + "\n" + "\n" + "/loans/1/charges/1?fields=name,amountOrPercentage")
+    @Operation(summary = "Retrieve a Loan Charge", operationId = "retrieveLoanChargeByLoanExternalId", description = """
+            Retrieves Loan Charge according to the Loan external ID and Loan Charge ID\
+            Example Requests:
+
+            /loans/1/charges/1
+
+
+            /loans/1/charges/1?fields=name,amountOrPercentage""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanChargesApiResourceSwagger.GetLoansLoanIdChargesChargeIdResponse.class)))
     public String retrieveLoanCharge(@PathParam("loanExternalId") @Parameter(description = "loanExternalId") final String loanExternalId,
             @PathParam("loanChargeId") @Parameter(description = "loanChargeId") final Long loanChargeId, @Context final UriInfo uriInfo) {
@@ -181,8 +229,14 @@ public class LoanChargesApiResource {
     @GET
     @Path("external-id/{loanExternalId}/charges/external-id/{loanChargeExternalId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Loan Charge", operationId = "retrieveLoanChargeByLoanAndChargeExternalId", description = "Retrieves Loan Charge according to the Loan External ID and Loan Charge External ID"
-            + "Example Requests:\n" + "\n" + "/loans/1/charges/1\n" + "\n" + "\n" + "/loans/1/charges/1?fields=name,amountOrPercentage")
+    @Operation(summary = "Retrieve a Loan Charge", operationId = "retrieveLoanChargeByLoanAndChargeExternalId", description = """
+            Retrieves Loan Charge according to the Loan External ID and Loan Charge External ID\
+            Example Requests:
+
+            /loans/1/charges/1
+
+
+            /loans/1/charges/1?fields=name,amountOrPercentage""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = LoanChargesApiResourceSwagger.GetLoansLoanIdChargesChargeIdResponse.class)))
     public String retrieveLoanCharge(@PathParam("loanExternalId") @Parameter(description = "loanExternalId") final String loanExternalId,
             @PathParam("loanChargeExternalId") @Parameter(description = "loanChargeExternalId") final String loanChargeExternalId,

@@ -34,7 +34,6 @@ import org.apache.fineract.infrastructure.core.data.DataValidatorBuilder;
 import org.apache.fineract.infrastructure.core.exception.InvalidJsonException;
 import org.apache.fineract.infrastructure.core.exception.PlatformApiDataValidationException;
 import org.apache.fineract.infrastructure.core.serialization.FromJsonHelper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -55,7 +54,6 @@ public class CreditBureauTokenCommandFromApiJsonDeserializer {
             Arrays.asList(USER_NAME, PASSWORD, SUBSCRIPTION_ID, SUBSCRIPTION_KEY));
     private final FromJsonHelper fromApiJsonHelper;
 
-    @Autowired
     public CreditBureauTokenCommandFromApiJsonDeserializer(final FromJsonHelper fromApiJsonHelper) {
         this.fromApiJsonHelper = fromApiJsonHelper;
     }

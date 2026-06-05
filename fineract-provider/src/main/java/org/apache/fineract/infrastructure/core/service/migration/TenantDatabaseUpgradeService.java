@@ -43,6 +43,7 @@ import org.apache.fineract.infrastructure.core.service.ThreadLocalContextUtil;
 import org.apache.fineract.infrastructure.core.service.tenant.TenantDetailsService;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.sql.init.dependency.DependsOnDatabaseInitialization;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,7 @@ import org.springframework.stereotype.Service;
 /**
  * A service that picks up on tenants that are configured to auto-update their specific schema on application startup.
  */
+@DependsOnDatabaseInitialization
 @Service
 @Slf4j
 @RequiredArgsConstructor

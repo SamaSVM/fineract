@@ -41,10 +41,12 @@ import org.springframework.stereotype.Component;
 
 @Path("/v1/workingdays")
 @Component
-@Tag(name = "Working days", description = "The days of the week that are workdays.\n" + "\n"
-        + "Rescheduling of repayments when it falls on a non-working is turned on /off by enable/disable reschedule-future-repayments parameter in Global configurations\n"
-        + "\n"
-        + "Allow transactions on non-working days is configurable by enabling/disbaling the allow-transactions-on-non-workingday parameter in Global configurations.")
+@Tag(name = "Working days", description = """
+        The days of the week that are workdays.
+
+        Rescheduling of repayments when it falls on a non-working is turned on /off by enable/disable reschedule-future-repayments parameter in Global configurations
+
+        Allow transactions on non-working days is configurable by enabling/disbaling the allow-transactions-on-non-workingday parameter in Global configurations.""")
 @RequiredArgsConstructor
 public class WorkingDaysApiResource {
 
@@ -62,8 +64,9 @@ public class WorkingDaysApiResource {
     @PUT
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Update a Working Day", description = "Mandatory Fields\n"
-            + "recurrence,repaymentRescheduleType,extendTermForDailyRepayments,locale")
+    @Operation(summary = "Update a Working Day", description = """
+            Mandatory Fields
+            recurrence,repaymentRescheduleType,extendTermForDailyRepayments,locale""")
     public WorkingDaysUpdateResponse update(@Valid WorkingDaysUpdateRequest request) {
 
         final var command = new WorkingDaysUpdateCommand();
@@ -80,8 +83,12 @@ public class WorkingDaysApiResource {
     @GET
     @Path("/template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Working Days Template", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for working days.\n"
-            + "\n" + "Example Request:\n" + "\n" + "workingdays/template")
+    @Operation(summary = "Working Days Template", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for working days.
+
+            Example Request:
+
+            workingdays/template""")
     public WorkingDaysData template() {
         return this.workingDaysReadPlatformService.repaymentRescheduleType();
     }

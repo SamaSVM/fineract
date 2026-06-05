@@ -81,8 +81,9 @@ import org.springframework.util.CollectionUtils;
 
 @Path("/v1/savingsproducts")
 @Component
-@Tag(name = "Savings Product", description = "An MFIs savings product offerings are modeled using this API." + "\n"
-        + "When creating savings accounts, the details from the savings product are used to auto fill details of the savings account application process.")
+@Tag(name = "Savings Product", description = """
+        An MFIs savings product offerings are modeled using this API.
+        When creating savings accounts, the details from the savings product are used to auto fill details of the savings account application process.""")
 @RequiredArgsConstructor
 public class SavingsProductsApiResource {
 
@@ -103,10 +104,14 @@ public class SavingsProductsApiResource {
     @POST
     @Consumes({ MediaType.APPLICATION_JSON })
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Create a Savings Product", operationId = "createSavingsProduct", description = "Creates a Savings Product\n\n"
-            + "Mandatory Fields: name, shortName, description, currencyCode, digitsAfterDecimal,inMultiplesOf, nominalAnnualInterestRate, interestCompoundingPeriodType, interestCalculationType, interestCalculationDaysInYearType,accountingRule\n\n"
-            + "Mandatory Fields for Cash based accounting (accountingRule = 2): savingsReferenceAccountId, savingsControlAccountId, interestOnSavingsAccountId, incomeFromFeeAccountId, transfersInSuspenseAccountId, incomeFromPenaltyAccountId\n\n"
-            + "Optional Fields: minRequiredOpeningBalance, lockinPeriodFrequency, lockinPeriodFrequencyType, withdrawalFeeForTransfers, paymentChannelToFundSourceMappings, feeToIncomeAccountMappings, penaltyToIncomeAccountMappings, charges, allowOverdraft, overdraftLimit, minBalanceForInterestCalculation,withHoldTax,taxGroupId,accountMapping, lienAllowed, maxAllowedLienLimit")
+    @Operation(summary = "Create a Savings Product", operationId = "createSavingsProduct", description = """
+            Creates a Savings Product
+
+            Mandatory Fields: name, shortName, description, currencyCode, digitsAfterDecimal,inMultiplesOf, nominalAnnualInterestRate, interestCompoundingPeriodType, interestCalculationType, interestCalculationDaysInYearType,accountingRule
+
+            Mandatory Fields for Cash based accounting (accountingRule = 2): savingsReferenceAccountId, savingsControlAccountId, interestOnSavingsAccountId, incomeFromFeeAccountId, transfersInSuspenseAccountId, incomeFromPenaltyAccountId
+
+            Optional Fields: minRequiredOpeningBalance, lockinPeriodFrequency, lockinPeriodFrequencyType, withdrawalFeeForTransfers, paymentChannelToFundSourceMappings, feeToIncomeAccountMappings, penaltyToIncomeAccountMappings, charges, allowOverdraft, overdraftLimit, minBalanceForInterestCalculation,withHoldTax,taxGroupId,accountMapping, lienAllowed, maxAllowedLienLimit""")
     @RequestBody(required = true, content = @Content(schema = @Schema(implementation = SavingsProductsApiResourceSwagger.PostSavingsProductsRequest.class)))
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = SavingsProductsApiResourceSwagger.PostSavingsProductsResponse.class)))
     public String create(@Parameter(hidden = true) final String apiRequestBodyAsJson) {
@@ -139,8 +144,14 @@ public class SavingsProductsApiResource {
 
     @GET
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "List Savings Products", operationId = "retrieveAllSavingsProducts", description = "Lists Savings Products\n\n"
-            + "Example Requests:\n" + "\n" + "savingsproducts\n" + "\n" + "savingsproducts?fields=name")
+    @Operation(summary = "List Savings Products", operationId = "retrieveAllSavingsProducts", description = """
+            Lists Savings Products
+
+            Example Requests:
+
+            savingsproducts
+
+            savingsproducts?fields=name""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(array = @ArraySchema(schema = @Schema(implementation = SavingsProductsApiResourceSwagger.GetSavingsProductsResponse.class))))
     public String retrieveAll(@Context final UriInfo uriInfo) {
 
@@ -155,9 +166,16 @@ public class SavingsProductsApiResource {
     @GET
     @Path("{productId}")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve a Savings Product", operationId = "retrieveOneSavingsProduct", description = "Retrieves a Savings Product\n\n"
-            + "Example Requests:\n" + "\n" + "savingsproducts/1\n" + "\n" + "savingsproducts/1?template=true\n" + "\n"
-            + "savingsproducts/1?fields=name,description")
+    @Operation(summary = "Retrieve a Savings Product", operationId = "retrieveOneSavingsProduct", description = """
+            Retrieves a Savings Product
+
+            Example Requests:
+
+            savingsproducts/1
+
+            savingsproducts/1?template=true
+
+            savingsproducts/1?fields=name,description""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = SavingsProductsApiResourceSwagger.GetSavingsProductsProductIdResponse.class)))
     public String retrieveOne(@PathParam("productId") @Parameter(description = "productId") final Long productId,
             @Context final UriInfo uriInfo) {
@@ -196,9 +214,15 @@ public class SavingsProductsApiResource {
     @GET
     @Path("template")
     @Produces({ MediaType.APPLICATION_JSON })
-    @Operation(summary = "Retrieve Savings Product Template", operationId = "retrieveTemplateSavingsProduct", description = "This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:\n"
-            + "\n" + "Field Defaults\n" + "Allowed description Lists\n" + "Example Request:\n" + "Account Mapping:\n" + "\n"
-            + "savingsproducts/template")
+    @Operation(summary = "Retrieve Savings Product Template", operationId = "retrieveTemplateSavingsProduct", description = """
+            This is a convenience resource. It can be useful when building maintenance user interface screens for client applications. The template data returned consists of any or all of:
+
+            Field Defaults
+            Allowed description Lists
+            Example Request:
+            Account Mapping:
+
+            savingsproducts/template""")
     @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = SavingsProductsApiResourceSwagger.GetSavingsProductsTemplateResponse.class)))
     public String retrieveTemplate(@Context final UriInfo uriInfo) {
 
