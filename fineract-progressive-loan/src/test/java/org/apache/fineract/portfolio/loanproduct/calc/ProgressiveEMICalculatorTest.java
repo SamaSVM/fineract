@@ -5317,6 +5317,38 @@ class ProgressiveEMICalculatorTest {
     }
 
     @Test
+    public void test_principalGraceForProgressiveSchedule_graceOnNMinus1_balloon() {
+        final List<LoanScheduleModelRepaymentPeriod> expectedRepaymentPeriods = new ArrayList<>();
+        expectedRepaymentPeriods.add(periodData(LocalDate.of(2024, 1, 1), LocalDate.of(2024, 2, 1)));
+        expectedRepaymentPeriods.add(periodData(LocalDate.of(2024, 2, 1), LocalDate.of(2024, 3, 1)));
+        expectedRepaymentPeriods.add(periodData(LocalDate.of(2024, 3, 1), LocalDate.of(2024, 4, 1)));
+        expectedRepaymentPeriods.add(periodData(LocalDate.of(2024, 4, 1), LocalDate.of(2024, 5, 1)));
+        expectedRepaymentPeriods.add(periodData(LocalDate.of(2024, 5, 1), LocalDate.of(2024, 6, 1)));
+        expectedRepaymentPeriods.add(periodData(LocalDate.of(2024, 6, 1), LocalDate.of(2024, 7, 1)));
+
+        Mockito.when(loanProductRelatedDetail.getAnnualNominalInterestRate()).thenReturn(BigDecimal.valueOf(7.0));
+        Mockito.when(loanProductRelatedDetail.getDaysInYearType()).thenReturn(DaysInYearType.DAYS_360.getValue());
+        Mockito.when(loanProductRelatedDetail.getDaysInMonthType()).thenReturn(DaysInMonthType.DAYS_30.getValue());
+        Mockito.when(loanProductRelatedDetail.getRepaymentPeriodFrequencyType()).thenReturn(PeriodFrequencyType.MONTHS);
+        Mockito.when(loanProductRelatedDetail.getRepayEvery()).thenReturn(1);
+        Mockito.when(loanProductRelatedDetail.getNumberOfRepayments()).thenReturn(6);
+        Mockito.when(loanProductRelatedDetail.getGraceOnPrincipalPayment()).thenReturn(5);
+        Mockito.when(loanProductRelatedDetail.getGraceOnInterestPayment()).thenReturn(0);
+
+        final ProgressiveLoanInterestScheduleModel interestSchedule = emiCalculator
+                .generatePeriodInterestScheduleModel(expectedRepaymentPeriods, loanProductRelatedDetail, null, mc);
+
+        emiCalculator.addDisbursement(interestSchedule, LocalDate.of(2024, 1, 1), toMoney(100.0));
+
+        checkPeriod(interestSchedule, 0, 0.58, 0.58, 0.0, 100.0, false);
+        checkPeriod(interestSchedule, 1, 0.58, 0.58, 0.0, 100.0, false);
+        checkPeriod(interestSchedule, 2, 0.58, 0.58, 0.0, 100.0, false);
+        checkPeriod(interestSchedule, 3, 0.58, 0.58, 0.0, 100.0, false);
+        checkPeriod(interestSchedule, 4, 0.58, 0.58, 0.0, 100.0, false);
+        checkPeriod(interestSchedule, 5, 100.58, 0.58, 100.0, 0.0, false);
+    }
+
+    @Test
     public void test_interestGraceForProgressiveSchedule() {
         final List<LoanScheduleModelRepaymentPeriod> expectedRepaymentPeriods = new ArrayList<>();
         expectedRepaymentPeriods.add(periodData(LocalDate.of(2024, 1, 1), LocalDate.of(2024, 2, 1)));

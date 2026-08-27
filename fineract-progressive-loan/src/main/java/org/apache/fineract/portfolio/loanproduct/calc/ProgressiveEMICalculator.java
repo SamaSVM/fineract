@@ -1335,7 +1335,7 @@ public final class ProgressiveEMICalculator implements EMICalculator {
             newScheduleModel.repaymentPeriods().forEach(period -> {
                 if (!period.getFromDate().isBefore(relatedPeriodsFirstFromDate) && !period.getDueDate().isBefore(relatedPeriodsFirstDueDate)
                         && !adjustedEqualMonthlyInstallmentValue.isLessThan(period.getTotalPaidAmount())
-                        && !period.isReAgedEarlyRepaymentHolder()) {
+                        && !period.isReAgedEarlyRepaymentHolder() && !period.isPrincipalPaymentGrace()) {
                     period.setEmi(adjustedEqualMonthlyInstallmentValue);
                     period.setOriginalEmi(adjustedEqualMonthlyInstallmentValue);
                 }
@@ -1747,12 +1747,14 @@ public final class ProgressiveEMICalculator implements EMICalculator {
         if (graceOnPrincipalPayment == null || graceOnPrincipalPayment <= 0) {
             return;
         }
+        repaymentPeriods.forEach(period -> period.setPrincipalPaymentGrace(false));
         int gracePeriods = Math.min(graceOnPrincipalPayment, repaymentPeriods.size());
         List<RepaymentPeriod> gracePeriodsList = repaymentPeriods.subList(0, gracePeriods);
         gracePeriodsList.forEach(period -> {
             Money interestOnlyEmi = period.getDueInterest();
             period.setEmi(interestOnlyEmi);
             period.setOriginalEmi(interestOnlyEmi);
+            period.setPrincipalPaymentGrace(true);
         });
         if (gracePeriods == repaymentPeriods.size()) {
             return;
@@ -1835,7 +1837,8 @@ public final class ProgressiveEMICalculator implements EMICalculator {
         for (int idx = repaymentPeriods.size() - 1; idx > 0; --idx) {
             RepaymentPeriod lastPeriod = repaymentPeriods.get(idx);
             RepaymentPeriod penultimatePeriod = repaymentPeriods.get(idx - 1);
-            if (!lastPeriod.isFullyPaid() && !penultimatePeriod.isFullyPaid()) {
+            if (!lastPeriod.isFullyPaid() && !penultimatePeriod.isFullyPaid() && !lastPeriod.isPrincipalPaymentGrace()
+                    && !penultimatePeriod.isPrincipalPaymentGrace()) {
                 Money emiDifference = lastPeriod.getEmi().minus(penultimatePeriod.getEmi());
                 return new EmiAdjustment(penultimatePeriod.getEmi(), emiDifference, repaymentPeriods,
                         getUncountablePeriods(repaymentPeriods, penultimatePeriod.getEmi()));
