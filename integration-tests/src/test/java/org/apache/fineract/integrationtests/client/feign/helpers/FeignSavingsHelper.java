@@ -34,6 +34,8 @@ import org.apache.fineract.client.models.PostSavingsAccountsSavingsAccountIdChar
 import org.apache.fineract.client.models.PostSavingsAccountsSavingsAccountIdChargesResponse;
 import org.apache.fineract.client.models.PutSavingsAccountsAccountIdRequest;
 import org.apache.fineract.client.models.PutSavingsAccountsAccountIdResponse;
+import org.apache.fineract.client.models.PutSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest;
+import org.apache.fineract.client.models.PutSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdResponse;
 import org.apache.fineract.client.models.SavingsAccountData;
 import org.apache.fineract.client.models.SavingsAccountStatusEnumData;
 import org.apache.fineract.client.models.SavingsAccountSummaryData;
@@ -139,5 +141,10 @@ public class FeignSavingsHelper {
 
     public List<GetSavingsAccountsSavingsAccountIdChargesResponse> getSavingsCharges(Long savingsId) {
         return ok(() -> fineractClient.savingsCharges().retrieveAllSavingsAccountCharges(savingsId, "all"));
+    }
+
+    public PutSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdResponse updateSavingsAccountCharge(Long savingsId,
+            Long savingsAccountChargeId, PutSavingsAccountsSavingsAccountIdChargesSavingsAccountChargeIdRequest request) {
+        return ok(() -> fineractClient.savingsCharges().updateSavingsAccountCharge(savingsId, savingsAccountChargeId, request));
     }
 }
