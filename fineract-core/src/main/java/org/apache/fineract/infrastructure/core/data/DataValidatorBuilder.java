@@ -308,7 +308,7 @@ public class DataValidatorBuilder {
             return this;
         }
 
-        final List<Object> rawValuesList = Arrays.asList(values);
+        final List<String> rawValuesList = Arrays.stream(values).map(v -> v.toString().toLowerCase()).toList();
 
         if (this.value == null || !rawValuesList.contains(this.value.toString().toLowerCase())) {
             final List<String> valuesList = Arrays.stream(values).map(Object::toString).toList();
