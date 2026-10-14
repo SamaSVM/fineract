@@ -2073,9 +2073,8 @@ public final class LoanProductDataValidator {
 
     private void validateChargeToIncomeAccountMappings(final DataValidatorBuilder baseDataValidator, final JsonElement element) {
         // validate for both fee and penalty charges
-        // TODO: This look faulty. Need to analyze this behaviour before changing
         validateChargeToIncomeAccountMappings(baseDataValidator, element, true);
-        validateChargeToIncomeAccountMappings(baseDataValidator, element, true);
+        validateChargeToIncomeAccountMappings(baseDataValidator, element, false);
     }
 
     private void validateChargeToIncomeAccountMappings(final DataValidatorBuilder baseDataValidator, final JsonElement element,

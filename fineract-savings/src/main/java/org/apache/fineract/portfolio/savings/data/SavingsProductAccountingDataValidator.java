@@ -179,7 +179,7 @@ public class SavingsProductAccountingDataValidator {
     public void validateChargeToIncomeAccountMappings(final DataValidatorBuilder baseDataValidator, final JsonElement element) {
         // validate for both fee and penalty charges
         validateChargeToIncomeAccountMappings(baseDataValidator, element, true);
-        validateChargeToIncomeAccountMappings(baseDataValidator, element, true);
+        validateChargeToIncomeAccountMappings(baseDataValidator, element, false);
     }
 
     private void validateChargeToIncomeAccountMappings(final DataValidatorBuilder baseDataValidator, final JsonElement element,
