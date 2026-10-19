@@ -490,8 +490,8 @@ public class ShareProductDataSerializer {
 
         final LocalDate dividendPeriodEndDate = this.fromApiJsonHelper
                 .extractLocalDateNamed(ShareProductApiConstants.dividendPeriodEndDateParamName, element);
-        baseDataValidator.reset().parameter(ShareProductApiConstants.dividendPeriodStartDateParamName).value(dividendPeriodEndDate)
-                .notBlank().validateDateAfter(dividendPeriodStartDate);
+        baseDataValidator.reset().parameter(ShareProductApiConstants.dividendPeriodEndDateParamName).value(dividendPeriodEndDate).notBlank()
+                .validateDateAfter(dividendPeriodStartDate);
         final BigDecimal dividendAmount = this.fromApiJsonHelper
                 .extractBigDecimalWithLocaleNamed(ShareProductApiConstants.dividendAmountParamName, element);
         baseDataValidator.reset().parameter(ShareProductApiConstants.dividendAmountParamName).value(dividendAmount).notBlank()
